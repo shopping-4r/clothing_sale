@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.yc.clothing.dao.UserDao">
+  	<update id="updateInformation">
+  		update cs_user set 
+  		uname=#{uname},
+  		pwd=md5(md5(#{pwd})),
+  		email=#{email},
+  		tel=#{tel},
+  		age=#{age},
+  		sex=#{sex}
+  		where uid=#{uid}
+  	</update>
+  	<select id="selectUserById" resultType="com.yc.clothing.bean.User">
+  		select *from cs_user where uid=#{uid}
+  	</select>
+  	<update id="updateMoney">
+  		update cs_user set money=#{money} where uid=#{uid}
+  	</update>
+  	<select id="SelectByEmail" resultType="com.yc.clothing.bean.User">
+  		select * from cs_user where email=#{email}
+  	</select>
+  </mapper>

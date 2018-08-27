@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+  <!--namespace命名空间  -->
+<mapper namespace="com.yc.clothing.dao.GoodsDao">
+	<select id="selectByBoardid" resultType="com.yc.clothing.bean.Goods">
+		select *from cs_goods where bid=#{bid}
+	</select>
+	<select id="selectById" resultType="com.yc.clothing.bean.Goods">
+		select *from cs_goods where id=#{id}
+	</select>
+	<select id="OrderByTime" resultType="com.yc.clothing.bean.Goods">
+		select *from cs_goods order by time desc
+	</select>
+</mapper>

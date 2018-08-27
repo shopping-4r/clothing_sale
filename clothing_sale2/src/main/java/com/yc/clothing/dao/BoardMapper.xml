@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+  <!--namespace命名空间  -->
+<mapper namespace="com.yc.clothing.dao.BoardDao">
+	<resultMap id="BoardMap1" type="com.yc.clothing.bean.Board">
+		<id column="id" property="id"></id>
+		<collection  property="Goods" column="id" fetchType="lazy"
+			select="com.yc.clothing.dao.GoodsDao.selectByBoardid">
+		</collection>
+	</resultMap>
+	<select id="findByName" resultType="com.yc.clothing.bean.Board">
+		select *from cs_board where name=#{name}
+	</select>
+</mapper>

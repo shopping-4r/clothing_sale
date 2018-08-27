@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.yc.clothing.dao.CartDao">
+  	<select id="selectAll" resultType="java.util.Map">
+		select a.*,b.size,b.color,b.stock,c.name,c.image,c.price,c.time ctime,c.bid,c.describe,c.rebate,c.feature,c.id gid from cs_cart a join size_color b on a.scid=b.id join cs_goods c on b.gid=c.id where a.uid=#{uid}
+	</select>
+  	
+  	<insert id="ajax_addCart" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+  		insert into cs_cart(uid,scid,count,status,time) values(#{uid},#{scid},#{count},#{status},#{time})
+  	</insert>
+  	
+  	<select id="selectById" resultType="java.util.Map">
+		select a.*,b.size,b.color,b.stock,c.name,c.image,c.price,c.time ctime,c.bid,c.describe,c.rebate,c.feature,c.id gid from cs_cart a join size_color b on a.scid=b.id join cs_goods c on b.gid=c.id where a.uid=#{uid} and a.id=#{id}
+  	</select>
+  	
+  	<delete id="deleteById" >
+  		delete from cs_cart where id=#{id}
+  	</delete>
+  </mapper>

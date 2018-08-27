@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+  <!--namespace命名空间  -->
+<mapper namespace="com.yc.clothing.dao.Goods_OrdersDao">
+	<!-- 按订单id查询所有详细信息-->
+	<select id="selectAllById" resultType="java.util.Map">
+		select a.count,b.size,b.color,c.name,c.price*c.rebate price from goods_orders a
+		LEFT JOIN  size_color b on a.scid=b.id
+		left join cs_goods c on b.gid=c.id 
+		where a.oid=#{id}
+	</select>
+</mapper>
