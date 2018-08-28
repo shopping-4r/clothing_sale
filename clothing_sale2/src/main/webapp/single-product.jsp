@@ -32,112 +32,6 @@
 <link rel="stylesheet" href="css/color/skin-default.css">
 
 
-<!-- Modernizr JS -->
-<script src="js/vendor/modernizr-2.8.3.min.js"></script>
-<script type="text/javascript">
-
-
-
-	var count = "${goods.stock}";
-	//》》》》修改后的商品id
-	var scid;
-	function ajax1() {
-		var obj1 = document.getElementById("input-sort-color");
-
-		var index1 = obj1.selectedIndex;
-
-		var color = obj1.options[index1].text;
-		var obj = document.getElementById("input-sort-size");
-
-		var index = obj.selectedIndex;
-
-		var size = obj.options[index].text;
-		var name = "${goods.name}";
-		$.ajax({
-			"url" : "ajax1.do",
-			"type" : "post",
-			"data" : {
-				"color" : color,
-				"size" : size,
-				"name" : name
-			},
-			"dataType" : "json",
-			"success" : function(obj) {
-				if (obj != null) {
-					$("#iptCount").val(0);
-					scid = obj.id;
-					count = obj.stock;
-					$("#lab").html(obj.stock);
-				} else {
-					$("#iptCount").val(0);
-					count = 0;
-					$("#lab").html(0);
-				}
-
-			},
-			"error" : function() {
-			}
-		});
-	}
-
-	function addCart(){
-		
-		var inputcount=$("#iptCount").val();
-		if(inputcount==0){
-			alert("请选择商品数量！");
-			return;
-			
-		}else{
-			var data={
-					"count":inputcount,
-					"scid":scid
-					}
-			$.post("addCart2.do",data,function(data){
-				if(data){
-					if(confirm("商品成功加入购物车，是否跳转到购物车")){
-						 window.location ="cart.jsp" 
-					}
-					
-				}
-			});
-			
-		}
-		$("#iptCount").val(0);
-		count = 0;
-		$("#lab").html(0);
-		$("#input-sort-size").val(1);
-		$("#input-sort-color").val(1);
-	}
-	
-	
-	function addcount(){
-        var oldVal =parseInt($("#iptCount").val());
-        if(count>oldVal){
-        	var newVal=oldVal+1;
-	    	$("#iptCount").val(newVal);
-	    	$("#inputcount").val($(newVal));
-	     }else{
-	        	alert("库存不足");
-	    }
-   } 
- 	function jiancount(){
-			var oldVal =parseInt($("#iptCount").val());
-	        if(oldVal>1){
-	        	var newVal=oldVal-1;
-	         	$("#iptCount").val(newVal);
-	         	$("#inputcount").val(newVal)
-	        }else{
-	        	$("#iptCount").val(1);
-	        }
-       
-        } 
-</script>
-<script type="text/javascript">
-	function queryPage(page, size) {
-		location.href = "single-product.do?id=${goods.id}&page=" + page
-				+ "&size=" + size;
-	}
-</script>
 
 </head>
 
@@ -658,5 +552,111 @@
 			</div>
 		</div>
 		<!--new arrival area end-->
+<!-- Modernizr JS -->
+<script src="js/vendor/modernizr-2.8.3.min.js"></script>
+<script type="text/javascript">
+
+
+
+	var count = "${goods.stock}";
+	//》》》》修改后的商品id
+	var scid;
+	function ajax1() {
+		var obj1 = document.getElementById("input-sort-color");
+
+		var index1 = obj1.selectedIndex;
+
+		var color = obj1.options[index1].text;
+		var obj = document.getElementById("input-sort-size");
+
+		var index = obj.selectedIndex;
+
+		var size = obj.options[index].text;
+		var name = "${goods.name}";
+		$.ajax({
+			"url" : "ajax1.do",
+			"type" : "post",
+			"data" : {
+				"color" : color,
+				"size" : size,
+				"name" : name
+			},
+			"dataType" : "json",
+			"success" : function(obj) {
+				if (obj != null) {
+					$("#iptCount").val(0);
+					scid = obj.id;
+					count = obj.stock;
+					$("#lab").html(obj.stock);
+				} else {
+					$("#iptCount").val(0);
+					count = 0;
+					$("#lab").html(0);
+				}
+
+			},
+			"error" : function() {
+			}
+		});
+	}
+
+	function addCart(){
+		
+		var inputcount=$("#iptCount").val();
+		if(inputcount==0){
+			alert("请选择商品数量！");
+			return;
+			
+		}else{
+			var data={
+					"count":inputcount,
+					"scid":scid
+					}
+			$.post("addCart2.do",data,function(data){
+				if(data){
+					if(confirm("商品成功加入购物车，是否跳转到购物车")){
+						 window.location ="cart.jsp" 
+					}
+					
+				}
+			});
+			
+		}
+		$("#iptCount").val(0);
+		count = 0;
+		$("#lab").html(0);
+		$("#input-sort-size").val(1);
+		$("#input-sort-color").val(1);
+	}
+	
+	
+	function addcount(){
+        var oldVal =parseInt($("#iptCount").val());
+        if(count>oldVal){
+        	var newVal=oldVal+1;
+	    	$("#iptCount").val(newVal);
+	    	$("#inputcount").val($(newVal));
+	     }else{
+	        	alert("库存不足");
+	    }
+   } 
+ 	function jiancount(){
+			var oldVal =parseInt($("#iptCount").val());
+	        if(oldVal>1){
+	        	var newVal=oldVal-1;
+	         	$("#iptCount").val(newVal);
+	         	$("#inputcount").val(newVal)
+	        }else{
+	        	$("#iptCount").val(1);
+	        }
+       
+        } 
+</script>
+<script type="text/javascript">
+	function queryPage(page, size) {
+		location.href = "single-product.do?id=${goods.id}&page=" + page
+				+ "&size=" + size;
+	}
+</script>
 
 		<%@include file="footer.jsp"%>

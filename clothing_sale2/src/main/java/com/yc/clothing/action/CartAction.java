@@ -49,9 +49,14 @@ public class CartAction {
 		cart.setUid(user.getUid());
 		
 		if(cbiz.selectByScid(cart)){
+			System.out.println("下面是合并");
 			cbiz.updataById2(cart);
-			out.print(cart.getId());
+			Integer id=cart.getId();
+			String data=id+"|~|id";
+			out.print(data);
 		}else{
+			System.out.println("下面是添加纪录");
+
 			int cid=cbiz.ajax_addCart(cart);
 			cart.setId(cid);
 			Map<String,Object> map=cbiz.selectById(cart);
@@ -60,15 +65,18 @@ public class CartAction {
 			String name=(String) map.get("name");
 			String image=(String) map.get("image");
 			int id=(Integer)map.get("id");
-			out.printf("<div class='cart-single-wraper' id='headerId_"+id+"'>"+
-	                    "<div class='cart-img'>"+
-	                      "<a href='#'><img src='images/product/"+image.split("、")[0]+"' alt=''></a>"+
-	                        "</div><div class='cart-content'>"+
-	                       "<div class='cart-name'> <a href='#'>"+name+"</a> </div>"+
-	                       "<div class='cart-price id='priceId_"+id+"'>"+ price +"</div>"+
-	                        "<div class=cart-qty > 数量 <span id='countId_"+id+"'>"+count+"</span> </div>"+
-	                           "</div><div class='remove'> <a onclick='delHeaderCart("+id+","+price+")'><i class='zmdi zmdi-close'></i></a> </div></div>");
+			String data="<div class='cart-single-wraper' id='headerId_"+id+"'>"+
+                    "<div class='cart-img'>"+
+                    "<a href='#'><img src='images/product/"+image.split("、")[0]+"' alt=''></a>"+
+                      "</div><div class='cart-content'>"+
+                     "<div class='cart-name'> <a href='#'>"+name+"</a> </div>"+
+                     "<div class='cart-price id='priceId_"+id+"'>"+ price +"</div>"+
+                      "<div class=cart-qty > 数量 <span id='countId_"+id+"'>"+count+"</span> </div>"+
+                         "</div><div class='remove'> <a onclick='delHeaderCart("+id+","+price+")'><i class='zmdi zmdi-close'></i></a> </div></div>";
+			 data=data+"|~|data";
+			out.printf(data);
 		}
+		System.out.println("下面是更新会话");
 		//購物車中商品購買數量-count
 		sc.setId(cart.getScid());
 		sc.setStock(cart.getCount());
