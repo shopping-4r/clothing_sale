@@ -902,14 +902,14 @@
 											<label>颜色: </label> <select id="input-sort-color"
 												onchange="ajax1()">
 
-												<option value="#" selected="selected">请选择颜色</option>
+												<option value="1" selected="selected">请选择颜色</option>
 											</select>
 										</div>
 										<div class="sort product-type">
 											<label>尺寸: </label> <select id="input-sort-size"
 												onchange="ajax1()">
 
-												<option value="#" selected="selected">请选择尺寸</option>
+												<option value="1" selected="selected">请选择尺寸</option>
 											</select>
 										</div>
 									</div>
@@ -921,12 +921,12 @@
 									<div class="quantity-area">
 										<label>数量 :</label>
 										<div class="cart-quantity">
-											<form action="#" method="POST" id="myform">
+											<form action="" method="POST" id="myform">
 												<div class="product-qty">
 													<div class="cart-quantity">
 														<div class="cart-plus-minus">
 															<div class="dec qtybutton" onclick="jiancount();">-</div>
-															<input id="iptCount" type="text" value="1"
+															<input id="iptCount" type="text" value="0"
 																readonly="readonly" name="qtybutton"
 																class="cart-plus-minus-box">
 															<div class="inc qtybutton" onclick="addcount();">+</div>
@@ -938,11 +938,7 @@
 
 									</div>
 									<div class="quick-add-to-cart">
-										<form action="addCart.do" method="post" class="cart">
-											<input type="hidden" name="scid" value="2" id="inputscid">
-											<input type="hidden" name="count" value="" id="inputcount">
-											<button class="single_add_to_cart_button" type="submit">加入购物车</button>
-										</form>
+											<button class="single_add_to_cart_button"  onclick="addCart();">加入购物车</button>
 									</div>
 									<div class="quick-desc" id="feature">Lorem ipsum dolor
 										sit amet, consectetur adipiscing elit. Nam fringilla augue nec
@@ -1010,26 +1006,13 @@
 
 	<script type="text/javascript">
 	
-		function addCart(id,price){
-			var data={gid:id}
-			$.post("ajax_addCart.do",data,function(data){
-				$("#cart").prepend(data);
-				$("#total").text(parseInt($("#total").text())+1);
-				$("#totalMoney").text(parseInt($("#totalMoney").text())+price);
-			});
-			alert("添加成功");
-		}
-		
-		
-	
-		
-		
 
 		var count = "${goods.stock}";
-		var goodscount;
+		
 		
 		//》》》》修改后的商品id
 		var scid;
+		
 		function showInfo(gid){
 			
 				$.ajax({
@@ -1041,6 +1024,11 @@
 				"dataType" : "json",
 				"success" : function(obj) {
 					if (obj != null) {
+						$("#iptCount").val(0);
+						count = 0;
+						$("#lab").html(0);
+						$("#input-sort-size").val(1);
+						$("#input-sort-color").val(1);
 						var images=obj[3];
 						var goods=obj[0];
 						var lstSize=obj[2];
@@ -1054,14 +1042,15 @@
 						$("#new_price").text("$"+(goods.price*goods.rebate).toFixed(2));
 						$("#old_price").text("$"+goods.price);
 						$("#feature").text(goods.feature);	
+						
 						var sel1=$("#input-sort-size"); //根据id获取select的jquery对象
 						for(var i=0;i<lstSize.length;i++){
-							sel1.append("<option value='#'>"+lstSize[i]+"</option>");//添加option
+							sel1.append("<option >"+lstSize[i]+"</option>");//添加option
 							
 						}
 						var sel2=$("#input-sort-color"); 
 						for(var i=0;i<lstColor.length;i++){
-							sel2.append("<option value='#'>"+lstColor[i]+"</option>");//添加option
+							sel2.append("<option >"+lstColor[i]+"</option>");//添加option
 						}
 					
 					} else {
@@ -1135,7 +1124,37 @@
 		        	$("#iptCount").val(1);
 		        }
 	       
-	        } 
+	        }
+	 	
+		function addCart(id,price){
+			
+			var inputcount=$("#iptCount").val();
+			if(inputcount==0||inputcount==null){
+				alert("请选择商品数量");
+				return;
+			}
+			var data={scid:scid,count:inputcount}
+			$.post("ajax_addCart.do",data,function(data){
+				console.log(data);
+				if(typeof(data) != "String"){
+					console.log(data);
+					console.log(inputcount);
+					var newcount=parseInt(inputcount)+parseInt($("#countId_"+data).text());
+					var price=parseFloat($.trim($("#priceId_"+data).html()));
+					$("#countId_"+data).text(newcount);
+					console.log(price);
+					console.log(newcount);
+					$("#totalMoney").text(parseFloat($("#totalMoney").text())+inputcount*price);
+				}else{
+					$("#cart").prepend(data);
+					$("#total").text(parseInt($("#total").text())+1);
+					$("#totalMoney").text(parseInt($("#totalMoney").text())+price);
+				}
+				
+			});
+			alert("添加成功");
+		}
+		
 	
 	</script>
 </body>

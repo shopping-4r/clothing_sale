@@ -149,7 +149,7 @@
                                                                          <p>总计 <span id="total2" >${totalMoney}</span><span>￥</span></p>
                                                                      </div>
                                                                      <div class="process-checkout-btn text-right">
-                                                                         <a class="btn-def btn2" href="#checkout" aria-controls="checkout" role="tab" data-toggle="tab">提交订单</a>
+                                                                         <a class="btn-def btn2"  href="#checkout" aria-controls="checkout" role="tab" data-toggle="tab" onclick="selectAddr()">提交订单</a>
                                                                      </div>
                                                                 </div>
                                                             </div>
@@ -175,11 +175,7 @@
                                                      <div style="line-height:50px;width:1170px;color:FFF0E8;">
                                                      	&nbsp;&nbsp;<label style="hight:50px; font-weight:bold; float:left">寄送至：  </label>&nbsp;
                                                      	<label style="float:left">
-                                                     		<select style="width:300px">
-				                                                <option value="1">湖南衡阳${user.addr }&nbsp;</option>
-				                                                <option value="2">Pound</option>
-				                                                <option value="3">Euro</option>
-				                                                <option value="4">Dinar</option>
+                                                     		<select style="width:300px" id="addrSelect">
                                            			 		</select>
                                                      	</label>
                                                      	<label>(${user.uname})</label>&nbsp;
@@ -187,12 +183,12 @@
 	                                                    <label style="float:right"><a href="" style="color:orange;margin-right:23px;">修改收货地址</a></label>
                                                      </div>
                                               	  	<div style="margin-top:10px">
-                                              	  		<a class="btn-def btn2">添加收货地址</a>
+                                              	  		<a class="btn-def btn2" >添加收货地址</a>
                                               	  	</div>
                                               	  	<div>
                                               	  		<div style="text-align:center; margin-top:30px">
 	                                              	  		<a class="btn-def btn2" href="cart.jsp">返回购物车</a>
-	                                              	  		<a class="btn-def btn2" href="#complete-order" aria-controls="complete-order" role="tab" data-toggle="tab">确认收货地址</a>
+	                                              	  		<a class="btn-def btn2" onclick="createOrder();" href="#complete-order" aria-controls="complete-order" role="tab" data-toggle="tab">确认收货地址</a>
                                               	  		</div>
                                               	  		
                                               	  	</div>
@@ -217,36 +213,11 @@
                                                     <td class="cgt-des"> 价格</td>
                                                 </tr>
                                                 </thead>
-                                                <tbody>
-                                                <c:forEach items="${sessionScope.cart }" var="c">
-                                                	<tr class="cart_item check-item prd-name">
-                                                        <td class="ctg-type"> ${c.name } x<span id="count">${c.count }</span><span>件</span></td>
-                                                        <td class="cgt-des"> <span>￥</span><span id="price_count">${c.count*c.price }</span></td>
-                                                    </tr>
-                                                </c:forEach>
+                                                <tbody  id="goodsOrder">
+                                                <!-- 循环生成订单 -->
+                                                	
+                                                   
                                                     
-                                                    
-                                                    <tr class="cart_item">
-                                                        <td class="ctg-type" > 小计</td>
-                                                        <td class="cgt-des" id="total">${totalMoney }</td>
-                                                    </tr>
-                                                    <tr class="cart_item">
-                                                        <td class="ctg-type">邮费</td>
-                                                            <td class="cgt-des ship-opt">
-                                                                <div class="shipp">
-                                                                    <input type="radio" id="pay-toggle" onclick="airpay();" name="ship">
-                                                                    <label for="pay-toggle">空运: <span>￥03</span></label>
-                                                                </div>
-                                                                <div class="shipp">
-                                                                    <input type="radio" id="pay-toggle2" onclick="postage();" name="ship">
-                                                                    <label for="pay-toggle2">普通包邮</label>
-                                                                </div>
-                                                         </td>
-                                                    </tr>
-                                                    <tr class="cart_item">
-                                                        <td class="ctg-type crt-total">总计</td>
-                                                        <td class="cgt-des prc-total" id="cartTotal"> ${totalMoney }</td>
-                                                    </tr>
                                                 </tbody>
                                             </table>
                                            </div>
@@ -536,26 +507,38 @@
 			var totalprice=parseFloat( $("#"+"totalId_"+id).text());
 	        var newVal =parseInt($("#"+"valueId_"+id).val());
 	        var count=parseInt(stock)
-	        var data={
-	        	id:id,
-	        	count:newVal
-	        }
+
 	        if(count>newVal){
-	        $("#"+"valueId_"+id).val(newVal+1);
-	    	$("#"+"totalId_"+id).text(totalprice+parseFloat(price));
-	    	var total2=parseFloat($("#total2").text());
-	    	$("#total2").text(total2+price);
-	    	$("#count").text(newVal);
-	    	$("#price_count").text(totalprice-parseFloat(price))
+				var data={
+			        	count:newVal+1,
+			        	id:id
+			        }
+				$.post("updataCart.do",data,function(data){
+					
+				});
+		        $("#"+"valueId_"+id).val(newVal+1);
+		    	$("#"+"totalId_"+id).text(totalprice+parseFloat(price));
+		    	var total2=parseFloat($("#total2").text());
+		    	$("#total2").text(total2+price);
+		    	$("#count").text(newVal);
+		    	$("#price_count").text(totalprice-parseFloat(price))
 	        }else{
 	        	alert("库存不足");
 	        }
-	        } 
+	        
+	     } 
 	 	function jianmoney(price,id,stock){
 			var totalprice=parseFloat( $("#"+"totalId_"+id).text());
 			var newVal =parseInt($("#"+"valueId_"+id).val());
 	        var count=parseInt(stock);
 	        if(newVal>1){
+	        	var data={
+			        	count:newVal-1,
+			        	id:id
+			        }
+				$.post("updataCart.do",data,function(data){
+					
+				});
 	         	$("#"+"valueId_"+id).val(newVal-1);
 		       	$("#"+"totalId_"+id).text(totalprice-parseFloat(price));
 		      	var total2=parseFloat($("#total2").text());
@@ -583,10 +566,38 @@
 		 		});
 	 		}
 	 	}
+	 function selectAddr(){
+		
+    	 $.getJSON('showAddr.do',null,function(data){  
+    		 console.log(data);
+    		 for(var i=0;i<data.length;i++){
+    			 $("#addrSelect").append("<option >"+data[i].addr+"</option>");
+    		 }
+			    	
+		})
 	 	
-	 	function airpay(){
-	 		$("#cartTotal").val($("#catTotal").val()+3);
-	 	}
+	 }
+	 function createOrder(){
+		 var addr=$("#addrSelect").val();
+		 var data={
+				orderAddr:addr
+		 }
+		 
+		 $.post("insertOrder.do",data,function(data){
+			 console.log(data);
+			 $("#goodsOrder").prepend(data);
+			 
+		 });
+	 }	
+	 
+	 function airpay(){
+		 
+	 		$("#cartTotal").text((parseFloat($.trim($("#carttotal").text()))+3).toFixed(1));
+	  }
+	 
+	 function postage(){
+	 		$("#cartTotal").text($.trim($("#carttotal").text()));
+	  }
 	</script> 
 </body>
 

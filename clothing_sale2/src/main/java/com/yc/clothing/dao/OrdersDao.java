@@ -3,7 +3,10 @@ package com.yc.clothing.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +22,9 @@ public Integer countSumSize(Integer gid);
 List<Orders> selectAllByUid(int uid);
 @Update("update cs_orders set isdelete=1 where id=#{id}")
 void updateIsdeleteById(int id);
+
+int insertOrder(Orders orders);
+
+@Insert("insert into Goods_Orders(oid,scid,count) values(#{arg0},#{arg1},#{arg2})")
+public void insertgsds(int oid, Integer scid, int count);
 }

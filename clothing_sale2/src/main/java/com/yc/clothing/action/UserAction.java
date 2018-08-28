@@ -73,6 +73,7 @@ public class UserAction {
 					
 					
 					model.addAttribute("msg", "登录成功！");
+					
 					session.setAttribute("user", user);
 					return "index";
 				}

@@ -34,13 +34,20 @@ public List<Map<String,Object>> queryForPage(Integer gid,Integer page,Integer si
  * @param gid
  * @return
  */
-public Integer countSumSize(Integer gid){
-	return odao.countSumSize(gid);
-}
-public List<Orders> findAllOrdersByUid(int uid){
-	return odao.selectAllByUid(uid);
-}
-public void deleteOrderById(int id) {
-	odao.updateIsdeleteById(id);
-}
+	public Integer countSumSize(Integer gid){
+		return odao.countSumSize(gid);
+	}
+	public List<Orders> findAllOrdersByUid(int uid){
+		return odao.selectAllByUid(uid);
+	}
+	public void deleteOrderById(int id) {
+		odao.updateIsdeleteById(id);
+	}
+	public void insertOrder(Orders orders){
+		odao.insertOrder(orders);
+	}
+	public void insertgsds(int oid, Integer scid, int  count) {
+		odao.insertgsds(oid,scid,count);
+		
+	}
 }

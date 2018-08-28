@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yc.clothing.bean.Cart;
+import com.yc.clothing.bean.Size_Color;
 import com.yc.clothing.dao.CartDao;
 @Service
 public class CartBiz {
@@ -31,10 +32,28 @@ public class CartBiz {
 		return cdao.deleteById(cart);
 		
 	}
+	
 	public void updateById(Cart cart) {
-		// TODO Auto-generated method stub
+		cdao.updataById(cart);
+	}
+	
+	public boolean selectByScid(Cart cart){
+		if(cdao.selectByScid(cart)!=null){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public void updataById2(Cart cart){
+		cdao.updataById2(cart);
+	}
+	public void delete(Cart cart) {
+		cdao.delete(cart);
 		
 	}
-
+	public void updataById3(Size_Color sc) {
+		cdao.updataById3(sc);
+		
+	}
 
 }

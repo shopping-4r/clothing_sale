@@ -9,7 +9,15 @@ public class Orders {
 	private Integer count;
 	private Integer status;
 	private Date time;
+	private String orderAddr;
 	private Integer isdelete;
+	public String getOrderAddr() {
+		return orderAddr;
+	}
+	public void setOrderAddr(String orderAddr) {
+		this.orderAddr = orderAddr;
+	}
+
 	
 	public Integer getIsdelete() {
 		return isdelete;

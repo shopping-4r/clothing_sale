@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yc.clothing.bean.Cart;
 import com.yc.clothing.bean.Goods;
+import com.yc.clothing.bean.Size_Color;
 import com.yc.clothing.bean.User;
 import com.yc.clothing.biz.CartBiz;
 import com.yc.clothing.biz.GoodsBiz;
@@ -26,6 +27,7 @@ public class CartAction {
 	@Resource
 	GoodsBiz gbiz;
 	sessionUtil sutil=new sessionUtil();
+	Size_Color sc=new Size_Color();
 	@RequestMapping("/selectAll.do")
 	public String selectAll(Cart cart,Model model,HttpSession session){
 		if(cart.getUid()!=null){
@@ -45,29 +47,35 @@ public class CartAction {
 		cart.setTime(sft.format(System.currentTimeMillis()));
 		User user=(User) session.getAttribute("user");
 		cart.setUid(user.getUid());
-		cart.setStatus(0);
-		if(cart.getCount()==null){
-			cart.setCount(1);
+		
+		if(cbiz.selectByScid(cart)){
+			cbiz.updataById2(cart);
+			out.print(cart.getId());
+		}else{
+			int cid=cbiz.ajax_addCart(cart);
+			cart.setId(cid);
+			Map<String,Object> map=cbiz.selectById(cart);
+			int count=(int) map.get("count");
+			double price=(double) map.get("price");
+			String name=(String) map.get("name");
+			String image=(String) map.get("image");
+			int id=(Integer)map.get("id");
+			out.printf("<div class='cart-single-wraper' id='headerId_"+id+"'>"+
+	                    "<div class='cart-img'>"+
+	                      "<a href='#'><img src='images/product/"+image.split("、")[0]+"' alt=''></a>"+
+	                        "</div><div class='cart-content'>"+
+	                       "<div class='cart-name'> <a href='#'>"+name+"</a> </div>"+
+	                       "<div class='cart-price id='priceId_"+id+"'>"+ price +"</div>"+
+	                        "<div class=cart-qty > 数量 <span id='countId_"+id+"'>"+count+"</span> </div>"+
+	                           "</div><div class='remove'> <a onclick='delHeaderCart("+id+","+price+")'><i class='zmdi zmdi-close'></i></a> </div></div>");
 		}
-		cbiz.ajax_addCart(cart);
-		Map<String,Object> map=cbiz.selectById(cart);
-		int count=(int) map.get("count");
-		double price=(double) map.get("price");
-		String name=(String) map.get("name");
-		String image=(String) map.get("image");
-		int id=(Integer)map.get("id");
+		//購物車中商品購買數量-count
+		sc.setId(cart.getScid());
+		sc.setStock(cart.getCount());
+		cbiz.updataById3(sc);
 		//修改会话
 		sutil.rsession(cart, session, cbiz);
 		
-		
-		out.printf("<div class='cart-single-wraper' id='headerId_"+id+"'>"+
-                    "<div class='cart-img'>"+
-                      "<a href='#'><img src='images/product/"+image.split("、")[0]+"' alt=''></a>"+
-                        "</div><div class='cart-content'>"+
-                       "<div class='cart-name'> <a href='#'>"+name+"</a> </div>"+
-                       "<div class='cart-price'>"+ price +"</div>"+
-                        "<div class=cart-qty> 数量 <span>"+count+"</span> </div>"+
-                           "</div><div class='remove'> <a onclick='delHeaderCart("+id+","+price+")'><i class='zmdi zmdi-close'></i></a> </div></div>");
 	}
 	
 	//商品添加到购物车（跳转到购物车页面）
@@ -79,6 +87,7 @@ public class CartAction {
 		cart.setUid(user.getUid());
 		cart.setStatus(0);
 		cbiz.ajax_addCart(cart);
+;
 		sutil.rsession(cart, session, cbiz);
 		return "cart";
 	}
@@ -86,13 +95,19 @@ public class CartAction {
 	public void  addCart2(Cart cart,HttpSession session,PrintWriter out){
 		SimpleDateFormat sft=new  SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		cart.setTime(sft.format(System.currentTimeMillis()));
-		cart.setStatus(0);
 		User user=(User) session.getAttribute("user");
 		cart.setUid(user.getUid());
-		if(cbiz.ajax_addCart(cart)!=0){
-			sutil.rsession(cart, session, cbiz);
-			out.print(true);
+		if(cbiz.selectByScid(cart)){
+			cbiz.updataById2(cart);
+		}else{
+			cbiz.ajax_addCart(cart);
 		}
+		//購物車中商品購買數量-count
+		sc.setId(cart.getScid());
+		sc.setStock(cart.getCount());
+		cbiz.updataById3(sc);
+		sutil.rsession(cart, session, cbiz);
+		out.print(true);
 		
 	}
 	//按id查询商品
@@ -122,6 +137,9 @@ public class CartAction {
 	public void updataCart(Cart cart,HttpSession session,PrintWriter out){
 		
 		cbiz.updateById(cart);
+		sutil.rsession(cart, session, cbiz);
 	}
+	
+
 	
 }

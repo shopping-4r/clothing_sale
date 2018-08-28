@@ -9,14 +9,28 @@
 	</select>
   	
   	<insert id="ajax_addCart" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-  		insert into cs_cart(uid,scid,count,status,time) values(#{uid},#{scid},#{count},#{status},#{time})
+  		insert into cs_cart(uid,scid,count,time) values(#{uid},#{scid},#{count},#{time})
   	</insert>
   	
   	<select id="selectById" resultType="java.util.Map">
-		select a.*,b.size,b.color,b.stock,c.name,c.image,c.price,c.time ctime,c.bid,c.describe,c.rebate,c.feature,c.id gid from cs_cart a join size_color b on a.scid=b.id join cs_goods c on b.gid=c.id where a.uid=#{uid} and a.id=#{id}
+		select a.*,b.size,b.color,b.stock,c.name,c.image,c.price,c.time ctime,c.bid,c.describe,c.rebate,c.feature,c.id gid from cs_cart a join size_color b on a.scid=b.id join cs_goods c on b.gid=c.id where a.uid=#{uid} and a.scid=#{scid}
   	</select>
   	
   	<delete id="deleteById" >
   		delete from cs_cart where id=#{id}
   	</delete>
+  	
+  	<select id="selectByScid" resultType="java.util.Map">
+		select *from size_color a join cs_cart b on a.id=b.scid JOIN cs_goods c on c.id=a.gid where b.scid=#{scid} and b.uid=#{uid}
+  	</select>
+  	<update id="updataById2">
+  	 <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT id from cs_cart where  scid=#{scid} and uid=#{uid}
+ 	</selectKey>
+ 	update cs_cart set count=count+#{count} ,time=#{time} where scid=#{scid} and uid=#{uid}
+  	</update>
+  	
+  	<update id="updataById3">
+  		update size_color set stock=stock-#{stock} where id=#{id} 
+  	</update>
   </mapper>

@@ -81,6 +81,7 @@
 	}
 
 	function addCart(){
+		
 		var inputcount=$("#iptCount").val();
 		if(inputcount==0){
 			alert("请选择商品数量！");
@@ -99,8 +100,13 @@
 					
 				}
 			});
+			
 		}
-		
+		$("#iptCount").val(0);
+		count = 0;
+		$("#lab").html(0);
+		$("#input-sort-size").val(1);
+		$("#input-sort-color").val(1);
 	}
 	
 	
@@ -261,7 +267,7 @@
 											<c:forEach items="${lstColor }" var="lc">
 												<option id="selColor" value="#">${lc}</option>
 											</c:forEach>
-											<option value="#" selected="selected">请选择颜色</option>
+											<option value="1" selected="selected">请选择颜色</option>
 										</select>
 									</div>
 									<div class="sort product-type">
@@ -270,7 +276,7 @@
 											<c:forEach items="${ lstSize}" var="ls">
 												<option value="#">${ls}</option>
 											</c:forEach>
-											<option value="#" selected="selected">请选择尺寸</option>
+											<option value="1" selected="selected">请选择尺寸</option>
 										</select>
 									</div>
 								</div>

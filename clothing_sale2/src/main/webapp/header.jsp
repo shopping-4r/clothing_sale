@@ -85,20 +85,20 @@
 															<div class="cart-name">
 																<a href="#">${c.name }</a>
 															</div>
-															<div class="cart-price">${c.price }</div>
+															<div class="cart-price" id="priceId_${c.id }">${c.price }</div>
 															<div class="cart-qty">
-																数量 <span>${c.count }</span>
+																数量 <span id="countId_${c.id }">${c.count }</span>
 															</div>
 														</div>
 														<div class="remove">
-															<a onclick="delHeaderCart(${c.id},${c.price });"><i
+														<a onclick="delHeaderCart(${c.id},${c.price });"><i
 																class="zmdi zmdi-close"></i></a>
 														</div>
 													</div>
 												</c:forEach>
 
 												<div class="cart-subtotal">
-													总计: <span id="totalMoney">${sessionScope.totalMoney }</span>
+													总计: <span id="totalMoney" >${sessionScope.totalMoney }</span>
 												</div>
 												<div class="cart-check-btn">
 													<div class="view-cart">
