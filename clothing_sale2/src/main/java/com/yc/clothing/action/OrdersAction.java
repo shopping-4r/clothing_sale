@@ -56,6 +56,8 @@ public class OrdersAction {
 		orders.setTime(date);
 		obiz.insertOrder(orders);
 		int oid=orders.getId();
+		String  addr=orders.getOrderAddr();
+		System.out.println(addr);
 		List<Map<String,Object>> list=cbiz.selectAll(cart);
 		String data=null;
 		Double totalMoney = 0d;

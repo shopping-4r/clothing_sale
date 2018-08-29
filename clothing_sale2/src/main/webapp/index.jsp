@@ -1146,6 +1146,7 @@
 					console.log(newcount);
 					$("#totalMoney").text(parseFloat($("#totalMoney").text())+inputcount*price);
 				}else{
+					console.log(data);
 					$("#cart").prepend(data);
 					$("#total").text(parseInt($("#total").text())+1);
 					$("#totalMoney").text(parseInt($("#totalMoney").text())+price);

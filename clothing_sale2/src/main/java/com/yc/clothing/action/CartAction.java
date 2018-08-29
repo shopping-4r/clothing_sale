@@ -50,7 +50,14 @@ public class CartAction {
 		
 		if(cbiz.selectByScid(cart)){
 			cbiz.updataById2(cart);
+			//購物車中商品購買數量-count
+			sc.setId(cart.getScid());
+			sc.setStock(cart.getCount());
+			cbiz.updataById3(sc);
+			//修改会话
+			sutil.rsession(cart, session, cbiz);
 			out.print(cart.getId());
+			
 		}else{
 			int cid=cbiz.ajax_addCart(cart);
 			cart.setId(cid);
@@ -60,6 +67,12 @@ public class CartAction {
 			String name=(String) map.get("name");
 			String image=(String) map.get("image");
 			int id=(Integer)map.get("id");
+			//購物車中商品購買數量-count
+			sc.setId(cart.getScid());
+			sc.setStock(cart.getCount());
+			cbiz.updataById3(sc);
+			//修改会话
+			sutil.rsession(cart, session, cbiz);
 			out.printf("<div class='cart-single-wraper' id='headerId_"+id+"'>"+
 	                    "<div class='cart-img'>"+
 	                      "<a href='#'><img src='images/product/"+image.split("、")[0]+"' alt=''></a>"+
@@ -69,12 +82,7 @@ public class CartAction {
 	                        "<div class=cart-qty > 数量 <span id='countId_"+id+"'>"+count+"</span> </div>"+
 	                           "</div><div class='remove'> <a onclick='delHeaderCart("+id+","+price+")'><i class='zmdi zmdi-close'></i></a> </div></div>");
 		}
-		//購物車中商品購買數量-count
-		sc.setId(cart.getScid());
-		sc.setStock(cart.getCount());
-		cbiz.updataById3(sc);
-		//修改会话
-		sutil.rsession(cart, session, cbiz);
+		
 		
 	}
 	
