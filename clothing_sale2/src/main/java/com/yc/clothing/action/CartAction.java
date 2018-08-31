@@ -1,6 +1,8 @@
 package com.yc.clothing.action;
 
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yc.clothing.bean.Cart;
 import com.yc.clothing.bean.Goods;
+import com.yc.clothing.bean.Orders;
 import com.yc.clothing.bean.Size_Color;
 import com.yc.clothing.bean.User;
 import com.yc.clothing.biz.CartBiz;
 import com.yc.clothing.biz.GoodsBiz;
+import com.yc.clothing.biz.OrdersBiz;
 import com.yc.clothing.util.sessionUtil;
 
 @Controller
@@ -26,6 +30,8 @@ public class CartAction {
 	CartBiz cbiz;
 	@Resource
 	GoodsBiz gbiz;
+	@Resource
+	OrdersBiz obiz;
 	sessionUtil sutil=new sessionUtil();
 	Size_Color sc=new Size_Color();
 	@RequestMapping("/selectAll.do")
@@ -49,38 +55,48 @@ public class CartAction {
 		cart.setUid(user.getUid());
 		
 		if(cbiz.selectByScid(cart)){
-			System.out.println("下面是合并");
+			//System.out.println("下面是合并");
 			cbiz.updataById2(cart);
 			Integer id=cart.getId();
 			String data=id+"|~|id";
 			out.print(data);
 		}else{
-			System.out.println("下面是添加纪录");
+			//System.out.println("下面是添加纪录");
 
 			int cid=cbiz.ajax_addCart(cart);
 			cart.setId(cid);
 			Map<String,Object> map=cbiz.selectById(cart);
 			int count=(int) map.get("count");
 			double price=(double) map.get("price");
+			double rebate=(double)map.get("rebate");
+			DecimalFormat df = new DecimalFormat("0.00");
 			String name=(String) map.get("name");
 			String image=(String) map.get("image");
 			int id=(Integer)map.get("id");
+			String color=(String) map.get("color");
+			String size=(String) map.get("size");
 			String data="<div class='cart-single-wraper' id='headerId_"+id+"'>"+
                     "<div class='cart-img'>"+
                     "<a href='#'><img src='images/product/"+image.split("、")[0]+"' alt=''></a>"+
                       "</div><div class='cart-content'>"+
                      "<div class='cart-name'> <a href='#'>"+name+"</a> </div>"+
-                     "<div class='cart-price id='priceId_"+id+"'>"+ price +"</div>"+
-                      "<div class=cart-qty > 数量 <span id='countId_"+id+"'>"+count+"</span> </div>"+
-                         "</div><div class='remove'> <a onclick='delHeaderCart("+id+","+price+")'><i class='zmdi zmdi-close'></i></a> </div></div>";
+                     "<div class='cart-price id='priceId_"+id+"'>"+ df.format(price*rebate) +"</div>"+
+                    " <div class='cart-qty'>"+
+						"颜色: <span id='countId_${c.id }'>"+color +"</span>"+
+					"</div>"+
+					"<div class='cart-qty'>"+
+						"尺码: <span id='countId_${c.id }'>"+size +"</span>"+
+					"</div>"+
+                      "<div class=cart-qty > 数量 :<span id='countId_"+id+"'>"+count+"</span> </div>"+
+                         "</div><div class='remove'> <a onclick='delHeaderCart("+id+","+df.format(price*rebate)+","+count+")'><i class='zmdi zmdi-close'></i></a> </div></div>";
 			 data=data+"|~|data";
 			out.printf(data);
 		}
-		System.out.println("下面是更新会话");
+		//System.out.println("下面是更新会话");
 		//購物車中商品購買數量-count
-		sc.setId(cart.getScid());
-		sc.setStock(cart.getCount());
-		cbiz.updataById3(sc);
+		//		sc.setId(cart.getScid());
+		//		sc.setStock(cart.getCount());
+		//		cbiz.updataById3(sc);
 		//修改会话
 		sutil.rsession(cart, session, cbiz);
 		
@@ -148,6 +164,39 @@ public class CartAction {
 		sutil.rsession(cart, session, cbiz);
 	}
 	
-
+	
+	//验证支付密码
+	@RequestMapping("YanZhen.do")
+	public  void YanZhen(PrintWriter out,String orderAddr, String pwd,HttpSession session){
+		Orders orders=new Orders();
+		User user =(User) session.getAttribute("user");
+		user.setPwd(pwd);
+		orders.setUid(user.getUid());
+		orders.setOrderAddr(orderAddr);
+		Cart cart=new Cart();
+		cart.setUid(user.getUid());
+		Date date=new Date(System.currentTimeMillis());
+		orders.setTime(date);
+		
+		if(cbiz.YanZhen(user)){
+			//订单已成交
+			obiz.insertOrder1(orders);
+			out.print(true);
+		}else{
+			//订单未成交
+			obiz.insertOrder(orders);
+			out.print(false);
+		}
+		int oid=orders.getId();
+		List<Map<String,Object>> list=cbiz.selectAll(cart);
+		for(int i=0;i<list.size();i++){
+			int count=(int) list.get(i).get("count");
+			int scid=(int) list.get(i).get("scid");
+			obiz.insertgsds(oid,scid,count);
+		}
+		//清空购物车
+		cbiz.delete(cart);
+		sutil.rsession(cart, session, cbiz);
+	}
 	
 }

@@ -27,8 +27,10 @@
     <link rel="stylesheet" href="css/responsive.css">
     <!-- User style -->
     <link rel="stylesheet" href="css/custom.css">  <link rel="stylesheet" href="css/color/skin-default.css">
-
-    
+    <!-- 弹框css -->
+	<link rel="stylesheet" type="text/css" href="css/css/postbirdAlertBox.min.css">
+    <!-- 弹框js -->
+    <script type="text/javascript" src="js/js/postbirdAlertBox.min.js"></script>
     <!-- Modernizr JS -->
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
@@ -96,23 +98,26 @@
                                                                 <td class="item-img">
                                                                     <a href="#"><img src="images/product/${c.image.split("、")[0] }" alt=""> </a>
                                                                 </td>
-                                                                <td class="item-title"> <a href="#">${c.name } </a></td>
-                                                                <td class="item-price" > ${c.price } </td>
+                                                                <td class="item-title"> <label>名字：${c.name } &nbsp;&nbsp;颜色：${c.color }&nbsp;&nbsp;尺码：${c.size}</label></td>
+                                                                <td class="item-price" > 
+                                                                <fmt:formatNumber type="number" value="${c.price*c.rebate }" pattern="0.00" maxFractionDigits="2"/>
+                                                                
+                                                                </td>
                                                                 <td class="item-qty">
                                                                     <div class="cart-quantity">
                                                                         <div class="product-qty">
                                                                             <div class="cart-quantity">
                                                                                 <div class="cart-plus-minus">
-                                                                                    <div class="dec qtybutton" onclick="jianmoney(${c.price},${c.id },${c.stock });" >-</div>
+                                                                                    <div class="dec qtybutton" onclick="jianmoney(${c.price*c.rebate },${c.id },${c.stock });" >-</div>
                                                                                    	 <input value="${c.count }" name="qtybutton"  id="valueId_${c.id }" class="cart-plus-minus-box" type="text" >
-                                                                                    <div class="inc qtybutton" onclick="addmoney(${c.price},${c.id },${c.stock });">+</div>
+                                                                                    <div class="inc qtybutton" onclick="addmoney(${c.price*c.rebate },${c.id },${c.stock });">+</div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </td>
-                                                                <td class="total-price"><span>￥</span><span  id="totalId_${c.id}"> ${c.count*c.price }</span></td>
-                                                                <td class="remove-item"><a onclick="deleteCart(${c.id},${c.price });"><i class="fa fa-trash-o"></i></a></td>
+                                                                <td class="total-price"><span>￥</span><span  id="totalId_${c.id}"> <fmt:formatNumber type="number" value="${c.price*c.rebate*c.count }" pattern="0.00" maxFractionDigits="2"/></span></td>
+                                                                <td class="remove-item"><a onclick="deleteCart(${c.id},${c.price*c.rebate });"><i class="fa fa-trash-o"></i></a></td>
                                                             </tr>
                                                           </c:forEach>  
                                                         </tbody>
@@ -227,7 +232,7 @@
                                                 <div class="pay-toggle">
                                                     <form action="#">
                                                        <div class="pay-type-total">
-                                                        <div class="pay-type">
+                                                        <!-- <div class="pay-type">
                                                             <input type="radio" id="pay-toggle01" name="pay">
                                                             <label for="pay-toggle01">银行卡转账</label>
                                                         </div>
@@ -238,10 +243,13 @@
                                                         <div class="pay-type">
                                                             <input type="radio" id="pay-toggle04" name="pay">
                                                             <label for="pay-toggle04">微信</label>
-                                                        </div>
+                                                        </div> -->
+                                                        <label>收货地址：</label><span id="spanAddr"></span>
+                                                        <label>账户余额：</label><span>${sessionScope.user.money }</span>
                                                         </div>
                                                         <div class="input-box mt-20">
-                                                            <a class="btn-def btn2" href="#">付款</a>
+                                                            <a class="btn-def btn2" onclick="FuKuan(${sessionScope.user.money})">付款</a>
+                                                            <a class="btn-def btn2" href="index.jsp">暂不付款，继续购物</a>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -504,9 +512,9 @@
 	<script type="text/javascript">
 
 	 	 function addmoney(price,id,stock){
-			var totalprice=parseFloat( $("#"+"totalId_"+id).text());
+			var totalprice=parseFloat( $("#"+"totalId_"+id).text().toFixed(2));
 	        var newVal =parseInt($("#"+"valueId_"+id).val());
-	        var count=parseInt(stock)
+	        var count=parseInt(stock);
 
 	        if(count>newVal){
 				var data={
@@ -517,11 +525,11 @@
 					
 				});
 		        $("#"+"valueId_"+id).val(newVal+1);
-		    	$("#"+"totalId_"+id).text(totalprice+parseFloat(price));
+		    	$("#"+"totalId_"+id).text(totalprice+parseFloat(price).toFixed(2));
 		    	var total2=parseFloat($("#total2").text());
 		    	$("#total2").text(total2+price);
 		    	$("#count").text(newVal);
-		    	$("#price_count").text(totalprice-parseFloat(price))
+		    	$("#price_count").text(totalprice-parseFloat(price).toFixed(2))
 	        }else{
 	        	alert("库存不足");
 	        }
@@ -540,11 +548,11 @@
 					
 				});
 	         	$("#"+"valueId_"+id).val(newVal-1);
-		       	$("#"+"totalId_"+id).text(totalprice-parseFloat(price));
+		       	$("#"+"totalId_"+id).text(totalprice-parseFloat(price).toFixed(2));
 		      	var total2=parseFloat($("#total2").text());
 		      	$("#total2").text(total2-price);
 		      	$("#count").text(newVal);
-		      	$("#price_count").text(totalprice-parseFloat(price))
+		      	$("#price_count").text(totalprice-parseFloat(price).toFixed(2));
 	        }else{
 	        	$("#"+"valueId_"+id).val(1);
 	        }
@@ -557,9 +565,11 @@
 		 			if(data){
 		 				alert("删除成功") ;
 		 				$("#total").text(parseInt($("#total").text())-1);
-						$("#totalMoney").text(parseInt($("#totalMoney").text())-price);
+						$("#totalMoney").text(parseInt($("#totalMoney").text())-price.toFixed(2));
 						$("#"+"theId_"+id).remove();
 						$("#"+"headerId_"+id).remove();
+						$("#total2").text("0");
+						
 		 			}else{
 		 				alert("删除失败");
 		 			}
@@ -567,9 +577,9 @@
 	 		}
 	 	}
 	 function selectAddr(){
-		
+	
     	 $.getJSON('showAddr.do',null,function(data){  
-    		 console.log(data);
+    		 //console.log(data);
     		 for(var i=0;i<data.length;i++){
     			 $("#addrSelect").append("<option >"+data[i].addr+"</option>");
     		 }
@@ -578,14 +588,15 @@
 	 	
 	 }
 	 function createOrder(){
-		 var addr=$("#addrSelect").val();
-		 var data={
-				orderAddr:addr
-		 }
 		 
-		 $.post("insertOrder.do",data,function(data){
-			 console.log(data);
+		 var addr=$("#addrSelect").val();
+		 $.post("insertOrder.do",null,function(data){
+			 //console.log(data);
+			 $("#total").text("0");
+			 $(".cart-single-wraper").remove();
+			 $("#totalMoney").text("0");
 			 $("#goodsOrder").prepend(data);
+			 $("#spanAddr").html(addr);
 			 
 		 });
 	 }	
@@ -598,6 +609,58 @@
 	 function postage(){
 	 		$("#cartTotal").text($.trim($("#carttotal").text()));
 	  }
+	 
+	 //付款的方法
+	 function FuKuan(money){
+		var jianMoney= parseFloat($("#cartTotal").html());
+		var shengYuMoney=money-jianMoney;
+		//console.log(money);
+		//console.log(jianMoney);
+		//console.log(shengYuMoney);
+		var str="付款前账户余额: " + money + "  付款金额: "+ jianMoney + "  付款后余额: " + shengYuMoney;
+		if(shengYuMoney<0){
+			alert("余额不足，请先去充值，商品已加入您的订单，\n"+str);
+			  alert("即将跳转到账户信息");
+		        window.location.href='my-account.jsp';
+			return;
+		}
+		 PostbirdAlertBox.prompt({
+			    'title': '请输入密码',
+			    'okBtn': '提交',
+			    onConfirm:function (data) {
+					var addr=$("#addrSelect").val();
+		 			var data1={
+						orderAddr:addr,
+						pwd:data
+		 				}
+			    	$.post("YanZhen.do",data1,function (flag){
+			    		console.log(flag);
+			    		if(flag=="true"){
+			    			alert("密码正确");
+			    			PostbirdAlertBox.alert({
+			    			    'title': '交易信息',
+			    			    'content': str,
+			    			    'okBtn': '好的',
+			    			    'contentColor': 'red',
+			    			    'onConfirm': function () {
+			    			        //console.log("回调触发后隐藏提示框");
+			    			        alert("即将跳转到账户信息");
+			    			        window.location.href='my-account.jsp';
+			    			    }
+			    			});
+			    		}else{
+			    			alert("密码错误，请重试");
+			    		}
+			    	});
+			       // console.log("输入框内容是：" + data);
+			       // alert("输入框内容是：" + data);
+			    },
+			    onCancel: function (data) {
+			       
+			        alert("你取消了支付");
+			    },
+			});
+	 }
 	</script> 
 </body>
 

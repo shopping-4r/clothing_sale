@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.yc.clothing.bean.Cart;
 import com.yc.clothing.bean.Size_Color;
+import com.yc.clothing.bean.User;
 import com.yc.clothing.dao.CartDao;
 @Service
 public class CartBiz {
@@ -53,6 +54,15 @@ public class CartBiz {
 	}
 	public void updataById3(Size_Color sc) {
 		cdao.updataById3(sc);
+		
+	}
+	public boolean YanZhen(User user) {
+		if(cdao.YanZhen(user)!=null){
+			
+			return true;
+		}else{
+			return false;
+		}
 		
 	}
 

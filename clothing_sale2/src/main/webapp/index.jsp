@@ -291,7 +291,7 @@
 											<div class="prodcut-price">
 												<div class="new-price">
 													$
-													<fmt:formatNumber type="number" value="${g.price*0.8}"
+													<fmt:formatNumber type="number" value="${g.price*g.rebate}"
 														pattern="#.00" maxFractionDigits="2" />
 												</div>
 												<div class="old-price">
@@ -395,8 +395,7 @@
 										data-toggle="tab">新品榜</a></li>
 									<li role="presentation"><a href="#bestsellr"
 										aria-controls="bestsellr" role="tab" data-toggle="tab">销量榜</a></li>
-									<li role="presentation"><a href="#specialoffer"
-										aria-controls="specialoffer" role="tab" data-toggle="tab">热评榜</a></li>
+									
 								</ul>
 							</div>
 						</div>
@@ -451,7 +450,7 @@
 															<div class="prodcut-price">
 																<div class="new-price">
 																	$
-																	<fmt:formatNumber type="number" value="${g.price*0.8}"
+																	<fmt:formatNumber type="number" value="${g.price*g.rebate}"
 																		pattern="#.00" maxFractionDigits="2" />
 																</div>
 																<div class="old-price">${g.price}</div>
@@ -510,7 +509,7 @@
 															<div class="prodcut-price">
 																<div class="new-price">
 																	$
-																	<fmt:formatNumber type="number" value="${g.price*0.8}"
+																	<fmt:formatNumber type="number" value="${g.price*g.rebate}"
 																		pattern="#.00" maxFractionDigits="2" />
 																</div>
 																<div class="old-price">${g.price}</div>
@@ -940,12 +939,8 @@
 									<div class="quick-add-to-cart">
 										<button class="single_add_to_cart_button" onclick="addCart();">加入购物车</button>
 									</div>
-									<div class="quick-desc" id="feature">Lorem ipsum dolor
-										sit amet, consectetur adipiscing elit. Nam fringilla augue nec
-										est tristique auctor. Donec non est at libero.Lorem ipsum
-										dolor sit amet, consectetur adipiscing elit. Nam fringilla
-										augue nec est tristique auctor. Donec non est at libero.Nam
-										fringilla tristique auctor.</div>
+									<div class="quick-desc" id="feature">
+									</div>
 									<div class="social-sharing-modal">
 										<div class="widget widget_socialsharing_widget">
 											<h3 class="widget-title-modal">分享商品</h3>
@@ -1037,7 +1032,7 @@
 						price1=(goods.price*goods.rebate).toFixed(2);
 						$("#new_price").text("$"+(goods.price*goods.rebate).toFixed(2));
 						$("#old_price").text("$"+goods.price);
-						$("#feature").text(goods.feature);	
+						$("#feature").html(goods.feature);	
 						var sel1=$("#input-sort-size"); //根据id获取select的jquery对象
 						sel1.append("<option value='1' selected='selected'>请选择尺寸</option>");
 						for(var i=0;i<lstSize.length;i++){
@@ -1126,12 +1121,12 @@
 				if(type[1]=="id"){
 					console.log(type[0]);
 					console.log(inputcount);
-					var newcount=parseInt(inputcount)+parseInt($("#countId_"+type[0]).text());
+					var newcount=parseInt(inputcount)+parseInt($("#countId_"+type[0]).html());
 					var price=parseFloat($.trim($("#priceId_"+type[0]).html()));
 					$("#countId_"+type[0]).text(newcount);
 					console.log(price);
 					console.log(newcount);
-					$("#totalMoney").text(parseFloat($("#totalMoney").text())+inputcount*price);
+					$("#totalMoney").text(parseFloat($("#totalMoney").text())+inputcount*price1);
 				}else{
 					$("#cart").prepend(type[0]);
 					$("#total").text(parseInt($("#total").text())+1);
