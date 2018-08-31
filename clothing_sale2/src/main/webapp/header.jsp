@@ -196,90 +196,6 @@
 												src="images/banner/banner-fashion.jpg" alt=""></a>
 										</div>
 									</div></li>
-<<<<<<< HEAD
-								<li class="mega-parent"><a href="shop.html">Shortcut</a>
-									<div class="mega-menu-area mma-970">
-										<ul class="single-mega-item">
-											<li class="menu-title uppercase">Shortcode-01</li>
-											<li><a href="shortcode-banner.html" target="_blank">shortcode-banner</a></li>
-											<li><a href="shortcode-best-top-on-sale-slider.html"
-												target="_blank">too-on-sale</a></li>
-											<li><a href="shortcode-blog-item.html" target="_blank">Short
-													Blog Item</a></li>
-											<li><a href="shortcode-brand-prodcut.html"
-												target="_blank">Brand Product</a></li>
-											<li><a href="shortcode-brand-slider.html"
-												target="_blank">Brand Slider</a></li>
-										</ul>
-										<ul class="single-mega-item">
-											<li class="menu-title uppercase">Shortcode-02</li>
-											<li><a href="shortcode-breadcrumb.html" target="_blank">Breadcrumb</a></li>
-											<li><a href="shortcode-related-product.html"
-												target="_blank">Related Product</a></li>
-											<li><a href="shortcode-service.html" target="_blank">Service</a></li>
-											<li><a href="shortcode-skill.html" target="_blank">Skill</a></li>
-											<li><a href="shortcode-slider.html" target="_blank">Slider</a></li>
-										</ul>
-										<ul class="single-mega-item">
-											<li class="menu-title uppercase">Shortcode-03</li>
-											<li><a href="shortcode-team.html" target="_blank">Team</a></li>
-											<li><a href="shortcode-testimonial.html" target="_blank">Testimonial</a></li>
-											<li><a href="shortcode-why-choose-us.html"
-												target="_blank">Why Choose Us</a></li>
-										</ul>
-									</div></li>
-								<li class="mega-parent"><a href="index.html">Pages</a>
-									<div class="mega-menu-area mma-970">
-										<ul class="single-mega-item coloum-4">
-											<li class="menu-title uppercase">Pages-01</li>
-											<li><a href="about-us.html" target="_blank">About-us</a></li>
-											<li><a href="blog.html" target="_blank">Blog</a></li>
-											<li><a href="blog-right.html" target="_blank">Blog-Right</a></li>
-											<li><a href="single-blog.html" target="_blank">Single
-													Blog</a></li>
-											<li><a href="single-blog-right.html" target="_blank">Single
-													Blog Right</a></li>
-											<li><a href="blog-full.html" target="_blank">Blog-Fullwidth</a></li>
-										</ul>
-										<ul class="single-mega-item coloum-4">
-											<li class="menu-title uppercase">pages-02</li>
-											<li><a href="blog-full-right.html" target="_blank">Blog
-													Ful Rightl</a></li>
-											<li><a href="cart.html" target="_blank">Cart</a></li>
-											<li><a href="checkout.html" target="_blank">Checkout</a></li>
-											<li><a href="compare.html" target="_blank">Compare</a></li>
-											<li><a href="complete-order.html" target="_blank">Complete
-													Order</a></li>
-											<li><a href="contact-us.html" target="_blank">Contact
-													US</a></li>
-										</ul>
-										<ul class="single-mega-item coloum-4">
-											<li class="menu-title uppercase">pages-03</li>
-											<li><a href="login.html" target="_blank">Login</a></li>
-											<li><a href="my-account.jsp" target="_blank">My
-													Account</a></li>
-											<li><a href="shop-full-grid.html" target="_blank">Shop
-													Full Grid</a></li>
-											<li><a href="shop-full-list.html" target="_blank">Shop
-													Full List</a></li>
-											<li><a href="shop-list-right-sidebar.html"
-												target="_blank">Shop List Right</a></li>
-											<li><a href="shop-list.html" target="_blank">Shop
-													List</a></li>
-										</ul>
-										<ul class="single-mega-item coloum-4">
-											<li class="menu-title uppercase">pages-03</li>
-											<li><a href="shop-right-sidebar.html" target="_blank">Shop
-													Right</a></li>
-											<li><a href="shop.jsp" target="_blank">Shop</a></li>
-											<li><a href="single-product.html" target="_blank">Single
-													Prodcut</a></li>
-											<li><a href="wishlist.html" target="_blank">Wishlist</a></li>
-										</ul>
-									</div></li>
-								<li><a href="blog.html">BLOG</a></li>
-								<li><a href="about-us.html">ABOUT</a></li>
-=======
 								<li ><a class="mega-parent" href="shop.html">我的</a>
 									<ul class="dropdown">
 										<li><a href="my-account.jsp" target="_blank">我的账户</a></li>
@@ -292,7 +208,6 @@
 								<li class="mega-parent"><a href="shop.jsp">总览</a>
 								</li>
 								<li><a href="about-us.jsp">关于我们</a></li>
->>>>>>> branch 'master' of https://github.com/shopping-4r/clothing_sale.git
 							</ul>
 						</nav>
 					</div>
