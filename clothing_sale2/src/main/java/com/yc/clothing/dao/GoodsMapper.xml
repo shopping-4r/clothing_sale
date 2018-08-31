@@ -17,7 +17,10 @@
 	</select>
 	<select id="countAll" resultType="java.lang.Integer">
 	select count(*) cnt from (
-		select *from cs_goods where sid=#{sid}) a
+		select *from cs_goods) a
+	</select>
+	<select id="selectAll" resultType="java.util.Map">
+		select *from cs_goods 
 	</select>
 	<select id="selectBySid" resultType="java.util.Map">
 		select *from cs_goods where sid=#{sid}
@@ -33,18 +36,21 @@
 		SELECT * FROM CS_GOODS WHERE id=#{id}
 	</select>
 	<select id="OrderByName" resultType="java.util.Map">
-		select *from cs_goods where sid=#{sid} and s order by name
+		select *from cs_goods order by name
 	</select>
 	<select id="OrderByNameDesc" resultType="java.util.Map">
-		select *from cs_goods where sid=#{sid} order by name desc
+		select *from cs_goods  order by name desc
 	</select>
 	<select id="OrderByPrice" resultType="java.util.Map">
-		select *from cs_goods where sid=#{sid} order by (price*rebate)
+		select *from cs_goods  order by (price*rebate)
 	</select>
 	<select id="OrderByPriceDesc" resultType="java.util.Map">
-		select *from cs_goods where sid=#{sid} order by (price*rebate) desc
+		select *from cs_goods  order by (price*rebate) desc
 	</select>
 	<select id="selectBySidAndCondition" resultType="java.util.Map">
-		select *from cs_goods where sid=#{sid} order by (price*rebate) desc
+		select *from cs_goods  order by (price*rebate) desc
+	</select>
+	<select id="fuzzySearchGoods" resultType="com.yc.clothing.bean.Goods">
+		select DISTINCT *from cs_goods where name like '%' #{name} '%'
 	</select>
 </mapper>

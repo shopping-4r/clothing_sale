@@ -26,6 +26,14 @@ public class GoodsBiz {
 	@Autowired
 	private Goods_SalerDao gsdao;
 	/**
+	 * 模糊查询商品(根据商品名字和颜色)
+	 * @param name
+	 * @return
+	 */
+	public List<Goods> fuzzySearchGoods(String name) {
+		return gdao.fuzzySearchGoods(name);
+	}
+	/**
 	 *	 得到商品根据时间排序的所有商品
 	 * @return
 	 */
@@ -67,24 +75,24 @@ public class GoodsBiz {
 		
 	}
 	//根据商铺id查询所有商品
-	public Page<Map<String,Object>> findAllGoods(Integer id) {
-		long total=gdao.countAll(id);
-		List<Map<String,Object>> rows=gdao.selectBySid(id);
+	public Page<Map<String,Object>> findAllGoods() {
+		long total=gdao.countAll();
+		List<Map<String,Object>> rows=gdao.selectAll();
 		return new Page<Map<String,Object>>(total,rows);
 	}
 	//按照不同条件查询商品
-	public Page<Map<String, Object>> findByType(Integer id,int type) {
+	public Page<Map<String, Object>> findByType(int type) {
 		List<Map<String,Object>> goods=null;
 		if(type==2) {
-			goods=gdao.OrderByName(id);
+			goods=gdao.OrderByName();
 		}else if(type==3) {
-			goods=gdao.OrderByNameDesc(id);
+			goods=gdao.OrderByNameDesc();
 		}else if(type==4) {
-			goods=gdao.OrderByPrice(id);
+			goods=gdao.OrderByPrice();
 		}else {
-			goods=gdao.selectBySid(id);
+			goods=gdao.selectBySid();
 		}
-		long total=gdao.countAll(id);
+		long total=gdao.countAll();
 		return new Page<Map<String, Object>>(total,goods);
 	}
 }

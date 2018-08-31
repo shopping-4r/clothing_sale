@@ -25,16 +25,20 @@ public interface GoodsDao {
 	public Map<String,Object> selectCountByColorAndSize(String color, String size, String name);
 	//根据所有条件查询商品
 	//List<Map<String,Object>> selectBySidAndCondition(int sid,SelectCondition scd,@Param("minPrice")int minPrice,@Param("maxPrice")int maxPrice);
+	//查询所有商品
+	List<Map<String,Object>> selectAll();
 	//根据sid查询所有商品的数量
-	List<Map<String,Object>> selectBySid(int sid);
+	List<Map<String,Object>> selectBySid();
 	//根据sid查询所有商品的数量
-	int countAll(@Param("sid")int sid);
+	int countAll();
 	//根据所有条件和按名字顺序查询
-	List<Map<String,Object>> OrderByName(Integer id);
+	List<Map<String,Object>> OrderByName();
 	//根据sid且按名字降序查询
-	List<Map<String,Object>> OrderByNameDesc(Integer id);
+	List<Map<String,Object>> OrderByNameDesc();
 	//根据sid和按价格顺序查询
-	List<Map<String,Object>> OrderByPrice(Integer id);
+	List<Map<String,Object>> OrderByPrice();
 	//根据sid和按价格降序查询
-	List<Map<String,Object>> OrderByPriceDesc(Integer id);
+	List<Map<String,Object>> OrderByPriceDesc();
+	//按模糊查询商品
+	List<Goods> fuzzySearchGoods(String name);
 }

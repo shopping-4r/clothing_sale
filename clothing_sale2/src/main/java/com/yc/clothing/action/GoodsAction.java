@@ -37,6 +37,20 @@ public class GoodsAction {
 	@Resource
 	private SalerBiz sbiz;
 	/**
+	 * 关键字查询商品
+	 * @throws IOException 
+	 * 
+	 *
+	 */
+	@RequestMapping("/search.do")
+	public void ajaxFindGoods(HttpServletResponse res,String name) throws IOException {
+		System.out.println(name);
+		List<Goods> goods=gbiz.fuzzySearchGoods(name);
+		Gson g=new Gson();
+		String Json=g.toJson(goods);
+		res.getWriter().print(Json);
+	}
+	/**
 	 * 查询该商铺所有的商品
 	 * @return
 	 */
@@ -44,7 +58,7 @@ public class GoodsAction {
 	public String findGoods(HttpSession session,Model model) {
 		User user=(User) session.getAttribute("user");
 		Saler saler=sbiz.findSaler(user.getUid());
-		Page<Map<String,Object>> goods=gbiz.findAllGoods(saler.getId());
+		Page<Map<String,Object>> goods=gbiz.findAllGoods();
 		List<Map<String,Object>> goods2=(List<Map<String, Object>>) goods.getRows().subList(0, 6);
 		List<Map<String,Object>> goods3=(List<Map<String, Object>>) goods.getRows().subList(0, 2);
 		model.addAttribute("total",goods.getTotal());
@@ -68,10 +82,10 @@ public class GoodsAction {
 		int max=min+size;
 		Page<Map<String,Object>> goods=null;
 		if(type==1) {
-			goods=gbiz.findAllGoods(saler.getId());
+			goods=gbiz.findAllGoods();
 		}
 		else {
-			goods=gbiz.findByType(saler.getId(),type);
+			goods=gbiz.findByType(type);
 		}
 		if(max>goods.getTotal()) {
 			max=(int) goods.getTotal();
@@ -101,10 +115,10 @@ public class GoodsAction {
 		int max=min+size;
 		Page<Map<String,Object>> goods=null;
 		if(type==1) {
-			goods=gbiz.findAllGoods(saler.getId());
+			goods=gbiz.findAllGoods();
 		}
 		else {
-			goods=gbiz.findByType(saler.getId(),type);
+			goods=gbiz.findByType(type);
 		}
 		if(max>goods.getTotal()) {
 			max=(int) goods.getTotal();
@@ -135,7 +149,7 @@ public class GoodsAction {
 		int min=(page-1)*size;
 		int max=min+size;
 		Page<Map<String,Object>> goods=null;
-			goods=gbiz.findAllGoods(saler.getId());
+			goods=gbiz.findAllGoods();
 		if(max>goods.getTotal()) {
 			max=(int) goods.getTotal();
 		}
@@ -277,6 +291,5 @@ public class GoodsAction {
 		String json=gson.toJson(list);
 		
 		out.print(json);
-	
 	}
 }

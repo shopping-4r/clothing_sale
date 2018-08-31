@@ -212,22 +212,21 @@
 						</nav>
 					</div>
 					<div class="col-md-3 hidden-sm hidden-xs">
-						<div class="search-box global-table">
-							<div class="global-row">
-								<div class="global-cell">
-									<form action="#">
-										<div class="input-box">
-											<input class="single-input" placeholder="Search anything"
-												type="text">
-											<button class="src-btn">
-												<i class="fa fa-search"></i>
-											</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
+                                <div class="search-box global-table">
+                                    <div class="global-row">
+                                        <div class="global-cell">
+                                            <form>
+                                                <div class="input-box" style=" z-index:9999">
+                                                    <input class="single-input" id="single-input1" placeholder="请输入衣服名字" type="text">
+                                                     <div style="border:1px solid #ccc"><ul class="searchmore" id="searchmore"></ul></div>
+                                                    <button class="src-btn"><i class="fa fa-search"></i></button>
+                                                </div>
+                                                </form>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 					<!-- mobile-menu-area start -->
 					<div class="mobile-menu-area">
@@ -373,8 +372,40 @@
 		 				alert("删除失败");
 		 			}
 		 		});
-	 		}
-	 	}
-		</script>
+	 		};
+	 	};
+	 	$(document).ready(function(){
+            $("#single-input1").keyup(function(){//搜索
+                var uname =$(this).val();
+                if(uname.length >= 1){
+                    $.getJSON('search.do',{name:uname},function (data) {
+                        var item;
+                        $(".searchmore").empty();//清空原来的ul
+                        if(data!=null){
+                            $.each(data,function(i,res){//循环加入到ul中去
+                            	if(i>=5) return false;
+                            	item = "<a style='color:blue' href='single-product.do?id="+res.id+"&name="+res.name+"' style='color:blue'><li>"+res.name+"</li></a><br>";
+                                $(".searchmore").append(item);
+                            })
+                            $(".searchmore").show();
+                        }else{
+                            $(".searchmore").hide();
+                        }
+                    });
+                }else{
+                    $(".searchmore").hide();
+                }
+            })
+            $(document).on("click", ".searchmore li", function(){
+                $("#single-input1").val(trim($(this).text()));
+                $(".searchmore").hide();
+            });
+
+            $(".input-box").mouseleave(function(){
+                $(".searchmore").hide();
+            })
+
+        })
+</script>
 -->
 <!-- End of header area -->

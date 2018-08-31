@@ -78,12 +78,11 @@ public class UserAction {
 					skip= "login";
 				} else {
 					user=ubiz.getPwdByEmail(user);
-					if(user.getRole()==1){
+					if(user.getRole()==2){
 						session.setAttribute("user2", user);
 						skip="redirect:/management/index.jsp";
 					}else if(user.getRole()==0){
 						Cart cart=new Cart();
-						
 						System.out.println(user.getUid());
 						cart.setUid(user.getUid());
 						List<Map<String,Object>> list=cbiz.selectAll(cart);
