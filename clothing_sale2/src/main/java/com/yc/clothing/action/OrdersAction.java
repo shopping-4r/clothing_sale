@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.gson.Gson;
@@ -93,4 +94,46 @@ public class OrdersAction {
 		//sessionutil.rsession(cart, session, cbiz);
 		out.print(data);
 	}
+	
+	
+	/**
+	 * 以下是管理员的代码
+	 * */
+	
+	
+	/**
+	 * 查询订单状态
+	 * @param Untreated（未处理）
+	 * @param turnover（已成交）
+
+	 * */
+	@RequestMapping("admin_findOrders.do")
+	public String admin_findOrders(HttpSession session,Model model){
+		User user2=(User) session.getAttribute("user2");
+		List<Orders> orders=obiz.findAllOrders();
+		int notpay=0;
+		int paid=0;
+		int Untreated=0;
+		int turnover=0;
+		int failuer=0;
+		for(int i=0;i<orders.size();i++){
+			if(orders.get(i).getStatus()==0){
+				paid++;
+			}else if(orders.get(i).getStatus()==1){
+				notpay++;
+			}else if(orders.get(i).getStatus()==2){
+				Untreated++;
+			}else if(orders.get(i).getStatus()==5){
+				turnover++;
+			}else{
+				failuer++;
+			}
+		}
+		int[] data={Untreated,paid,notpay,turnover,failuer};
+		session.setAttribute("orderData", data);
+		return "management/index";
+	}
+	
+	
+	
 }
