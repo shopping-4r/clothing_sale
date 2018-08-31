@@ -54,5 +54,10 @@ public List<Map<String,Object>> queryForPage(Integer gid,Integer page,Integer si
 	//修改订单为已成交
 	public void insertOrder1(Orders orders){
 		odao.insertOrder1(orders);
+
+	}
+	public List<Orders> findAllOrders() {
+	
+		return odao.findAllOrders();
 	};
 }
