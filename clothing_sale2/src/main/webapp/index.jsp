@@ -291,7 +291,7 @@
 											<div class="prodcut-price">
 												<div class="new-price">
 													$
-													<fmt:formatNumber type="number" value="${g.price*0.8}"
+													<fmt:formatNumber type="number" value="${g.price*g.rebate}"
 														pattern="#.00" maxFractionDigits="2" />
 												</div>
 												<div class="old-price">
@@ -395,8 +395,7 @@
 										data-toggle="tab">新品榜</a></li>
 									<li role="presentation"><a href="#bestsellr"
 										aria-controls="bestsellr" role="tab" data-toggle="tab">销量榜</a></li>
-									<li role="presentation"><a href="#specialoffer"
-										aria-controls="specialoffer" role="tab" data-toggle="tab">热评榜</a></li>
+									
 								</ul>
 							</div>
 						</div>
@@ -451,7 +450,7 @@
 															<div class="prodcut-price">
 																<div class="new-price">
 																	$
-																	<fmt:formatNumber type="number" value="${g.price*0.8}"
+																	<fmt:formatNumber type="number" value="${g.price*g.rebate}"
 																		pattern="#.00" maxFractionDigits="2" />
 																</div>
 																<div class="old-price">${g.price}</div>
@@ -510,7 +509,7 @@
 															<div class="prodcut-price">
 																<div class="new-price">
 																	$
-																	<fmt:formatNumber type="number" value="${g.price*0.8}"
+																	<fmt:formatNumber type="number" value="${g.price*g.rebate}"
 																		pattern="#.00" maxFractionDigits="2" />
 																</div>
 																<div class="old-price">${g.price}</div>
@@ -902,14 +901,14 @@
 											<label>颜色: </label> <select id="input-sort-color"
 												onchange="ajax1()">
 
-												<option value="1" selected="selected">请选择颜色</option>
+
 											</select>
 										</div>
 										<div class="sort product-type">
 											<label>尺寸: </label> <select id="input-sort-size"
 												onchange="ajax1()">
 
-												<option value="1" selected="selected">请选择尺寸</option>
+
 											</select>
 										</div>
 									</div>
@@ -938,14 +937,10 @@
 
 									</div>
 									<div class="quick-add-to-cart">
-											<button class="single_add_to_cart_button"  onclick="addCart();">加入购物车</button>
+										<button class="single_add_to_cart_button" onclick="addCart();">加入购物车</button>
 									</div>
-									<div class="quick-desc" id="feature">Lorem ipsum dolor
-										sit amet, consectetur adipiscing elit. Nam fringilla augue nec
-										est tristique auctor. Donec non est at libero.Lorem ipsum
-										dolor sit amet, consectetur adipiscing elit. Nam fringilla
-										augue nec est tristique auctor. Donec non est at libero.Nam
-										fringilla tristique auctor.</div>
+									<div class="quick-desc" id="feature">
+									</div>
 									<div class="social-sharing-modal">
 										<div class="widget widget_socialsharing_widget">
 											<h3 class="widget-title-modal">分享商品</h3>
@@ -1005,16 +1000,11 @@
 	<script src="js/jquery.alerts.js" type="text/javascript"></script>
 
 	<script type="text/javascript">
-	
-
 		var count = "${goods.stock}";
-		
-		
 		//》》》》修改后的商品id
 		var scid;
-		
+		var price1;
 		function showInfo(gid){
-			
 				$.ajax({
 				"url" : "single-product1.do",
 				"type" : "post",
@@ -1027,8 +1017,8 @@
 						$("#iptCount").val(0);
 						count = 0;
 						$("#lab").html(0);
-						$("#input-sort-size").val(1);
-						$("#input-sort-color").val(1);
+						$("#input-sort-size").empty();
+						$("#input-sort-color").empty();
 						var images=obj[3];
 						var goods=obj[0];
 						var lstSize=obj[2];
@@ -1039,24 +1029,22 @@
 						$(".img3").attr("src","images/product/"+images[2]);
 						$(".img4").attr("src","images/product/"+images[3]);
 						$("#product_name").text(goods.name);
+						price1=(goods.price*goods.rebate).toFixed(2);
 						$("#new_price").text("$"+(goods.price*goods.rebate).toFixed(2));
 						$("#old_price").text("$"+goods.price);
-						$("#feature").text(goods.feature);	
-						
+						$("#feature").html(goods.feature);	
 						var sel1=$("#input-sort-size"); //根据id获取select的jquery对象
+						sel1.append("<option value='1' selected='selected'>请选择尺寸</option>");
 						for(var i=0;i<lstSize.length;i++){
 							sel1.append("<option >"+lstSize[i]+"</option>");//添加option
-							
 						}
 						var sel2=$("#input-sort-color"); 
+						sel2.append("<option  value='1' selected='selected'>请选择颜色</option>");
 						for(var i=0;i<lstColor.length;i++){
 							sel2.append("<option >"+lstColor[i]+"</option>");//添加option
 						}
-					
 					} else {
-						
 					}
-
 				},
 				"error" : function() {
 				}
@@ -1064,16 +1052,11 @@
 		};
 
 		function ajax1() {
-			
 			var obj1 = document.getElementById("input-sort-color");
-
 			var index1 = obj1.selectedIndex;
-
 			var color = obj1.options[index1].text;
 			var obj = document.getElementById("input-sort-size");
-
 			var index = obj.selectedIndex;
-
 			var size = obj.options[index].text;
 			var name=$("#product_name").html();
 				$.ajax({
@@ -1103,7 +1086,7 @@
 				}
 			});
 		}
-		
+
 		function addcount(){
 	        var oldVal =parseInt($("#iptCount").val());
 	        if(count>oldVal){
@@ -1126,8 +1109,7 @@
 	       
 	        }
 	 	
-		function addCart(id,price){
-			
+		function addCart(){
 			var inputcount=$("#iptCount").val();
 			if(inputcount==0||inputcount==null){
 				alert("请选择商品数量");
@@ -1135,27 +1117,31 @@
 			}
 			var data={scid:scid,count:inputcount}
 			$.post("ajax_addCart.do",data,function(data){
-				console.log(data);
-				if(typeof(data) != "String"){
-					console.log(data);
+				var type=data.split("|~|");
+				if(type[1]=="id"){
+					console.log(type[0]);
 					console.log(inputcount);
-					var newcount=parseInt(inputcount)+parseInt($("#countId_"+data).text());
-					var price=parseFloat($.trim($("#priceId_"+data).html()));
-					$("#countId_"+data).text(newcount);
+					var newcount=parseInt(inputcount)+parseInt($("#countId_"+type[0]).html());
+					var price=parseFloat($.trim($("#priceId_"+type[0]).html()));
+					$("#countId_"+type[0]).text(newcount);
 					console.log(price);
 					console.log(newcount);
-					$("#totalMoney").text(parseFloat($("#totalMoney").text())+inputcount*price);
+					$("#totalMoney").text(parseFloat($("#totalMoney").text())+inputcount*price1);
 				}else{
-					$("#cart").prepend(data);
+					$("#cart").prepend(type[0]);
 					$("#total").text(parseInt($("#total").text())+1);
-					$("#totalMoney").text(parseInt($("#totalMoney").text())+price);
+					console.log(price1);
+					console.log(parseFloat($("#totalMoney").text()));
+					$("#totalMoney").text(parseFloat($("#totalMoney").text())+inputcount*price1);
 				}
-				
 			});
 			alert("添加成功");
+			$("#iptCount").val(0);
+			count = 0;
+			$("#lab").html(0);
+			$("#input-sort-size").val(1);
+			$("#input-sort-color").val(1);
 		}
-		
-	
 	</script>
 </body>
 

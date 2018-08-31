@@ -22,7 +22,9 @@ public Integer countSumSize(Integer gid);
 List<Orders> selectAllByUid(int uid);
 @Update("update cs_orders set isdelete=1 where id=#{id}")
 void updateIsdeleteById(int id);
-
+//插入订单为已成交
+void insertOrder1(Orders orders);
+//插入订单为未成交
 int insertOrder(Orders orders);
 
 @Insert("insert into Goods_Orders(oid,scid,count) values(#{arg0},#{arg1},#{arg2})")

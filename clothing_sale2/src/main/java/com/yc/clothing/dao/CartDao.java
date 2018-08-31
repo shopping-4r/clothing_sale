@@ -5,12 +5,14 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.yc.clothing.bean.Cart;
 import com.yc.clothing.bean.Size_Color;
+import com.yc.clothing.bean.User;
 @Repository
 public interface CartDao {
 
@@ -35,5 +37,7 @@ public interface CartDao {
 	void delete(Cart cart);
 
 	void updataById3(Size_Color sc);
+	@Select(value = { "select * from cs_user where email=#{email} and pwd=md5(md5(#{pwd}))" })
+	User YanZhen(User user);
 
 }

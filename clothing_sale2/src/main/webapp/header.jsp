@@ -2,6 +2,8 @@
 	pageEncoding="utf-8"%>
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
 	request.setAttribute("root",application.getContextPath());
 %>
@@ -85,13 +87,24 @@
 															<div class="cart-name">
 																<a href="#">${c.name }</a>
 															</div>
-															<div class="cart-price" id="priceId_${c.id }">${c.price }</div>
+															<div class="cart-price" id="priceId_${c.id }">
+															
+															
+																<fmt:formatNumber type="number" value="${c.price*c.rebate }" pattern="0.00" maxFractionDigits="2"/>
+															
+															</div>
 															<div class="cart-qty">
-																数量 <span id="countId_${c.id }">${c.count }</span>
+																颜色: <span id="countId_${c.id }">${c.color }</span>
+															</div>
+															<div class="cart-qty">
+																尺码 :<span id="countId_${c.id }">${c.size }</span>
+															</div>
+															<div class="cart-qty">
+																数量 :<span id="countId_${c.id }">${c.count }</span>
 															</div>
 														</div>
 														<div class="remove">
-														<a onclick="delHeaderCart(${c.id},${c.price });"><i
+														<a onclick="delHeaderCart(${c.id},${c.price*c.rebate },${c.count });"><i
 																class="zmdi zmdi-close"></i></a>
 														</div>
 													</div>
@@ -102,11 +115,9 @@
 												</div>
 												<div class="cart-check-btn">
 													<div class="view-cart">
-														<a class="btn-def" href="cart.jsp">我的购物车</a>
+														<a class="btn-def" href="cart.jsp">结账</a>
 													</div>
-													<div class="check-btn">
-														<a class="btn-def" href="checkout.html">结账</a>
-													</div>
+													
 												</div>
 											
 										</div>
@@ -121,7 +132,7 @@
 													<div>
 														<span>你尚未登录，请先登录再查看购物车！</span>
 													</div>
-													<div style="height:50px;width:100px;text-align: center"><a class="btn-def btn2" >点击登录</a></div>
+													<div style="height:50px;width:100px;text-align: center"><a href="login.jsp" class="btn-def btn2" >点击登录</a></div>
 													
 												</div>
 										
@@ -146,14 +157,15 @@
 					<div class="col-md-7 col-sm-10 hidden-xs">
 						<nav id="primary-menu">
 							<ul class="main-menu">
-								<li class="current"><a class="active" href="index.jsp">Home</a>
+								<li class="current"><a class="active" href="index.jsp">首页</a>
 									<ul class="dropdown">
-										<li><a class="active" href="index.jsp">Home One</a></li>
-										<li><a href="index-2.html">Home Two</a></li>
-										<li><a href="index-boxed-01.html">Home Three (Boxed)</a></li>
-										<li><a href="index-boxed-02.html">Home Four (Boxed)</a></li>
-									</ul></li>
-								<li class="mega-parent pos-rltv"><a href="shop.html">Man</a>
+										<li><a class="active" href="index.jsp">首页 1</a></li>
+										<li><a href="index-2.html">首页2</a></li>
+										<li><a href="index-boxed-01.html">首页3</a></li>
+										<li><a href="index-boxed-02.html">首页4</a></li>
+									</ul>
+								</li>
+								<li class="mega-parent pos-rltv"><a href="shop.jsp">男装</a>
 									<div class="mega-menu-area mma-800">
 										<ul class="single-mega-item">
 											<li class="menu-title uppercase">Shirts</li>
@@ -162,26 +174,13 @@
 											<li><a href="shop.html">Shirt 03</a></li>
 											<li><a href="shop.html">Shirt 04</a></li>
 										</ul>
-										<ul class="single-mega-item">
-											<li class="menu-title uppercase">Pants</li>
-											<li><a href="shop.html">Pant 01</a></li>
-											<li><a href="shop.html">Pant 02</a></li>
-											<li><a href="shop.html">Pant 03</a></li>
-											<li><a href="shop.html">Pant 04</a></li>
-										</ul>
-										<ul class="single-mega-item">
-											<li class="menu-title uppercase">T-Shirts</li>
-											<li><a href="shop.html">T-Shirt 01</a></li>
-											<li><a href="shop.html">T-Shirt 02</a></li>
-											<li><a href="shop.html">T-Shirt 03</a></li>
-											<li><a href="shop.html">T-Shirt 04</a></li>
-										</ul>
+
 										<div class="mega-banner-img">
 											<a href="single-product.html"><img
 												src="images/banner/banner-fashion-02.jpg" alt=""></a>
 										</div>
 									</div></li>
-								<li class="mega-parent pos-rltv"><a href="shop.html">Women</a>
+								<li class="mega-parent pos-rltv"><a href="shop.html">女装</a>
 									<div class="mega-menu-area mma-700">
 										<ul class="single-mega-item">
 											<li class="menu-title uppercase">Sharees</li>
@@ -191,27 +190,13 @@
 											<li><a href="shop.html">Sharee 04</a></li>
 											<li><a href="shop.html">Sharee 05</a></li>
 										</ul>
-										<ul class="single-mega-item">
-											<li class="menu-title uppercase">Lahenga</li>
-											<li><a href="shop.html">Lahenga 01</a></li>
-											<li><a href="shop.html">Lahenga 02</a></li>
-											<li><a href="shop.html">Lahenga 03</a></li>
-											<li><a href="shop.html">Lahenga 04</a></li>
-											<li><a href="shop.html">Lahenga 05</a></li>
-										</ul>
-										<ul class="single-mega-item">
-											<li class="menu-title uppercase">Sandels</li>
-											<li><a href="shop.html">Sandel 01</a></li>
-											<li><a href="shop.html">Sandel 02</a></li>
-											<li><a href="shop.html">Sandel 03</a></li>
-											<li><a href="shop.html">Sandel 04</a></li>
-											<li><a href="shop.html">Sandel 05</a></li>
-										</ul>
+										
 										<div class="mega-banner-img">
 											<a href="single-product.html"><img
 												src="images/banner/banner-fashion.jpg" alt=""></a>
 										</div>
 									</div></li>
+<<<<<<< HEAD
 								<li class="mega-parent"><a href="shop.html">Shortcut</a>
 									<div class="mega-menu-area mma-970">
 										<ul class="single-mega-item">
@@ -294,6 +279,20 @@
 									</div></li>
 								<li><a href="blog.html">BLOG</a></li>
 								<li><a href="about-us.html">ABOUT</a></li>
+=======
+								<li ><a class="mega-parent" href="shop.html">我的</a>
+									<ul class="dropdown">
+										<li><a href="my-account.jsp" target="_blank">我的账户</a></li>
+											<li><a href="wishlist.html" target="_blank">收藏夹</a></li>
+											<li><a href="cart.jsp" target="_blank">我的购物车</a></li>
+											<li><a href="my-account.jsp" target="_blank">我的订单</a></li>
+									</ul>
+								</li>
+								
+								<li class="mega-parent"><a href="shop.jsp">总览</a>
+								</li>
+								<li><a href="about-us.jsp">关于我们</a></li>
+>>>>>>> branch 'master' of https://github.com/shopping-4r/clothing_sale.git
 							</ul>
 						</nav>
 					</div>
@@ -445,14 +444,14 @@
 </header>
 
 <script type="text/javascript">
-       function delHeaderCart(id,price){
+       function delHeaderCart(id,price,count){
 	 		var data={id:id};
 	 		if(confirm("你确定要删除吗？")){
 	 			 $.post("deleteCart.do",data,function(data){
 		 			if(data){
 		 				alert("删除成功") ;
 		 				$("#total").text(parseInt($("#total").text())-1);
-						$("#totalMoney").text(parseInt($("#totalMoney").text())-price);
+						$("#totalMoney").text(parseInt($("#totalMoney").text())-price*count);
 						$("#"+"headerId_"+id).remove();
 						$("#"+"theId_"+id).remove();
 		 			}else{
