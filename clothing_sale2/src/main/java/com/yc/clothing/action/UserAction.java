@@ -105,7 +105,6 @@ public class UserAction {
 						session.setAttribute("user", user);
 						skip= "index";
 					}
-					
 				}
 			}
 			return skip;

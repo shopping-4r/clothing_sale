@@ -29,4 +29,9 @@ int insertOrder(Orders orders);
 
 @Insert("insert into Goods_Orders(oid,scid,count) values(#{arg0},#{arg1},#{arg2})")
 public void insertgsds(int oid, Integer scid, int count);
+
+//管理员查询所有订单状态
+@Select("select *from cs_orders")
+public List<Orders> findAllOrders();
+
 }

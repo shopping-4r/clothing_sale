@@ -3,14 +3,14 @@
 <html class="no-js" lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>My Account || Clothing</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>My Account || Clothing</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="images/icons/favicon.ico">
-    <!-- Place favicon.ico in the root directory -->
+<link rel="apple-touch-icon" href="images/icons/favicon.ico">
+<!-- Place favicon.ico in the root directory -->
 
     <!-- All css files are included here. -->
     <!-- Bootstrap fremwork main css -->
@@ -26,15 +26,15 @@
     <!-- User style -->
     <link rel="stylesheet" href="css/custom.css">  <link rel="stylesheet" href="css/color/skin-default.css">
 
-    
-    <!-- Modernizr JS -->
-    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+
+<!-- Modernizr JS -->
+<script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
 <body>
-    <!--[if lt IE 8]>
+	<!--[if lt IE 8]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->  
+    <![endif]-->
 
     <!-- Body main wrapper start -->
     <div class="wrapper my-account">
@@ -64,7 +64,7 @@
                             <ul class="nav idea-tab" role="tablist">
                                 <li role="presentation" class="active"><a href="#creativity" onclick="showUser()" aria-controls="creativity" role="tab" data-toggle="tab">个人信息</a></li>
                                 <li role="presentation"><a href="#ideas" onclick="showAddr()" aria-controls="ideas" role="tab" data-toggle="tab">收货地址</a></li>
-                                <li role="presentation"><a href="#devlopment" onclick="showOrder()" aria-controls="devlopment" role="tab" data-toggle="tab">我的订单</a></li>
+                                <li role="presentation"><a href="#devlopment" onclick="showOrder(-1)" aria-controls="devlopment" role="tab" data-toggle="tab">我的订单</a></li>
                                 <li role="presentation"><a href="#markenting" onclick="showMoney()" aria-controls="markenting" role="tab" data-toggle="tab">账号充值</a></li>
                             	<li role="presentation"><a href="#saler" onclick="showSaler()" aria-controls="saler" role="tab" data-toggle="tab">店铺管理</a></li>
                             </ul>
@@ -103,6 +103,19 @@
                                         	<p align="right" id="newPwdMsg" style="color:red;"></p>
                                         </div>
                                    </div>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<div class="input-box mb-20">
+												<label>原邮箱<em>*</em></label> <input readOnly="readOnly"
+													id="email" type="email" class="info">
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<div class="input-box mb-20">
+												<label>新邮箱<em>*</em></label> <input id="newEmail"
+													type="email" name="email" class="info" placeholder="你的新邮箱">
+												<p align="right" id="newEmailMsg" style="color: red;"></p>
+											</div>
+										</div>
 
                                    <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="input-box mb-20">
@@ -175,6 +188,10 @@
                                 </div>
 <!-- 我的订单 -->
                                 <div role="tabpanel" class="tab-pane fade in" id="devlopment">
+                                    <a style="font-size: 20px;" onclick="showOrder(1)">待付款&nbsp;&nbsp;</a>
+									<a style="font-size: 20px;" onclick="showOrder(0)">待发货</a>&nbsp;&nbsp;
+									<a style="font-size: 20px;" onclick="showOrder(2)">待收货</a>&nbsp;&nbsp;
+									<a style="font-size: 20px;" onclick="showOrder(3)">待评价</a>
                                         <div class="table-responsive">
                                             <table class="checkout-area table text-center">
                                                 <thead>
@@ -363,18 +380,12 @@
 							</div>
 							<div class="instagrm">
 								<ul>
-									<li><a href="#"><img src="images/gallery/01.jpg"
-											alt=""></a></li>
-									<li><a href="#"><img src="images/gallery/02.jpg"
-											alt=""></a></li>
-									<li><a href="#"><img src="images/gallery/03.jpg"
-											alt=""></a></li>
-									<li><a href="#"><img src="images/gallery/04.jpg"
-											alt=""></a></li>
-									<li><a href="#"><img src="images/gallery/05.jpg"
-											alt=""></a></li>
-									<li><a href="#"><img src="images/gallery/06.jpg"
-											alt=""></a></li>
+									<li><a href="#"><img src="images/gallery/01.jpg"alt=""></a></li>
+									<li><a href="#"><img src="images/gallery/02.jpg"alt=""></a></li>
+									<li><a href="#"><img src="images/gallery/03.jpg"alt=""></a></li>
+									<li><a href="#"><img src="images/gallery/04.jpg"alt=""></a></li>
+									<li><a href="#"><img src="images/gallery/05.jpg"alt=""></a></li>
+									<li><a href="#"><img src="images/gallery/06.jpg"alt=""></a></li>
 								</ul>
 							</div>
 						</div>
@@ -426,16 +437,11 @@
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<ul class="payment-support text-right">
-									<li><a href="#"><img src="images/icons/pay1.png"
-											alt="" /></a></li>
-									<li><a href="#"><img src="images/icons/pay2.png"
-											alt="" /></a></li>
-									<li><a href="#"><img src="images/icons/pay3.png"
-											alt="" /></a></li>
-									<li><a href="#"><img src="images/icons/pay4.png"
-											alt="" /></a></li>
-									<li><a href="#"><img src="images/icons/pay5.png"
-											alt="" /></a></li>
+									<li><a href="#"><img src="images/icons/pay1.png"alt="" /></a></li>
+									<li><a href="#"><img src="images/icons/pay2.png"alt="" /></a></li>
+									<li><a href="#"><img src="images/icons/pay3.png"alt="" /></a></li>
+									<li><a href="#"><img src="images/icons/pay4.png"alt="" /></a></li>
+									<li><a href="#"><img src="images/icons/pay5.png"alt="" /></a></li>
 								</ul>
 							</div>
 						</div>
@@ -443,8 +449,9 @@
 				</div>
 			</div>
 		</div>
-		<!--footer bottom area end-->
-<script type="text/javascript">
+	</div>
+	<!--footer bottom area end-->
+	<script type="text/javascript">
 	var flag1=false;
 	var flag2=false;
 	var flag3=false;
@@ -584,21 +591,37 @@
 	    	});
 		}
     }
-    //查询订单
-    function showOrder(){
+    function showOrder(flag){
     	$("#order").html("");
-    	 $.getJSON('showOrder.do',null,function(data){  
+    	 $.getJSON('showOrder.do',flag,function(data){  
 			    	$.each(data,function(i,res){
-			    		var status="未支付";
+			    		var status="待付款";
 			    		if(res.status==0){
-			    			status="已支付"
+			    			status="待发货";
+			    		}else if(res.status==2){
+			    			status="待收货";
+			    		}else if(res.status==3){
+			    			status="待评价";
 			    		}
-				     	 $("#order").append("<tr class='cart_item check-item prd-name'>"
+			    		if(flag==res.status){
+				     	   $("#order").append("<tr class='cart_item check-item prd-name'>"
                                 +" <td class='ctg-type'>"+res.id+"</td>"
                                 +" <td class='cgt-type'>"+res.time+"</td>"
                                 +"<td class='cgt-type'>"+status+"</td>"
                                  +"<td class='cgt-des'> <a onclick='showDetailed("+res.id+","+res.status+")' data-tooltip='Quick View' class='q-view' data-toggle='modal' data-target='.modal'>查看详情</a></td>"
                                  +"<td><a class='btn-def btn2' onclick='deleteOrder("+res.id+")'>删除订单</a></td></tr>");
+			   			if(flag==3){
+			    				$("#order").append("<td><a class='btn-def btn2' onclick='commtent("+res.id+")'>评论</a></td>");
+			    			}
+			    	}
+			    	if(flag==-1){
+				     		$("#order").append("<tr class='cart_item check-item prd-name'>"
+	                                +" <td class='ctg-type'>"+res.id+"</td>"
+	                                +" <td class='cgt-type'>"+res.time+"</td>"
+	                                +"<td class='cgt-type'>"+status+"</td>"
+	                                 +"<td class='cgt-des'> <a onclick='showDetailed("+res.id+","+res.status+")' data-tooltip='Quick View' class='q-view' data-toggle='modal' data-target='.modal'>查看详情</a></td>"
+	                                 +"<td><a class='btn-def btn2' onclick='deleteOrder("+res.id+")'>删除订单</a></td></tr>");
+				     	}
 			   })
 		})
     };

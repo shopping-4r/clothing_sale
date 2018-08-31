@@ -27,8 +27,8 @@ public class AddrAction {
 	 * @throws IOException
 	 */
 	@RequestMapping("/showAddr.do")
-	public void ajaxShowAddr(HttpServletResponse res,User user,HttpSession session) throws IOException {
-//		User user=(User) session.getAttribute("user");
+	public void ajaxShowAddr(HttpServletResponse res,HttpSession session) throws IOException {
+		User user=(User) session.getAttribute("user");
 //		if(user==null) {
 //			user=new User();
 //			user.setUid(1);
@@ -37,7 +37,6 @@ public class AddrAction {
 		Gson g=new Gson();
 		String Json=g.toJson(addrs);
 		res.getWriter().print(Json);
-		
 	}
 	/**
 	 * 修改地址
