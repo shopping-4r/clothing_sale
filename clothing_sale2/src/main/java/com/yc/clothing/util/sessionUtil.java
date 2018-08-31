@@ -1,5 +1,6 @@
 package com.yc.clothing.util;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -25,10 +26,11 @@ public class sessionUtil {
 			double c=0;
 			for(int i=0;i<list.size();i++){
 				int a=(int) list.get(i).get("count");
-				double b=(double) list.get(i).get("price");
+				double b=(double) list.get(i).get("price")*(double) list.get(i).get("rebate");
 				c=c+a*b;
 			}
-			session.setAttribute("totalMoney", c);
+			DecimalFormat df = new DecimalFormat("0.00");
+			session.setAttribute("totalMoney", df.format(c));
 			session.setAttribute("total",  list.size());
 		}
 		

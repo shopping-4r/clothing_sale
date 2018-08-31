@@ -129,30 +129,7 @@ public class GoodsAction {
 		 Gson gson=new Gson();
 		 String goods1=gson.toJson(goods);
 		 out.print(goods1);
-		/*String price;
-		String rebate;
-		String feature;
-		String describe;
-		String image;
-		String count;
-		String id;
-		String time;
-		if (goods.get("id") != null) {
-			count = (String) goods.get("stock");
-			price = (String) goods.get("price");
-			rebate = (String) goods.get("rebate");
-			feature = (String) goods.get("feature");
-			describe = (String) goods.get("describe");
-			image = (String) goods.get("image");
-			id = (String) goods.get("id");
-			time = (String) goods.get("time");
-			out.print(count + "|~|" + price + "|~|" + rebate + "|~|" + feature + "|~|" + describe + "|~|" + image
-					+ "|~|" + time + "|~|" + id);
-
-		} else {
-			out.print(0 + "|~|" + 0 + "|~|" + 0 + "|~|" + 0 + "|~|" + 0 + "|~|" + 0 + "|~|" + 0 + "|~|" + 0);
-
-		}*/
+		
 	}
 	@RequestMapping("/single-product1.do")
 	public void goodsInfo(Goods goods,PrintWriter out) {

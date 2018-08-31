@@ -27,16 +27,17 @@ public class AddrAction {
 	 * @throws IOException
 	 */
 	@RequestMapping("/showAddr.do")
-	public void ajaxShowAddr(HttpServletResponse res,String name,HttpSession session) throws IOException {
-		User user=(User) session.getAttribute("user");
-		if(user==null) {
-			user=new User();
-			user.setUid(1);
-		}
+	public void ajaxShowAddr(HttpServletResponse res,User user,HttpSession session) throws IOException {
+//		User user=(User) session.getAttribute("user");
+//		if(user==null) {
+//			user=new User();
+//			user.setUid(1);
+//		}
 		List<Addr> addrs=abiz.findAllAddr(user.getUid());
 		Gson g=new Gson();
 		String Json=g.toJson(addrs);
 		res.getWriter().print(Json);
+		
 	}
 	/**
 	 * 修改地址

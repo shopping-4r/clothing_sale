@@ -1,6 +1,7 @@
 package com.yc.clothing.action;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import com.yc.clothing.bean.Cart;
 import com.yc.clothing.bean.User;
 import com.yc.clothing.biz.CartBiz;
 import com.yc.clothing.biz.UserBiz;
+import com.yc.clothing.util.sessionUtil;
 
 /**
  * 控制层
@@ -34,6 +36,7 @@ public class UserAction {
 	private UserBiz ubiz;
 	@Autowired
 	private CartBiz cbiz;
+	private sessionUtil sutil;
 	@RequestMapping("/regist.do")
 	public String Regist(User user,Model model){
 		ubiz.Regist(user);
@@ -48,36 +51,49 @@ public class UserAction {
 	@RequestMapping("/login.do")
 	public String Login(User user,Model model,HttpSession session){
 		//关于用户登录的表单提交
+		String skip=null;
 			if (!ubiz.isUserExist(user)) {
 				model.addAttribute("msg", "用户名不存在！");
-				return "login";
+				skip= "login";
 			} else {
+				
 				if (ubiz.getPwdByEmail(user)==null) {
 					model.addAttribute("msg", "密码错误！");
-					return "login";
+					skip= "login";
 				} else {
-					Cart cart=new Cart();
 					user=ubiz.getPwdByEmail(user);
-					cart.setUid(user.getUid());
-					List<Map<String,Object>> list=cbiz.selectAll(cart);
-					session.setAttribute("cart", list);
-					
-					double c=0;
-					for(int i=0;i<list.size();i++){
-						int a=(int) list.get(i).get("count");
-						double b=(double) list.get(i).get("price");
-						c=c+a*b;
+					if(user.getRole()==1){
+						session.setAttribute("user2", user);
+						skip="redirect:/management/index.jsp";
+					}else if(user.getRole()==0){
+						Cart cart=new Cart();
+						
+						System.out.println(user.getUid());
+						cart.setUid(user.getUid());
+						List<Map<String,Object>> list=cbiz.selectAll(cart);
+						session.setAttribute("cart", list);
+						
+						double c=0;
+						for(int i=0;i<list.size();i++){
+							int a=(int) list.get(i).get("count");
+							double b=(double) list.get(i).get("price")*(double) list.get(i).get("rebate");
+							c=c+a*b;
+						}
+
+				        DecimalFormat df = new DecimalFormat("0.00");
+						session.setAttribute("totalMoney",  df.format(c));
+						session.setAttribute("total",  list.size());
+						
+						
+						model.addAttribute("msg", "登录成功！");
+						
+						session.setAttribute("user", user);
+						skip= "index";
 					}
-					session.setAttribute("totalMoney", c);
-					session.setAttribute("total",  list.size());
 					
-					
-					model.addAttribute("msg", "登录成功！");
-					
-					session.setAttribute("user", user);
-					return "index";
 				}
 			}
+			return skip;
 			
 		}
 	
@@ -85,7 +101,7 @@ public class UserAction {
 	@RequestMapping("/quit.do")
 	public String quit(HttpSession session){
 		session.invalidate();
-		return "index";
+		return "redirect:index.jsp";
 	}
 	@RequestMapping("/updateUser.do")
 	public void updateBaseInformation(HttpSession session,HttpServletResponse res,User user) throws IOException {
@@ -109,4 +125,6 @@ public class UserAction {
 		ubiz.recharge(user,bill);
 		res.getWriter().print("充值成功");
 	}
+	
+	
 }

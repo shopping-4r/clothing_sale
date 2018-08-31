@@ -2,6 +2,8 @@
 	pageEncoding="utf-8"%>
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
 	request.setAttribute("root",application.getContextPath());
 %>
@@ -85,13 +87,24 @@
 															<div class="cart-name">
 																<a href="#">${c.name }</a>
 															</div>
-															<div class="cart-price" id="priceId_${c.id }">${c.price }</div>
+															<div class="cart-price" id="priceId_${c.id }">
+															
+															
+																<fmt:formatNumber type="number" value="${c.price*c.rebate }" pattern="0.00" maxFractionDigits="2"/>
+															
+															</div>
 															<div class="cart-qty">
-																数量 <span id="countId_${c.id }">${c.count }</span>
+																颜色: <span id="countId_${c.id }">${c.color }</span>
+															</div>
+															<div class="cart-qty">
+																尺码 :<span id="countId_${c.id }">${c.size }</span>
+															</div>
+															<div class="cart-qty">
+																数量 :<span id="countId_${c.id }">${c.count }</span>
 															</div>
 														</div>
 														<div class="remove">
-														<a onclick="delHeaderCart(${c.id},${c.price });"><i
+														<a onclick="delHeaderCart(${c.id},${c.price*c.rebate },${c.count });"><i
 																class="zmdi zmdi-close"></i></a>
 														</div>
 													</div>
@@ -102,11 +115,9 @@
 												</div>
 												<div class="cart-check-btn">
 													<div class="view-cart">
-														<a class="btn-def" href="cart.jsp">我的购物车</a>
+														<a class="btn-def" href="cart.jsp">结账</a>
 													</div>
-													<div class="check-btn">
-														<a class="btn-def" href="checkout.html">结账</a>
-													</div>
+													
 												</div>
 											
 										</div>
@@ -121,7 +132,7 @@
 													<div>
 														<span>你尚未登录，请先登录再查看购物车！</span>
 													</div>
-													<div style="height:50px;width:100px;text-align: center"><a class="btn-def btn2" >点击登录</a></div>
+													<div style="height:50px;width:100px;text-align: center"><a href="login.jsp" class="btn-def btn2" >点击登录</a></div>
 													
 												</div>
 										
@@ -348,14 +359,14 @@
 </header>
 
 <script type="text/javascript">
-       function delHeaderCart(id,price){
+       function delHeaderCart(id,price,count){
 	 		var data={id:id};
 	 		if(confirm("你确定要删除吗？")){
 	 			 $.post("deleteCart.do",data,function(data){
 		 			if(data){
 		 				alert("删除成功") ;
 		 				$("#total").text(parseInt($("#total").text())-1);
-						$("#totalMoney").text(parseInt($("#totalMoney").text())-price);
+						$("#totalMoney").text(parseInt($("#totalMoney").text())-price*count);
 						$("#"+"headerId_"+id).remove();
 						$("#"+"theId_"+id).remove();
 		 			}else{
