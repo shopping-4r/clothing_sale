@@ -577,15 +577,9 @@
 	 		}
 	 	}
 	 function selectAddr(){
-<<<<<<< HEAD
-	
-    	 $.getJSON('showAddr.do',null,function(data){  
-=======
 		var uid="${sessionScope.user.uid}";
 		var data1={uid:uid};
     	 $.getJSON('showAddr.do',data1,function(data){  
->>>>>>> branch 'master' of https://github.com/shopping-4r/clothing_sale.git
-    		 //console.log(data);
     		 for(var i=0;i<data.length;i++){
     			 $("#addrSelect").append("<option >"+data[i].addr+"</option>");
     		 }
