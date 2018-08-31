@@ -15,4 +15,36 @@
 	<select id="OrderByTime" resultType="com.yc.clothing.bean.Goods">
 		select *from cs_goods order by time desc
 	</select>
+	<select id="countAll" resultType="java.lang.Integer">
+	select count(*) cnt from (
+		select *from cs_goods where sid=#{sid}) a
+	</select>
+	<select id="selectBySid" resultType="java.util.Map">
+		select *from cs_goods where sid=#{sid}
+	</select>
+	<select id="selectCountByColorAndSize" resultType="java.util.Map">
+		SELECT b.stock,a.price, a.rebate ,a.feature ,a.describe , a.image, a.time , b.id FROM cs_goods a 
+		JOIN size_color b ON a.id=b.gid WHERE b.color=#{arg0} AND b.size=#{arg1} AND a.name=#{arg2}
+	</select>
+	<select id="selectGoodInfoByName" resultType="java.util.Map">
+		SELECT * FROM size_color WHERE gid=#{arg0}
+	</select>
+	<select id="selectGoodInfoById" resultType="com.yc.clothing.bean.Goods">
+		SELECT * FROM CS_GOODS WHERE id=#{id}
+	</select>
+	<select id="OrderByName" resultType="java.util.Map">
+		select *from cs_goods where sid=#{sid} and s order by name
+	</select>
+	<select id="OrderByNameDesc" resultType="java.util.Map">
+		select *from cs_goods where sid=#{sid} order by name desc
+	</select>
+	<select id="OrderByPrice" resultType="java.util.Map">
+		select *from cs_goods where sid=#{sid} order by (price*rebate)
+	</select>
+	<select id="OrderByPriceDesc" resultType="java.util.Map">
+		select *from cs_goods where sid=#{sid} order by (price*rebate) desc
+	</select>
+	<select id="selectBySidAndCondition" resultType="java.util.Map">
+		select *from cs_goods where sid=#{sid} order by (price*rebate) desc
+	</select>
 </mapper>

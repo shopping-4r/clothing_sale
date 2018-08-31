@@ -12,8 +12,17 @@ import com.yc.clothing.dao.BoardDao;
 @Service
 public class BoardBiz {
 	@Autowired
-	private BoardDao bdao; 
+	private BoardDao bdao;
+	//根据类型名字查询类型
 	public Board findByName(String name){
 		return bdao.findByName(name);
 		}
+	//查询所有类型
+	public List<Board> findAllParentBoard() {
+		return bdao.selectAllParentBoard();
+	}
+	//根据父类型名字查询所有子类型
+	public List<Board> findBoardByParentName(String parentName) {
+		return bdao.selectBoardByParentName(parentName);
+	}
 }

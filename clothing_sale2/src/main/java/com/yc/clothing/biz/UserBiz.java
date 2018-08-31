@@ -24,13 +24,26 @@ public class UserBiz {
 	}
 	
 	//用户	登录
-	//判断用户是否存在
+	//判断用户邮箱是否存在    
 	public boolean isUserExist(User user) {
-		if(udao.SelectByEmail(user)==null){
-			return false;
-		}else{
+		if(udao.SelectByEmail(user)!=null){
 			return true;
 		}
+		return false;
+	}
+	//判断电话是否存在
+	public boolean isExistPhone(User user) {
+		if(udao.SelectByPhone(user)!=null){
+			return true;
+		}
+		return false;
+	}
+	//判断用户昵称是否存在
+	public boolean isExistNickName(User user) {
+		if(udao.SelectByNickName(user)!=null){
+			return true;
+		}
+		return false;
 	}
 	//根据提供的用户名拿密码
 	public User getPwdByEmail(User user) {

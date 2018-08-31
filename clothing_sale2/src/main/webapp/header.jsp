@@ -286,7 +286,7 @@
 											<li class="menu-title uppercase">pages-03</li>
 											<li><a href="shop-right-sidebar.html" target="_blank">Shop
 													Right</a></li>
-											<li><a href="shop.html" target="_blank">Shop</a></li>
+											<li><a href="shop.jsp" target="_blank">Shop</a></li>
 											<li><a href="single-product.html" target="_blank">Single
 													Prodcut</a></li>
 											<li><a href="wishlist.html" target="_blank">Wishlist</a></li>

@@ -23,4 +23,10 @@
   	<select id="SelectByEmail" resultType="com.yc.clothing.bean.User">
   		select * from cs_user where email=#{email}
   	</select>
+  	<select id="SelectByPhone" resultType="com.yc.clothing.bean.User">
+  		select * from cs_user where tel=#{tel}
+  	</select>
+  	<select id="SelectByNickName" resultType="com.yc.clothing.bean.User">
+  		select * from cs_user where nickname=#{nickname}
+  	</select>
   </mapper>

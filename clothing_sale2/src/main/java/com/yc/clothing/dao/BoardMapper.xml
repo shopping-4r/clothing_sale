@@ -15,4 +15,10 @@
 	<select id="findByName" resultType="com.yc.clothing.bean.Board">
 		select *from cs_board where name=#{name}
 	</select>
+	<select id="selectAllParentBoard" resultType="com.yc.clothing.bean.Board">
+		select *from cs_board where parentid=0
+	</select>
+	<select id="selectBoardByParentName" resultType="com.yc.clothing.bean.Board">
+		select *from cs_board where parentid=(select id from cs_board where name=#{name})
+	</select>
 </mapper>

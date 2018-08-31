@@ -4,7 +4,7 @@ public class Saler {
 	private Integer id;
 	private String name;
 	private Integer status;
-	private String Image;
+	private String image;
 	
 	public Integer getId() {
 		return id;
@@ -25,9 +25,9 @@ public class Saler {
 		this.status = status;
 	}
 	public String getImage() {
-		return Image;
+		return image;
 	}
 	public void setImage(String image) {
-		Image = image;
+		this.image = image;
 	}
 }

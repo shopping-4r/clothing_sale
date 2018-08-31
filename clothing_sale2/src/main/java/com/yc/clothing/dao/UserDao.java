@@ -10,7 +10,7 @@ import com.yc.clothing.bean.User;
 public interface UserDao {
 	
 	//用户注册
-	@Insert("insert into cs_user(email,pwd,nickname) values(#{email},md5(md5(#{pwd})),#{nickname})")
+	@Insert("insert into cs_user(uname,email,tel,age,sex,pwd,nickname) values(#{uname},#{email},#{tel},#{age},#{sex},md5(md5(#{pwd})),#{nickname})")
 	public void Regist(User user);
 	//用户登录
 	public User SelectByEmail(User user);
@@ -22,4 +22,8 @@ public interface UserDao {
 	public User selectUserById(User user);
 	//用户充值
 	public void updateMoney(User user);
+	//查询电话是否已存在
+	public User SelectByPhone(User user);
+	//查询昵称是否已存在
+	public User SelectByNickName(User user);
 }

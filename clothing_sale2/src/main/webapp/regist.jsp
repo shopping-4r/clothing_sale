@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -60,33 +60,56 @@
             <div class="container">
                 <div class="row">
      		  <div class="col-sm-6 col-xs-12 lr2">
-                        	<form action="regist.do">
+                        	<form action="regist.do" id="registForm">
                             <div class="login-reg">
-                            
-						
-                            
-                                <h3>注册</h3>
+                            <p>${msg}</p>
+                                <h3><spring:message code="regist"></spring:message></h3>
+                   <!--昵称  -->
                                   <div class="input-box mb-20">
-                                    <label class="control-label">昵称</label>
-                                    <input  class="info" placeholder="" value="" name="nickname">
+                                    <label class="control-label"><spring:message code="nickname"></spring:message></label><div id="nickNameMsg"></div>
+                                    <input id="nickname" class="info" placeholder="<spring:message code="nickname2"></spring:message>" value="" name="nickname">
                                 </div>
-                                <div class="input-box">
-                                    <label class="control-label">密码</label>
-                                    <input type="password" class="info" placeholder="密码" value="" name="pwd">
-                                </div>
-                                <div class="input-box">
-                                    <label class="control-label">确认密码</label>
-                                    <input type="password" class="info" placeholder="确认密码" value="" name="rpwd">
-                                </div>
+                    <!--真实姓名  -->
                                 <div class="input-box mb-20">
-                                    <label class="control-label">邮箱</label>
-                                    <input type="email" class="info" placeholder="邮箱" value="" name="email">
+                                    <label class="control-label"><spring:message code="realName"></spring:message></label><div id="unameMsg"></div>
+                                    <input id="uname" class="info" placeholder="<spring:message code="realName2"></spring:message>" value="" name="uname">
+                                </div>
+                     <!--密码  -->
+                                <div class="input-box">
+                                    <label class="control-label"><spring:message code="password"></spring:message></label><div id="pwdMsg"></div>
+                                    <input id="password" type="password" class="info" placeholder="<spring:message code="password2"></spring:message>" value="" name="pwd">
+                                </div>
+                      <!--确认密码  -->
+                                <div class="input-box">
+                                    <label class="control-label"><spring:message code="confirm"></spring:message></label><div id="pwd2Msg"></div>
+                                    <input id="password2" type="password" class="info" placeholder="<spring:message code="password2"></spring:message>" value="" name="rpwd">
+                                </div>
+                       <!--电话  -->
+                                <div class="input-box">
+                                    <label class="control-label"><spring:message code="phone"></spring:message></label><div id="phoneMsg"></div>
+                                    <input id="phone" type="text" class="info" placeholder="<spring:message code="phone2"></spring:message>" name="tel">
+                                </div>
+                       <!--年龄  -->
+                                <div class="input-box">
+                                    <label class="control-label"><spring:message code="age"></spring:message></label><div id="age"></div>
+                                    <input id="age" type="number" class="info" placeholder="<spring:message code="age2"></spring:message>"  name="age">
+                                </div>
+                        <!--性别  -->
+                                <div class="input-box">
+                                    <label><spring:message code="sex"></spring:message></label>
+                                    <input checked style="margin-left:100px;width:15px;height:15px" type="radio" value="0" name="sex"><spring:message code="man"></spring:message>
+                                    <input style="margin-left:100px;width:15px;height:15px" type="radio" value="1" name="sex"><spring:message code="woman"></spring:message>
+                                </div>
+                        <!--邮箱  -->
+                                <div class="input-box mb-20">
+                                    <label class="control-label"><spring:message code="email"></spring:message></label><div id="emailMsg"></div>
+                                    <input id="email" type="email" class="info" placeholder="<spring:message code="email2"></spring:message>" value="" name="email">
                                 </div>
                                 
                             </div>
                             <div class="frm-action" style="text-align:center;">
                                 <div class="input-box tci-box">
-                                <input type="submit" class="btn-def btn2" value="Regist" >
+                                <input onclick="submit2()" type="button" class="btn-def btn2" value="<spring:message code="regist"></spring:message>" >
                                 </div>
                             </div>
                         </form>
@@ -94,249 +117,70 @@
                          </div>
             </div>
         </div>
+        <div class="text-right">
+        	 选择语言(language):
+    	<a class="btn-def btn2" style="color:bleak;" href="translate2.do?lang=zh_CN"><spring:message code="language.cn"/></a> &nbsp;&nbsp;&nbsp;
+    	<a class="btn-def btn2" style="color:bleak;" href="translate2.do?lang=en_US"><spring:message code="language.en"/></a>
+        </div>
         <!-- Account Area End -->
-
-        <!-- footer area start-->
-        <div class="footer-area ptb-50">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-                        <div class="single-footer contact-us">
-                            <div class="footer-title uppercase">
-                                <h5>Contact US</h5> </div>
-                            <ul>
-                                <li>
-                                    <div class="contact-icon"> <i class="zmdi zmdi-pin-drop"></i> </div>
-                                    <div class="contact-text">
-                                        <p><span>777/a  Seventh Street,</span> <span>Rampura, Bonosri</span></p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="contact-icon"> <i class="zmdi zmdi-email-open"></i> </div>
-                                    <div class="contact-text">
-                                        <p><span><a href="#">company@gmail.com</a></span> <span><a href="#">admin@devitems.com</a></span></p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="contact-icon"> <i class="zmdi zmdi-phone-paused"></i> </div>
-                                    <div class="contact-text">
-                                        <p><span>+11 (019) 25184203</span> <span>+11 (018) 50950555</span></p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
-                        <div class="single-footer informaton-area">
-                            <div class="footer-title uppercase">
-                                <h5>Information</h5> </div>
-                            <div class="informatoin">
-                                <ul>
-                                    <li><a href="#">My Account</a></li>
-                                    <li><a href="#">Order History</a></li>
-                                    <li><a href="#">Wishlist</a></li>
-                                    <li><a href="#">Returnes</a></li>
-                                    <li><a href="#">Private Policy</a></li>
-                                    <li><a href="#">Site Map</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 hidden-sm col-xs-12">
-                        <div class="single-footer instagrm-area">
-                            <div class="footer-title uppercase">
-                                <h5>InstaGram</h5> 
-                            </div>
-                            <div class="instagrm">
-                                <ul>
-                                    <li><a href="#"><img src="images/gallery/01.jpg" alt=""></a></li>
-                                    <li><a href="#"><img src="images/gallery/02.jpg" alt=""></a></li>
-                                    <li><a href="#"><img src="images/gallery/03.jpg" alt=""></a></li>
-                                    <li><a href="#"><img src="images/gallery/04.jpg" alt=""></a></li>
-                                    <li><a href="#"><img src="images/gallery/05.jpg" alt=""></a></li>
-                                    <li><a href="#"><img src="images/gallery/06.jpg" alt=""></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-4 col-lg-offset-1 col-xs-12">
-                        <div class="single-footer newslatter-area">
-                            <div class="footer-title uppercase">
-                                <h5>Get Newsletters</h5> 
-                            </div>
-                            <div class="newslatter">
-                                <form action="#" method="post">
-                                    <div class="input-box pos-rltv">
-                                        <input placeholder="Type Your Email hear" type="text"> 
-                                        <a href="#">
-                                            <i class="zmdi zmdi-arrow-right"></i>
-                                        </a>
-                                    </div>
-                                </form>
-                                <div class="social-icon socile-icon-style-3 mt-40">
-                                    <div class="footer-title uppercase">
-                                        <h5>Social Network</h5> 
-                                    </div>
-                                    <ul>
-                                        <li><a href="#"><i class="zmdi zmdi-facebook"></i></a></li>
-                                        <li><a href="#"><i class="zmdi zmdi-linkedin"></i></a></li>
-                                        <li><a href="#"><i class="zmdi zmdi-pinterest"></i></a></li>
-                                        <li><a href="#"><i class="zmdi zmdi-google"></i></a></li>
-                                        <li><a href="#"><i class="zmdi zmdi-twitter"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--footer area start-->
-        
-        <!--footer bottom area start-->
-        <div class="footer-bottom global-table">
-            <div class="global-row">
-                <div class="global-cell">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="copyrigth"> Copyright @ <a href="devitems.com">Devitems</a> All right reserved </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <ul class="payment-support text-right">
-                                    <li>
-                                        <a href="#"><img src="images/icons/pay1.png" alt="" /></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><img src="images/icons/pay2.png" alt="" /></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><img src="images/icons/pay3.png" alt="" /></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><img src="images/icons/pay4.png" alt="" /></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><img src="images/icons/pay5.png" alt="" /></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--footer bottom area end-->
-        
-
-
-        <!-- QUICKVIEW PRODUCT -->
-        <div id="quickview-wrapper">
-            <!-- Modal -->
-            <div class="modal fade" id="productModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="modal-product">
-                              <div class="product-images"> 
-                                   <!--modal tab start-->
-                                    <div class="portfolio-thumbnil-area-2">
-                                        <div class="tab-content active-portfolio-area-2">
-                                            <div role="tabpanel" class="tab-pane active" id="view1">
-                                                <div class="product-img">
-                                                    <a href="#"><img src="images/product/01.jpg" alt="Single portfolio" /></a>
-                                                </div>
-                                            </div>
-                                            <div role="tabpanel" class="tab-pane" id="view2">
-                                                <div class="product-img">
-                                                    <a href="#"><img src="images/product/02.jpg" alt="Single portfolio" /></a>
-                                                </div>
-                                            </div>
-                                            <div role="tabpanel" class="tab-pane" id="view3">
-                                                <div class="product-img">
-                                                    <a href="#"><img src="images/product/03.jpg" alt="Single portfolio" /></a>
-                                                </div>
-                                            </div>
-                                            <div role="tabpanel" class="tab-pane" id="view4">
-                                                <div class="product-img">
-                                                    <a href="#"><img src="images/product/04.jpg" alt="Single portfolio" /></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="product-more-views-2">
-                                            <div class="thumbnail-carousel-modal-2" data-tabs="tabs">
-                                                <a href="#view1" aria-controls="view1" data-toggle="tab"><img src="images/product/01.jpg" alt="" /></a>
-                                                <a href="#view2" aria-controls="view2" data-toggle="tab"><img src="images/product/02.jpg" alt="" /></a>
-                                                <a href="#view3" aria-controls="view3" data-toggle="tab"><img src="images/product/03.jpg" alt="" /></a>
-                                                <a href="#view4" aria-controls="view4" data-toggle="tab"><img src="images/product/04.jpg" alt="" /></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <!--modal tab end-->
-                                    <!-- .product-images -->
-                                    <div class="product-info">
-                                        <h1>Aenean eu tristique</h1>
-                                        <div class="price-box-3">
-                                            <div class="s-price-box"> <span class="new-price">$160.00</span> <span class="old-price">$190.00</span> </div>
-                                        </div> <a href="shop.html" class="see-all">See all features</a>
-                                        <div class="quick-add-to-cart">
-                                            <form method="post" class="cart">
-                                                <div class="numbers-row">
-                                                    <input type="number" id="french-hens" value="3" min="1"> </div>
-                                                <button class="single_add_to_cart_button" type="submit">Add to cart</button>
-                                            </form>
-                                        </div>
-                                        <div class="quick-desc"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Donec non est at libero.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Donec non est at libero.Nam fringilla tristique auctor. </div>
-                                        <div class="social-sharing-modal">
-                                            <div class="widget widget_socialsharing_widget">
-                                                <h3 class="widget-title-modal">Share this product</h3>
-                                                <ul class="social-icons-modal">
-                                                    <li><a target="_blank" title="Facebook" href="#" class="facebook m-single-icon"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a target="_blank" title="Twitter" href="#" class="twitter m-single-icon"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a target="_blank" title="Pinterest" href="#" class="pinterest m-single-icon"><i class="fa fa-pinterest"></i></a></li>
-                                                    <li><a target="_blank" title="Google +" href="#" class="gplus m-single-icon"><i class="fa fa-google-plus"></i></a></li>
-                                                    <li><a target="_blank" title="LinkedIn" href="#" class="linkedin m-single-icon"><i class="fa fa-linkedin"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- .product-info -->
-                                </div>
-                                <!-- .modal-product -->
-                            </div>
-                            <!-- .modal-body -->
-                        </div>
-                        <!-- .modal-content -->
-                    </div>
-                    <!-- .modal-dialog -->
-                </div>
-                <!-- END Modal -->
-            </div>
-        <!-- END QUICKVIEW PRODUCT -->
-      
-    </div> 
-    <!-- Body main wrapper end -->
-
-    <!-- Placed js at the end of the document so the pages load faster -->
-
-    <!-- jquery latest version -->
-    <script src="js/vendor/jquery-1.12.0.min.js"></script>
-    <!-- Bootstrap framework js -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- Slider js -->
-    <script src="js/slider/jquery.nivo.slider.pack.js"></script>
-    <script src="js/slider/nivo-active.js"></script>
-    <!-- counterUp-->
-    <script src="js/jquery.countdown.min.js"></script>
-    <!-- All js plugins included in this file. -->
-    <script src="js/plugins.js"></script>
-    <!-- Main js file that contents all jQuery plugins activation. -->
-    <script src="js/main.js"></script>
-
-</body>
-
-</html>
+<script type="text/javascript">
+function submit2(){
+	var email=$("#email").val();
+	var pwd=$("#password").val();
+	var pwd2=$("#password2").val();
+	var nickname=$("#nickname").val();
+	var uname=$("#uname").val();
+	var age=$("#age").val();
+	var phone=$("#phone").val();
+	//验证真实姓名的正则表达式
+	 var reg= /^(([a-zA-Z+\.?\·?a-zA-Z+]{2,30}$)|([\u4e00-\u9fa5+\·?\u4e00-\u9fa5+]{2,30}$))/;
+	var flag=true;
+  		$("#emailMsg").html("");
+		$("#pwdMsg").html("");
+		$("#pwd2Msg").html("");
+		$("#nickNameMsg").html("");
+		$("#unameMsg").html("");
+		$("#phoneMsg").html("");
+		$("#ageMsg").html("");
+	if(email==null||email==""){
+  		$("#emailMsg").html("邮箱不能为空");
+  		flag=false;
+  	}
+	if(phone==null||phone==""){
+		$("#phoneMsg").html("电话不能为空");
+  		flag=false;
+	}
+	if(phone.length!=11||isNaN(phone)){
+		$("#phoneMsg").html("电话必须为11位且全数字");
+  		flag=false;
+	}
+	if(age<0||age>200){
+		$("#ageMsg").html("年龄在0到200之间");
+  		flag=false;
+	}
+	if(!reg.test(uname)||uname==null||uname==""){
+  		$("#unameMsg").html("姓名输入有误，请重新输入");
+  		flag=false;
+  	}
+	if(email.indexOf(".com")<0||email.indexOf("@")<0){
+  		$("#emailMsg").html("邮箱必须包含'@'和'.com'");
+  		flag=false;
+  	}
+	if(pwd==null||pwd==""){
+  		$("#pwdMsg").html("密码不能为空");
+  		flag=false;
+  	}
+	if(pwd2!=pwd){
+  		$("#pwd2Msg").html("确认密码与密码不一致");
+  		flag=false;
+  	}
+	if(nickname==null||nickname==""){
+  		$("#nickNameMsg").html("昵称不能为空");
+  		flag=false;
+  	}
+	if(flag==true){
+  		$("#registForm").submit();
+  	}
+}
+</script>
+<%@include file="footer.jsp" %>

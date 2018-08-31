@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.yc.clothing.bean.Goods;
 import com.yc.clothing.bean.Goods_Saler;
+import com.yc.clothing.bean.Page;
 import com.yc.clothing.dao.GoodsDao;
 import com.yc.clothing.dao.Goods_SalerDao;
 
@@ -64,5 +65,26 @@ public class GoodsBiz {
 	public Map<String,Object> selectCountByColorAndSize(String tempColor, String tempSize, String tempName) {
 		return gdao.selectCountByColorAndSize(tempColor,tempSize,tempName);
 		
+	}
+	//根据商铺id查询所有商品
+	public Page<Map<String,Object>> findAllGoods(Integer id) {
+		long total=gdao.countAll(id);
+		List<Map<String,Object>> rows=gdao.selectBySid(id);
+		return new Page<Map<String,Object>>(total,rows);
+	}
+	//按照不同条件查询商品
+	public Page<Map<String, Object>> findByType(Integer id,int type) {
+		List<Map<String,Object>> goods=null;
+		if(type==2) {
+			goods=gdao.OrderByName(id);
+		}else if(type==3) {
+			goods=gdao.OrderByNameDesc(id);
+		}else if(type==4) {
+			goods=gdao.OrderByPrice(id);
+		}else {
+			goods=gdao.selectBySid(id);
+		}
+		long total=gdao.countAll(id);
+		return new Page<Map<String, Object>>(total,goods);
 	}
 }

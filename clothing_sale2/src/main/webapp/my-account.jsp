@@ -66,6 +66,7 @@
                                 <li role="presentation"><a href="#ideas" onclick="showAddr()" aria-controls="ideas" role="tab" data-toggle="tab">收货地址</a></li>
                                 <li role="presentation"><a href="#devlopment" onclick="showOrder()" aria-controls="devlopment" role="tab" data-toggle="tab">我的订单</a></li>
                                 <li role="presentation"><a href="#markenting" onclick="showMoney()" aria-controls="markenting" role="tab" data-toggle="tab">账号充值</a></li>
+                            	<li role="presentation"><a href="#saler" onclick="showSaler()" aria-controls="saler" role="tab" data-toggle="tab">店铺管理</a></li>
                             </ul>
                         </div>
                     </div>
@@ -225,7 +226,26 @@
 	                                        </div>
                                         </form>
                                 </div>
-                            </div>
+<!-- 商铺管理 -->                               
+                             <c:if test="${user.role==1}">
+                                <div role="tabpanel" class="tab-pane fade in" id="saler">
+                                	<div class="col-md-6 col-sm-6 col-xs-12">
+                                				<div class="input-box mb-20">
+	                                                <img src="" id="image"></img>
+	                                                <label>店名<em>*</em></label>
+	                                                <input type="text" id="sname" class="info">
+	                                            </div>
+	                                </div>
+	                                <div class="payment-btn-area mt-20">
+	                                            <div class="col-md-4 col-sm-4 col-xs-12 text-left">
+                                   					 <a onclick="addGoods()" class="btn-def btn2" href="#">商品上架</a>
+                                   				</div>
+	                                            <div class="col-md-4 col-sm-4 col-xs-12 text-right">
+                                   					 <a onclick="showAllGoods" class="btn-def btn2" href="#">商品下架</a>
+                                   				</div>
+                                	</div>
+                           		</div>
+                            </c:if>
                         </div>
                     </div>
                 </div>
@@ -564,6 +584,7 @@
 	    	});
 		}
     }
+    //查询订单
     function showOrder(){
     	$("#order").html("");
     	 $.getJSON('showOrder.do',null,function(data){  
@@ -629,6 +650,13 @@
 		    		showMoney();
 		    	})
 			}
+    }
+    //查询商铺
+    function showSaler(){
+    	$.getJSON('showSaler.do',null,function(data){
+    		$("#image").attr("src",data.image);
+    		$("#sname").val(data.name);
+    	});
     }
     $(function (){
     	$.getJSON('showUser.do',null,function(data){  

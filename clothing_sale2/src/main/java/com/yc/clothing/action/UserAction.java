@@ -36,24 +36,38 @@ public class UserAction {
 	private CartBiz cbiz;
 	@RequestMapping("/regist.do")
 	public String Regist(User user,Model model){
-		ubiz.Regist(user);
 		
-		model.addAttribute("msg","注册成功");
 		
-		//注册成功之后跳转页面
+		if (ubiz.isUserExist(user)) {
+			model.addAttribute("msg", "邮箱已存在！");
+			return "regist";
+		}else if(ubiz.isExistPhone(user)) {
+			model.addAttribute("msg", "电话已存在！");
+			return "regist";
+		}
+		else if(ubiz.isExistNickName(user)) {
+			model.addAttribute("msg", "昵称已存在！");
+			return "regist";
+		}
+		else {
+			ubiz.Regist(user);
+			model.addAttribute("msg","注册成功");
+			//注册成功之后跳转页面
+			
+			return "login";
+		}
 		
-		return "index";
 	}
 	
 	@RequestMapping("/login.do")
 	public String Login(User user,Model model,HttpSession session){
 		//关于用户登录的表单提交
 			if (!ubiz.isUserExist(user)) {
-				model.addAttribute("msg", "用户名不存在！");
+				model.addAttribute("msg", "邮箱不存在！");
 				return "login";
 			} else {
 				if (ubiz.getPwdByEmail(user)==null) {
-					model.addAttribute("msg", "密码错误！");
+					model.addAttribute("msg", "邮箱或密码错误！");
 					return "login";
 				} else {
 					Cart cart=new Cart();
