@@ -24,11 +24,4 @@ public class BoardAction {
 		model.addAttribute("Board",board);
 		return "shop";
 	}
-	@RequestMapping("/showChildBoard.do")
-	public void ajaxFindChildBoard(String op,HttpServletResponse res,String parentName) throws IOException {
-		List<Board> board=bbiz.findBoardByParentName(parentName);
-		Gson g=new Gson();
-		String json=g.toJson(board);
-		res.getWriter().println(json);
-	}
 }

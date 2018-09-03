@@ -45,10 +45,10 @@
         <div class="breadcumb-area overlay pos-rltv">
             <div class="bread-main">
                 <div class="bred-hading text-center">
-                    <h5>Login Register</h5> </div>
+                    <h5>忘记密码</h5> </div>
                 <ol class="breadcrumb">
-                    <li class="home"><a title="Go to Home Page" href="index.jsp">Home</a></li>
-                    <li class="active">Login</li>
+                    <li class="home"><a title="Go to Home Page" href="index.jsp">首页</a></li>
+                    <li class="active"><a title="Go to login Page" href="login.jsp">登录</a></li>
                 </ol>
             </div>
         </div>
@@ -59,41 +59,29 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6 col-xs-12" style="margin-left:350px">
-                        <form action="login.do" id="userForm">
-                            <div class="login-reg"  >
+                        <form action="refindPwd.do" id="refindForm">
+                            <div class="login-reg">
                             <p id="msg" style="color:red">${msg}</p>
-                                <h3><spring:message code="login"></spring:message></h3>
+                                <h3><spring:message code="refindPwd"></spring:message></h3>
                                 <div class="input-box mb-20">
                                     <label class="control-label"><spring:message code="email"></spring:message></label><div id="emailMsg" style="color:red"></div>
                                     <input id="email" type="email" placeholder="<spring:message code="email2"></spring:message>" value="" name="email" class="info">
                                 </div>
-                                <div class="input-box">
-                                    <label class="control-label"><spring:message code="password"></spring:message></label><div id="pwdMsg"></div>
-                                    <input id="password" type="password" placeholder="<spring:message code="password2"></spring:message>" value="" name="pwd" class="info">
+                                <div class="input-box mb-20">
+                                    <label class="control-label"><spring:message code="password3"></spring:message></label><div id="pwdMsg" style="color:red"></div>
+                                    <input id="email" type="email" placeholder="<spring:message code="password4"></spring:message>" value="" name="pwd" class="info">
                                 </div>
                                 <div class="input-box">
                                     <label class="control-label"><spring:message code="yzm"></spring:message></label><div id="yzmMsg" style="color:red"></div>
                                     <input id="yzm" type="text" placeholder="<spring:message code="yzm2"></spring:message>" value="" name="yzm"  style="width:400px">
-                                	<img alt="无图片" id="img" src="vc.do" height="30px" onclick="change(this)" style="float:right">
+                                	<button type="button" id="img" onclick="getYzm()" style="float:right;color:black;margin-top:10px">获取验证码</button>
                                 </div>
                             </div>
                             <div class="frm-action">
                                 <div class="input-box tci-box">
                                     <a onclick="submit2()" type="button" class="btn-def btn2"
-                                    style="width:100px"><spring:message code="login"></spring:message></a>
+                                    style="width:100px"><spring:message code="refindPwd"></spring:message></a>
                                 </div>
-                                <div class="input-box tci-box">
-                                	<a onclick="reset()" type="button" class="btn-def btn2" 
-                                	style="width:100px;margin-left:20px"><spring:message code="reset"></spring:message></a>
-                                </div>
-                                <div class="input-box tci-box">
-                                	<a href="regist.jsp" type="button" class="btn-def btn2" 
-                                	style="width:100px;margin-left:20px"><spring:message code="regist"></spring:message></a>
-                                </div>
-                                <span style="float:right;margin-top:5px">
-                             		<input class="remr" type="checkbox"> <spring:message code="rememberMe"></spring:message>
-                         		</span>
-                                <a href="refindPwd.jsp" class="forgotten forg"><spring:message code="forgottenPassword"></spring:message></a>
                             </div>
                         </form>
                     </div>
@@ -102,51 +90,51 @@
             </div>
 	        <div class="text-right">
 	        	 选择语言(language):
-	    	<a class="btn-def btn2" style="color:bleak;" href="translate1.do?lang=zh_CN"><spring:message code="language.cn"/></a> &nbsp;&nbsp;&nbsp;
-	    	<a class="btn-def btn2" style="color:bleak;" href="translate1.do?lang=en_US"><spring:message code="language.en"/></a>
+	    	<a class="btn-def btn2" style="color:bleak;" href="translate3.do?lang=zh_CN"><spring:message code="language.cn"/></a> &nbsp;&nbsp;&nbsp;
+	    	<a class="btn-def btn2" style="color:bleak;" href="translate3.do?lang=en_US"><spring:message code="language.en"/></a>
 	        </div>
         </div>
         <!-- Account Area End -->
     </div>
 <script type="text/javascript">
-//重置的点击事件
-	function reset(){
-	$("#email").val("");
-	$("#password").val("");
-	$("#yzm").val("");
-	var img=$("#img");
-	change(img);
-}
-//表单验证的点击事件
-	function submit2(){
-		var yzm=$("#yzm").val();
+	function getYzm(){
 		var email=$("#email").val();
-		var pwd=$("#password").val();
-		if(email==null||email==""){
-			$("#pwdMsg").html("");
-			$("#yzmMsg").html("");
-	  		$("#emailMsg").html("该项不能为空");
-	  	}else if(email.indexOf(".com")<0||email.indexOf("@")<0){
-	  		$("#pwdMsg").html("");
-	  		$("#yzmMsg").html("");
-	  		$("#emailMsg").html("邮箱必须包含'@'和'.com'");
-	  	}else if(pwd==null||pwd==""){
-	  		$("#emailMsg").html("");
-	  		$("#yzmMsg").html("");
-	  		$("#pwdMsg").html("该项不能为空");
-	  	}else if(yzm==null||yzm==""){
-	  		$("#emailMsg").html("");
-	  		$("#pwdMsg").html("");
-	  		$("#yzmMsg").html("验证码不能为空");
-	  	}else{
-	  		$("#userForm").submit();
-	  	}
+		$.post('sendYzm.do',{email:email},function(data){
+			if(data=="验证码发送成功，请注意查收"){
+				alert(data);
+			}else{
+				$("#msg").html(data);
+			}
+		})
 	}
-		var i=1;
-	//刷新yzm的方法
-	function change(a){
-		//这里如果src地址与原来的src地址一样  则，该代码无法实现
-		a.src="vc.do?a="+(++i);
+	function submit2(){
+		var email=$("#email").val();
+		var yzm=$("#yzm").val();
+		var flag=true;
+		$("#emailMsg").html("");
+		$("#yzmMsg").html("");
+		$("#msg").html("");
+		if(email==null||email==""){
+			$("#emailMsg").html("邮箱不能为空");
+			flag=false;
+		}
+		if(email.indexOf(".com")<0||email.indexOf("@")<0){
+	  		$("#emailMsg").html("邮箱必须包含'@'和'.com'");
+	  		flag=false;
+	  	}
+		if(yzm==null||yzm==""){
+			$("#yzmMsg").html("不能为空");
+	  		flag=false;
+		}
+		if(flag==true){
+			$.post('testEmailAndYzm.do',{email:email,yzm:yzm},function(data){
+				if(data=="正确"){
+					$("#refindForm").submit();
+				}else{
+					$("#msg").html(data);
+				}
+			})
+		}
 	}
 </script>
 <%@include file="footer.jsp" %>

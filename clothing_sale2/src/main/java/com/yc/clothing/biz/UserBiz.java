@@ -71,4 +71,8 @@ public class UserBiz {
 		user.setMoney((user2.getMoney()+bill.getMoney()));
 		udao.updateMoney(user);
 	}
+	//找回密码
+	public void refindPwd(User user) {
+		udao.updatePwd(user);
+	}
 }

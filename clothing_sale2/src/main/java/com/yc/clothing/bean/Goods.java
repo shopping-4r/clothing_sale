@@ -14,15 +14,15 @@ public class Goods {
 	private Double price;
 	private Date time;
 	private List<Board> boards;        //该商品所属的所有类型
-	private String describe;
+	private String gdescribe;
 	private Double rebate;
 	private String feature;
 	
 	public String getDescribe() {
-		return describe;
+		return gdescribe;
 	}
 	public void setDescribe(String describe) {
-		this.describe = describe;
+		this.gdescribe = describe;
 	}
 	public Double getRebate() {
 		return rebate;

@@ -5,7 +5,7 @@
   
   <mapper namespace="com.yc.clothing.dao.CartDao">
   	<select id="selectAll" resultType="java.util.Map">
-		select a.*,b.size,b.color,b.stock,c.name,c.image,c.price,c.time ctime,c.bid,c.describe,c.rebate,c.feature,c.id gid from cs_cart a join size_color b on a.scid=b.id join cs_goods c on b.gid=c.id where a.uid=#{uid}
+		select a.*,b.size,b.color,b.stock,c.name,c.image,c.price,c.time ctime,c.bid,c.gdescribe,c.rebate,c.feature,c.id gid from cs_cart a join size_color b on a.scid=b.id join cs_goods c on b.gid=c.id where a.uid=#{uid}
 	</select>
   	
   	<insert id="ajax_addCart" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
@@ -13,7 +13,7 @@
   	</insert>
   	
   	<select id="selectById" resultType="java.util.Map">
-		select a.*,b.size,b.color,b.stock,c.name,c.image,c.price,c.time ctime,c.bid,c.describe,c.rebate,c.feature,c.id gid from cs_cart a join size_color b on a.scid=b.id join cs_goods c on b.gid=c.id where a.uid=#{uid} and a.scid=#{scid}
+		select a.*,b.size,b.color,b.stock,c.name,c.image,c.price,c.time ctime,c.bid,c.gdescribe,c.rebate,c.feature,c.id gid from cs_cart a join size_color b on a.scid=b.id join cs_goods c on b.gid=c.id where a.uid=#{uid} and a.scid=#{scid}
   	</select>
   	
   	<delete id="deleteById" >

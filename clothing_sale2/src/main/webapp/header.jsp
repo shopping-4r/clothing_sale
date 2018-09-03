@@ -354,58 +354,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 </header>
-
-<script type="text/javascript">
-       function delHeaderCart(id,price,count){
-	 		var data={id:id};
-	 		if(confirm("你确定要删除吗？")){
-	 			 $.post("deleteCart.do",data,function(data){
-		 			if(data){
-		 				alert("删除成功") ;
-		 				$("#total").text(parseInt($("#total").text())-1);
-						$("#totalMoney").text(parseInt($("#totalMoney").text())-price*count);
-						$("#"+"headerId_"+id).remove();
-						$("#"+"theId_"+id).remove();
-		 			}else{
-		 				alert("删除失败");
-		 			}
-		 		});
-	 		};
-	 	};
-	 	$(document).ready(function(){
-            $("#single-input1").keyup(function(){//搜索
-                var uname =$(this).val();
-                if(uname.length >= 1){
-                    $.getJSON('search.do',{name:uname},function (data) {
-                        var item;
-                        $(".searchmore").empty();//清空原来的ul
-                        if(data!=null){
-                            $.each(data,function(i,res){//循环加入到ul中去
-                            	if(i>=5) return false;
-                            	item = "<a style='color:blue' href='single-product.do?id="+res.id+"&name="+res.name+"' style='color:blue'><li>"+res.name+"</li></a><br>";
-                                $(".searchmore").append(item);
-                            })
-                            $(".searchmore").show();
-                        }else{
-                            $(".searchmore").hide();
-                        }
-                    });
-                }else{
-                    $(".searchmore").hide();
-                }
-            })
-            $(document).on("click", ".searchmore li", function(){
-                $("#single-input1").val(trim($(this).text()));
-                $(".searchmore").hide();
-            });
-
-            $(".input-box").mouseleave(function(){
-                $(".searchmore").hide();
-            })
-
-        })
-</script>
 -->
 <!-- End of header area -->

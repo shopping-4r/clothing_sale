@@ -75,24 +75,117 @@ public class GoodsBiz {
 		
 	}
 	//根据商铺id查询所有商品
-	public Page<Map<String,Object>> findAllGoods() {
-		long total=gdao.countAll();
-		List<Map<String,Object>> rows=gdao.selectAll();
+	public Page<Map<String,Object>> findAllGoods(String priceRange,String name) {
+		String arr[]=priceRange.split(" - ");
+		int minPrice=Integer.parseInt( arr[0].replace("$", ""));
+		int maxPrice=Integer.parseInt( arr[1].replace("$", "") );
+		List<Map<String,Object>> rows=null;
+		if(name==null||"".equals(name)) {
+			rows=gdao.selectAll(minPrice,maxPrice);
+		}else {
+			rows=gdao.selectAllByFuzzy(minPrice,maxPrice,name);
+		}
+		long total=rows.size();
 		return new Page<Map<String,Object>>(total,rows);
 	}
 	//按照不同条件查询商品
-	public Page<Map<String, Object>> findByType(int type) {
+	public Page<Map<String, Object>> findByType(int type,int boardid,String priceRange,String name) {
 		List<Map<String,Object>> goods=null;
+		String arr[]=priceRange.split(" - ");
+		int minPrice=Integer.parseInt( arr[0].replace("$", "") );
+		int maxPrice=Integer.parseInt( arr[1].replace("$", "") );
 		if(type==2) {
-			goods=gdao.OrderByName();
+			if(name==null||"".equals(name)) {
+				if(boardid==-1) {
+					goods=gdao.AllGoodsOrderByName(minPrice,maxPrice);
+				}else if(boardid<=3) {
+					goods=gdao.findGoodsByParentidOrderByName(boardid,minPrice,maxPrice);
+				}else {
+					goods=gdao.findGoodsByBoardidOrderByName(boardid,minPrice,maxPrice);
+				}
+			}else {
+				if(boardid==-1) {
+					goods=gdao.AllGoodsOrderByNameFuzzy(minPrice,maxPrice,name);
+				}else if(boardid<=3) {
+					goods=gdao.findGoodsByParentidOrderByNameFuzzy(boardid,minPrice,maxPrice,name);
+				}else {
+					goods=gdao.findGoodsByBoardidOrderByNameFuzzy(boardid,minPrice,maxPrice,name);
+				}
+			}
 		}else if(type==3) {
-			goods=gdao.OrderByNameDesc();
+			if(name==null||"".equals(name)) {
+				if(boardid==-1) {
+					goods=gdao.AllGoodsOrderByNameDesc(minPrice,maxPrice);
+				}else if(boardid<=3) {
+					goods=gdao.findGoodsByParentidOrderByNameDesc(boardid,minPrice,maxPrice);
+				}else {
+					goods=gdao.findGoodsByBoardidOrderByNameDesc(boardid,minPrice,maxPrice);
+				}
+			}else {
+				if(boardid==-1) {
+					goods=gdao.AllGoodsOrderByNameDescFuzzy(minPrice,maxPrice,name);
+				}else if(boardid<=3) {
+					goods=gdao.findGoodsByParentidOrderByNameDescFuzzy(boardid,minPrice,maxPrice,name);
+				}else {
+					goods=gdao.findGoodsByBoardidOrderByNameDescFuzzy(boardid,minPrice,maxPrice,name);
+				}
+			}
 		}else if(type==4) {
-			goods=gdao.OrderByPrice();
+			if(name==null||"".equals(name)) {
+				if(boardid==-1) {
+					goods=gdao.AllGoodsOrderByPrice(minPrice,maxPrice);
+				}else if(boardid<=3) {
+					goods=gdao.findGoodsByParentidOrderByPrice(boardid,minPrice,maxPrice);
+				}else {
+					goods=gdao.findGoodsByBoardidOrderByPrice(boardid,minPrice,maxPrice);
+				}
+			}else {
+				if(boardid==-1) {
+					goods=gdao.AllGoodsOrderByPriceFuzzy(minPrice,maxPrice,name);
+				}else if(boardid<=3) {
+					goods=gdao.findGoodsByParentidOrderByPriceFuzzy(boardid,minPrice,maxPrice,name);
+				}else {
+					goods=gdao.findGoodsByBoardidOrderByPriceFuzzy(boardid,minPrice,maxPrice,name);
+				}
+			}
+		}else if(type==5) {
+			if(name==null||"".equals(name)) {
+				if(boardid==-1) {
+					goods=gdao.AllGoodsOrderByPriceDesc(minPrice,maxPrice);
+				}else if(boardid<=3) {
+					goods=gdao.findGoodsByParentidOrderByPriceDesc(boardid,minPrice,maxPrice);
+				}else {
+					goods=gdao.findGoodsByBoardidOrderByPriceDesc(boardid,minPrice,maxPrice);
+				}
+			}else {
+				if(boardid==-1) {
+					goods=gdao.AllGoodsOrderByPriceDescFuzzy(minPrice,maxPrice,name);
+				}else if(boardid<=3) {
+					goods=gdao.findGoodsByParentidOrderByPriceDescFuzzy(boardid,minPrice,maxPrice,name);
+				}else {
+					goods=gdao.findGoodsByBoardidOrderByPriceDescFuzzy(boardid,minPrice,maxPrice,name);
+				}
+			}
 		}else {
-			goods=gdao.selectBySid();
+			if(name==null||"".equals(name)) {
+				if(boardid==-1) {
+					goods=gdao.selectAll(minPrice,maxPrice);
+				}else if(boardid<=3) {
+					goods=gdao.AllGoodsByParentid(boardid,minPrice,maxPrice);
+				}else {
+					goods=gdao.AllGoodsByBoardid(boardid,minPrice,maxPrice);
+				}
+			}else {
+				if(boardid==-1) {
+					goods=gdao.selectAllByFuzzy(minPrice,maxPrice,name);
+				}else if(boardid<=3) {
+					goods=gdao.AllGoodsByParentidFuzzy(boardid,minPrice,maxPrice,name);
+				}else {
+					goods=gdao.AllGoodsByBoardidFuzzy(boardid,minPrice,maxPrice,name);
+				}
+			}
 		}
-		long total=gdao.countAll();
+		long total=goods.size();
 		return new Page<Map<String, Object>>(total,goods);
 	}
 }

@@ -59,39 +59,39 @@
          <div class="account-area ptb-80">
             <div class="container">
                 <div class="row">
-     		  <div class="col-sm-6 col-xs-12 lr2">
+     		  <div class="col-sm-6 col-xs-12 lr2" style="margin-left:350px">
                         	<form action="regist.do" id="registForm">
                             <div class="login-reg">
-                            <p>${msg}</p>
+                            <p id="msg" style="color:red">${msg}</p>
                                 <h3><spring:message code="regist"></spring:message></h3>
                    <!--昵称  -->
                                   <div class="input-box mb-20">
-                                    <label class="control-label"><spring:message code="nickname"></spring:message></label><div id="nickNameMsg"></div>
+                                    <label class="control-label"><spring:message code="nickname"></spring:message></label><div id="nickNameMsg" style="color:red"></div>
                                     <input id="nickname" class="info" placeholder="<spring:message code="nickname2"></spring:message>" value="" name="nickname">
                                 </div>
                     <!--真实姓名  -->
                                 <div class="input-box mb-20">
-                                    <label class="control-label"><spring:message code="realName"></spring:message></label><div id="unameMsg"></div>
+                                    <label class="control-label"><spring:message code="realName"></spring:message></label><div id="unameMsg" style="color:red"></div>
                                     <input id="uname" class="info" placeholder="<spring:message code="realName2"></spring:message>" value="" name="uname">
                                 </div>
                      <!--密码  -->
                                 <div class="input-box">
-                                    <label class="control-label"><spring:message code="password"></spring:message></label><div id="pwdMsg"></div>
+                                    <label class="control-label"><spring:message code="password"></spring:message></label><div id="pwdMsg" style="color:red"></div>
                                     <input id="password" type="password" class="info" placeholder="<spring:message code="password2"></spring:message>" value="" name="pwd">
                                 </div>
                       <!--确认密码  -->
                                 <div class="input-box">
-                                    <label class="control-label"><spring:message code="confirm"></spring:message></label><div id="pwd2Msg"></div>
+                                    <label class="control-label"><spring:message code="confirm"></spring:message></label><div id="pwd2Msg" style="color:red"></div>
                                     <input id="password2" type="password" class="info" placeholder="<spring:message code="password2"></spring:message>" value="" name="rpwd">
                                 </div>
                        <!--电话  -->
                                 <div class="input-box">
-                                    <label class="control-label"><spring:message code="phone"></spring:message></label><div id="phoneMsg"></div>
+                                    <label class="control-label"><spring:message code="phone"></spring:message></label><div id="phoneMsg" style="color:red"></div>
                                     <input id="phone" type="text" class="info" placeholder="<spring:message code="phone2"></spring:message>" name="tel">
                                 </div>
                        <!--年龄  -->
                                 <div class="input-box">
-                                    <label class="control-label"><spring:message code="age"></spring:message></label><div id="age"></div>
+                                    <label class="control-label"><spring:message code="age"></spring:message></label><div id="ageMsg" style="color:red"></div>
                                     <input id="age" type="number" class="info" placeholder="<spring:message code="age2"></spring:message>"  name="age">
                                 </div>
                         <!--性别  -->
@@ -102,26 +102,27 @@
                                 </div>
                         <!--邮箱  -->
                                 <div class="input-box mb-20">
-                                    <label class="control-label"><spring:message code="email"></spring:message></label><div id="emailMsg"></div>
+                                    <label class="control-label"><spring:message code="email"></spring:message></label><div id="emailMsg" style="color:red"></div>
                                     <input id="email" type="email" class="info" placeholder="<spring:message code="email2"></spring:message>" value="" name="email">
                                 </div>
                                 
                             </div>
                             <div class="frm-action" style="text-align:center;">
                                 <div class="input-box tci-box">
-                                <input onclick="submit2()" type="button" class="btn-def btn2" value="<spring:message code="regist"></spring:message>" >
+                                <input onclick="submit2()" type="button" class="btn-def btn2" style="width:510px;background:orange" value="<spring:message code="regist"></spring:message>" >
                                 </div>
                             </div>
                         </form>
                     </div>
                          </div>
             </div>
-        </div>
-        <div class="text-right">
-        	 选择语言(language):
-    	<a class="btn-def btn2" style="color:bleak;" href="translate2.do?lang=zh_CN"><spring:message code="language.cn"/></a> &nbsp;&nbsp;&nbsp;
-    	<a class="btn-def btn2" style="color:bleak;" href="translate2.do?lang=en_US"><spring:message code="language.en"/></a>
-        </div>
+	        <div class="text-right">
+	        	 选择语言(language):
+		    	<a class="btn-def btn2" style="color:bleak;" href="translate2.do?lang=zh_CN"><spring:message code="language.cn"/></a> &nbsp;&nbsp;&nbsp;
+		    	<a class="btn-def btn2" style="color:bleak;" href="translate2.do?lang=en_US"><spring:message code="language.en"/></a>
+	        </div>
+      </div>
+      </div>
         <!-- Account Area End -->
 <script type="text/javascript">
 function submit2(){
@@ -154,6 +155,10 @@ function submit2(){
 		$("#phoneMsg").html("电话必须为11位且全数字");
   		flag=false;
 	}
+	if(age==null||age==""){
+		$("#ageMsg").html("年龄不能为空");
+  		flag=false;
+	}
 	if(age<0||age>200){
 		$("#ageMsg").html("年龄在0到200之间");
   		flag=false;
@@ -178,8 +183,14 @@ function submit2(){
   		$("#nickNameMsg").html("昵称不能为空");
   		flag=false;
   	}
-	if(flag==true){
-  		$("#registForm").submit();
+	if(flag){
+		$.post('test.do',{nickName:nickname,email:email,tel:phone},function(data){
+			if(data=="正确"){
+  				$("#registForm").submit();
+			}else{
+				$("#msg").html(data);
+			}
+		})
   	}
 }
 </script>

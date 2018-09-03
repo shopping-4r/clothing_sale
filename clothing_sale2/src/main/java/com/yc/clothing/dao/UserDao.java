@@ -26,4 +26,6 @@ public interface UserDao {
 	public User SelectByPhone(User user);
 	//查询昵称是否已存在
 	public User SelectByNickName(User user);
+	//找回密码
+	public void updatePwd(User user);
 }

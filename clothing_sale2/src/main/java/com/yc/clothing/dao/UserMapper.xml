@@ -29,4 +29,7 @@
   	<select id="SelectByNickName" resultType="com.yc.clothing.bean.User">
   		select * from cs_user where nickname=#{nickname}
   	</select>
+  	<update id="updatePwd">
+  		update cs_user set pwd=#{pwd} where email=#{email}
+  	</update>
   </mapper>
