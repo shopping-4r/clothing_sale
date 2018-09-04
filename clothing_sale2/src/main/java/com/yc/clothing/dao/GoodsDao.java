@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import com.yc.clothing.bean.Goods;
@@ -41,4 +42,7 @@ public interface GoodsDao {
 	List<Map<String,Object>> OrderByPriceDesc();
 	//按模糊查询商品
 	List<Goods> fuzzySearchGoods(String name);
+	//查询相关商品
+	@Select("select * from cs_goods where bid=#{bid}")
+	List<Goods> selectLikeGoods(Goods goods);
 }

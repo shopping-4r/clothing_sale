@@ -853,22 +853,22 @@
 										<div class="tab-content active-portfolio-area-2">
 											<div role="tabpanel" class="tab-pane active" id="view1">
 												<div class="product-img">
-													<img alt="Single portfolio" class="img1" /></a>
+													<img alt="Single portfolio" class="img1" />
 												</div>
 											</div>
 											<div role="tabpanel" class="tab-pane" id="view2">
 												<div class="product-img">
-													<img alt="Single portfolio" class="img2" /></a>
+													<img alt="Single portfolio" class="img2" />
 												</div>
 											</div>
 											<div role="tabpanel" class="tab-pane" id="view3">
 												<div class="product-img">
-													<img alt="Single portfolio" class="img3" /></a>
+													<img alt="Single portfolio" class="img3" />
 												</div>
 											</div>
 											<div role="tabpanel" class="tab-pane" id="view4">
 												<div class="product-img">
-													<img alt="Single portfolio" class="img4" /></a>
+													<img alt="Single portfolio" class="img4" />
 												</div>
 											</div>
 										</div>
@@ -1092,7 +1092,6 @@
 	        if(count>oldVal){
 	        	var newVal=oldVal+1;
 		    	$("#iptCount").val(newVal);
-		    	$("#inputcount").val($(newVal));
 		     }else{
 		        	alert("库存不足");
 		    }

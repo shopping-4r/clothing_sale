@@ -22,8 +22,7 @@ public Integer countSumSize(Integer gid);
 List<Orders> selectAllByUid(int uid);
 @Update("update cs_orders set isdelete=1 where id=#{id}")
 void updateIsdeleteById(int id);
-//插入订单为已成交
-void insertOrder1(Orders orders);
+
 //插入订单为未成交
 int insertOrder(Orders orders);
 
@@ -33,5 +32,9 @@ public void insertgsds(int oid, Integer scid, int count);
 //管理员查询所有订单状态
 @Select("select *from cs_orders")
 public List<Orders> findAllOrders();
+@Update(value = { "update cs_orders set status=4,comment=#{comment},level=#{level} where id=#{id}"})
+public void updateOrders(Orders orders);
+@Update(value = { "update cs_orders set status=0 where id=#{id}"})
+public void updateOrders1(Orders orders);
 
 }

@@ -2,6 +2,7 @@ package com.yc.clothing.dao;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.yc.clothing.bean.User;
@@ -26,4 +27,7 @@ public interface UserDao {
 	public User SelectByPhone(User user);
 	//查询昵称是否已存在
 	public User SelectByNickName(User user);
+	//付款以后余额
+	@Update(value = { "update cs_user set money=#{money} where uid=#{uid}" })
+	public void updateMoney1(User user);
 }

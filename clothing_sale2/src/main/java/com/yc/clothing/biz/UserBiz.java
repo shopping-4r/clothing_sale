@@ -71,4 +71,9 @@ public class UserBiz {
 		user.setMoney((user2.getMoney()+bill.getMoney()));
 		udao.updateMoney(user);
 	}
+
+	public void updateMoney(User user) {
+		udao.updateMoney1(user);
+		
+	}
 }

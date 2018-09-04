@@ -26,7 +26,7 @@
 		select *from cs_goods where sid=#{sid}
 	</select>
 	<select id="selectCountByColorAndSize" resultType="java.util.Map">
-		SELECT b.stock,a.price, a.rebate ,a.feature ,a.describe , a.image, a.time , b.id FROM cs_goods a 
+		SELECT b.stock,a.price, a.rebate ,a.feature ,a.gdescribe , a.image, a.time , b.id FROM cs_goods a 
 		JOIN size_color b ON a.id=b.gid WHERE b.color=#{arg0} AND b.size=#{arg1} AND a.name=#{arg2}
 	</select>
 	<select id="selectGoodInfoByName" resultType="java.util.Map">

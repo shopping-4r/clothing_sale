@@ -8,10 +8,7 @@
   		insert into cs_orders(uid,time,orderAddr,status) values(#{uid},#{time},#{orderAddr},1)
 
   	</insert>
-  	<insert id="insertOrder1" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-  		insert into cs_orders(uid,time,orderAddr,status) values(#{uid},#{time},#{orderAddr},0)
 
-  	</insert>
 
   
   </mapper>

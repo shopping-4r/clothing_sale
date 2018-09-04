@@ -25,8 +25,33 @@
     <link rel="stylesheet" href="css/responsive.css">
     <!-- User style -->
     <link rel="stylesheet" href="css/custom.css">  <link rel="stylesheet" href="css/color/skin-default.css">
+<!-- 评论 区-->
+<style type="text/css"> 
 
+*{margin:0;padding:0;list-style-type:none;}
 
+body{color:#666;font:12px/1.5 Arial;}
+
+/* star */
+
+#star{position:relative;width:600px;margin:20px auto;height:120px;}
+
+#star ul,#star span{float:left;display:inline;height:19px;line-height:19px;}
+
+#star ul{margin:0 10px;}
+
+#star li{float:left;width:24px;cursor:pointer;text-indent:-9999px;background:url(images/star.png) no-repeat;}
+
+#star strong{color:#f60;padding-left:10px;}
+
+#star li.on{background-position:0 -28px;}
+
+#star p{position:absolute;top:20px;width:159px;height:60px;display:none;background:url(images/icon.gif) no-repeat;padding:7px 10px 0;}
+
+#star p em{color:#f60;display:block;font-style:normal;}
+
+</style>
+<!-- end评论 -->
 <!-- Modernizr JS -->
 <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
@@ -66,7 +91,6 @@
                                 <li role="presentation"><a href="#ideas" onclick="showAddr()" aria-controls="ideas" role="tab" data-toggle="tab">收货地址</a></li>
                                 <li role="presentation"><a href="#devlopment" onclick="showOrder(-1)" aria-controls="devlopment" role="tab" data-toggle="tab">我的订单</a></li>
                                 <li role="presentation"><a href="#markenting" onclick="showMoney()" aria-controls="markenting" role="tab" data-toggle="tab">账号充值</a></li>
-                            	<li role="presentation"><a href="#saler" onclick="showSaler()" aria-controls="saler" role="tab" data-toggle="tab">店铺管理</a></li>
                             </ul>
                         </div>
                     </div>
@@ -188,10 +212,12 @@
                                 </div>
 <!-- 我的订单 -->
                                 <div role="tabpanel" class="tab-pane fade in" id="devlopment">
+                                	<h1>订单分类</h1>
                                     <a style="font-size: 20px;" onclick="showOrder(1)">待付款&nbsp;&nbsp;</a>
 									<a style="font-size: 20px;" onclick="showOrder(0)">待发货</a>&nbsp;&nbsp;
 									<a style="font-size: 20px;" onclick="showOrder(2)">待收货</a>&nbsp;&nbsp;
-									<a style="font-size: 20px;" onclick="showOrder(3)">待评价</a>
+									<a style="font-size: 20px;" onclick="showOrder(3)">待评价</a>&nbsp;&nbsp;
+									<a style="font-size: 20px;" onclick="showOrder(4)">退款，售后</a>
                                         <div class="table-responsive">
                                             <table class="checkout-area table text-center">
                                                 <thead>
@@ -208,6 +234,7 @@
                                             </table>
                                         </div>
                                 </div>
+
 <!-- 账号充值 -->
                                 <div role="tabpanel" class="tab-pane fade in" id="markenting">
                                         <form action="recharge.do" method="post" id="rechargeForm">
@@ -280,25 +307,8 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="modal-body">
-						<div role="tabpanel" class="tab-pane fade in" id="devlopment">
-                                        <div class="table-responsive">
-                                            <table class="checkout-area table text-center">
-                                                <thead>
-                                                    <tr class="cart_item check-heading">
-                                                        <td>商品名</td>
-                                                        <td>颜色</td>
-                                                        <td>尺寸</td>
-                                                        <td>购买数量</td>
-                                                        <td>小计</td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="order2">
-                                                </tbody>
-                                            </table>
-                                                <div class="text-right" id="showPay"></div>
-                                        </div>
-                                </div>
+						<div class="modal-body" id="bodyContent">
+						
 						<!-- .modal-body -->
 						</div>
 						</div>
@@ -451,6 +461,129 @@
 		</div>
 	</div>
 	<!--footer bottom area end-->
+	<!-- 评价 -->
+	<script type="text/javascript">
+    //显示限制输入字符method
+    function textAreaChange(obj){
+        var $this = $(obj);
+        var count_total = $this.next().children('span').text();
+        var count_input = $this.next().children('em');
+        var area_val = $this.val();
+        if(area_val.len()>count_total){
+            area_val = autoAddEllipsis(area_val,count_total);//根据字节截图内容
+            $this.val(area_val);
+            count_input.text(0);//显示可输入数
+        }else{
+            count_input.text(count_total - area_val.len());//显示可输入数
+        }
+    }
+    //得到字符串的字节长度
+    String.prototype.len = function(){
+        return this.replace(/[^\x00-\xff]/g, "xx").length;
+    };
+    /*
+     * 处理过长的字符串，截取并添加省略号
+     * 注：半角长度为1，全角长度为2
+     * pStr:字符串
+     * pLen:截取长度
+     * return: 截取后的字符串
+     */
+    function autoAddEllipsis(pStr, pLen) {
+        var _ret = cutString(pStr, pLen);
+        var _cutFlag = _ret.cutflag;
+        var _cutStringn = _ret.cutstring;
+        return _cutStringn;
+    }
+    /*
+     * 取得指定长度的字符串
+     * 注：半角长度为1，全角长度为2
+     * pStr:字符串
+     * pLen:截取长度
+     * return: 截取后的字符串
+     */
+    function cutString(pStr, pLen) {
+        // 原字符串长度
+        var _strLen = pStr.length;
+        var _tmpCode;
+        var _cutString;
+        // 默认情况下，返回的字符串是原字符串的一部分
+        var _cutFlag = "1";
+        var _lenCount = 0;
+        var _ret = false;
+        if (_strLen <= pLen/2){_cutString = pStr;_ret = true;}
+        if (!_ret){
+            for (var i = 0; i < _strLen ; i++ ){
+                if (isFull(pStr.charAt(i))){_lenCount += 2;}
+                else {_lenCount += 1;}
+                if (_lenCount > pLen){_cutString = pStr.substring(0, i);_ret = true;break;}
+                else if(_lenCount == pLen){_cutString = pStr.substring(0, i + 1);_ret = true;break;}
+            }
+        }
+        if (!_ret){_cutString = pStr;_ret = true;}
+        if (_cutString.length == _strLen){_cutFlag = "0";}
+        return {"cutstring":_cutString, "cutflag":_cutFlag};
+    }
+    /*
+     * 判断是否为全角
+     *
+     * pChar:长度为1的字符串
+     * return: true:全角
+     *         false:半角
+     */
+    function isFull (pChar){
+        if((pChar.charCodeAt(0) > 128)){return true;}
+        else{return false;}
+    }
+</script>
+<script type="text/javascript"> 
+function pingFen(){
+	var oStar = document.getElementById("star");
+	var aLi = oStar.getElementsByTagName("li");
+	var oUl = oStar.getElementsByTagName("ul")[0];
+	var oSpan = oStar.getElementsByTagName("span")[1];
+	var oP = oStar.getElementsByTagName("p")[0];
+	var i = iScore = iStar = 0;
+	var aMsg = [
+				"很不满意|差得太离谱，与卖家描述的严重不符，非常不满",
+				"不满意|部分有破损，与卖家描述的不符，不满意",
+				"一般|质量一般，没有卖家描述的那么好",
+				"满意|质量不错，与卖家描述的基本一致，还是挺满意的",
+				"非常满意|质量非常好，与卖家描述的完全一致，非常满意"
+				]
+	for (i = 1; i <= aLi.length; i++){
+		aLi[i - 1].index = i;
+		//鼠标移过显示分数
+		aLi[i - 1].onmouseover = function (){
+			fnPoint(this.index);
+			//浮动层显示
+			oP.style.display = "block";
+			//计算浮动层位置
+			oP.style.left = oUl.offsetLeft + this.index * this.offsetWidth - 104 + "px";
+			//匹配浮动层文字内容
+			oP.innerHTML = "<em><b>" + this.index + "</b> 分 " + aMsg[this.index - 1].match(/(.+)\|/)[1] + "</em>" + aMsg[this.index - 1].match(/\|(.+)/)[1]
+		};
+		//鼠标离开后恢复上次评分
+		aLi[i - 1].onmouseout = function (){
+			fnPoint();
+			//关闭浮动层
+			oP.style.display = "none"
+		};
+		//点击后进行评分处理
+		aLi[i - 1].onclick = function (){
+			iStar = this.index;
+			oP.style.display = "none";
+			oSpan.innerHTML = "<strong id='level'>" + (this.index) + " 分</strong> (" + aMsg[this.index - 1].match(/\|(.+)/)[1] + ")"
+		}
+	}
+	//评分处理
+	function fnPoint(iArg){
+		//分数赋值
+		iScore = iArg || iStar;
+		for (i = 0; i < aLi.length; i++) aLi[i].className = i < iScore ? "on" : "";	
+	}
+};
+</script>
+    <!-- end 评价 -->
 	<script type="text/javascript">
 	var flag1=false;
 	var flag2=false;
@@ -602,16 +735,18 @@
 			    			status="待收货";
 			    		}else if(res.status==3){
 			    			status="待评价";
+			    		}else if(res.status==4){
+			    			status="退款，售后";
 			    		}
 			    		if(flag==res.status){
 				     	   $("#order").append("<tr class='cart_item check-item prd-name'>"
                                 +" <td class='ctg-type'>"+res.id+"</td>"
                                 +" <td class='cgt-type'>"+res.time+"</td>"
                                 +"<td class='cgt-type'>"+status+"</td>"
-                                 +"<td class='cgt-des'> <a onclick='showDetailed("+res.id+","+res.status+")' data-tooltip='Quick View' class='q-view' data-toggle='modal' data-target='.modal'>查看详情</a></td>"
+                                 +"<td class='cgt-des'> <a onclick='showDetailed("+res.id+","+res.status+",1)' data-tooltip='Quick View' class='q-view' data-toggle='modal' data-target='.modal'>查看详情</a></td>"
                                  +"<td><a class='btn-def btn2' onclick='deleteOrder("+res.id+")'>删除订单</a></td></tr>");
 			   			if(flag==3){
-			    				$("#order").append("<td><a class='btn-def btn2' onclick='commtent("+res.id+")'>评论</a></td>");
+			    				$("#order").append("<td><a style='color:CCFF33' onclick='showDetailed("+res.id+","+res.status+",2)' data-tooltip='Quick View' class='q-view' data-toggle='modal' data-target='.modal'>点击评价</a></td>");
 			    			}
 			    	}
 			    	if(flag==-1){
@@ -619,12 +754,13 @@
 	                                +" <td class='ctg-type'>"+res.id+"</td>"
 	                                +" <td class='cgt-type'>"+res.time+"</td>"
 	                                +"<td class='cgt-type'>"+status+"</td>"
-	                                 +"<td class='cgt-des'> <a onclick='showDetailed("+res.id+","+res.status+")' data-tooltip='Quick View' class='q-view' data-toggle='modal' data-target='.modal'>查看详情</a></td>"
+	                                 +"<td class='cgt-des'> <a onclick='showDetailed("+res.id+","+res.status+",1)' data-tooltip='Quick View' class='q-view' data-toggle='modal' data-target='.modal'>查看详情</a></td>"
 	                                 +"<td><a class='btn-def btn2' onclick='deleteOrder("+res.id+")'>删除订单</a></td></tr>");
 				     	}
 			   })
 		})
     };
+  
     function deleteOrder(id){
     	var r=confirm('是否删除');
 		if(r==true){
@@ -633,25 +769,106 @@
 	    	});
 		}
     }
-    function showDetailed(oid,status){
+    function showDetailed(oid,status,flag){
+    	if(flag==1){
+    	$("#bodyContent").html("<div role='tabpanel' class='tab-pane fade in' id='devlopment'>"+
+               "<div class='table-responsive'>"+
+        "<table class='checkout-area table text-center'>"+
+            "<thead>"+
+                "<tr class='cart_item check-heading'>"+
+                    "<td>商品名</td>"+
+                    "<td>单价</td>"+
+                    "<td>颜色</td>"+
+                    "<td>尺寸</td>"+
+                    "<td>购买数量</td>"+
+                    "<td>小计</td>"+
+                "</tr>"+
+            "</thead>"+
+            "<tbody id='order2'>"+
+            "</tbody>"+
+        "</table>"+
+            "<div class='text-right' id='showPay'></div>"+
+    "</div>"+
+"</div>");
     	$("#order2").html("");
     	$("#showPay").html("");
     	$.getJSON('findOrders.do',{id:oid},function(data){  
-    		var count=0;
+    		var jianMoney=0;
+    	
     		$.each(data,function(i,res){
     			$("#order2").append("<tr class='cart_item check-item prd-name'>"
                         +" <td class='ctg-type'>"+res.name+"</td>"
+                        +" <td class='ctg-type'>"+res.price+"</td>"
                         +" <td class='cgt-type'>"+res.color+"</td>"
                         +"<td class='cgt-type'>"+res.size+"</td>"
                          +"<td class='cgt-des'>"+res.count+"</td>"
                          +"<td class='cgt-type'>"+res.price*res.count+"</td></tr>");
-    			count+=res.price*res.count;
+    			jianMoney+=(res.price*res.count);
+    			
+    		
     		});
-    		$("#order2").append("<tr><td class='ctg-type'>总计</td><td>--</td><td>--</td><td>--</td><td class='cgt-type'>"+count+"</td></tr>")
-			if(status!=0){
-				$("#showPay").append("<a class='btn-def btn2' href='#'>去支付</a>");
+    		$("#order2").append("<tr><td class='ctg-type'>总计</td><td>--</td><td>--</td><td>--</td><td class='cgt-type'>"+jianMoney+"</td></tr>")
+			if(status==1){
+				$("#showPay").append("<button type='button' class='btn btn-info' id='testConfirm' onclick='zhiFu("+oid+","+jianMoney+")'>支付</button>");
 			}
     	});
+    }else if(flag==2){
+    	$("#bodyContent").html(" <div class='modal-product'>"+
+    			"<div id='star'>"+
+    			"<span style='font-size:15px'>对此次订单的评分：</span>"+
+    			"<ul>"+
+    				"<li><a href='javascript:;'>1</a></li>"+
+    				"<li><a href='javascript:;'>2</a></li>"+
+    				"<li><a href='javascript:;'>3</a></li>"+
+    				"<li><a href='javascript:;'>4</a></li>"+
+    				"<li><a href='javascript:;'>5</a></li>"+
+    			"</ul>"+
+    			"<span></span>"+
+    			"<p></p>"+
+    		"</div>"+
+    	        "<label class='col-md-3 control-label'>请输入评论内容：</label>"+
+    	        "<div class='col-md-6'>"+
+    	            "<textarea class='form-control' name='test' onkeyup='textAreaChange(this)' onkeydown='textAreaChange(this)' rows='5' id='comment'></textarea>"+
+    	            "<div class='text-right'>"+
+    	                "<em style='color:red'>200</em>/<span>200</span>"+
+    	            "</div>"+
+    	        "</div>"+
+    	    
+	"<div class='col-md-offset-3 col-md-6'>"+
+        "<button type='button' class='btn btn-info' id='testConfirm' onclick='subComment("+oid+")'>提交</button>"+
+   	"</div>"+
+   	"</div>");
+    	//调用评分js
+    	pingFen();
+    }
+    }
+  //判断字符是否为空的方法
+    function isEmpty(obj){
+        if(typeof obj == "undefined" || obj == null || obj == ""){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    //提交评分
+    function subComment(id){
+    	var comment=$("#comment").val();
+    	if(isEmpty($("#level").html())){
+    		alert("请给我们打个分");
+    		return;
+    	}
+    	if(isEmpty(comment)){
+    		alert("请高抬贵手写一点评论吧");
+    		return;
+    	}
+    	var level=$("#level").html().substr(0,1);
+    	var data={id:id,level:level,comment:comment};
+    	$.post("comment.do",data,function(){
+    		alert("评论成功");
+    		$("#productModal").modal('hide');
+    		showOrder(3);
+    	});
+ 
     }
     //显示用户账号和账号余额的点击事件
     function showMoney(){
@@ -723,7 +940,7 @@
 		function select(id){
 			var data={id:id}
 			$.post("selectById.do",data,function(data){
-				console.log(data);
+				//console.log(data);
 				var value=data.split("/");
 				$("#new_price").text((value[2]*value[3]).toFixed(2));
 				$("#old_price").text(value[2]);
@@ -732,7 +949,57 @@
 			});
 		}
 	</script>
-	
+	<!-- 支付 -->
+	<script type="text/javascript">
+		function zhiFu(id,jianMoney){
+			var money="${sessionScope.user.money}";
+			var shengYuMoney=money-jianMoney;
+			var str="付款前账户余额: " + money + "  付款金额: "+ jianMoney + "  付款后余额: " + shengYuMoney;
+			console.log(str);
+			$("#productModal").modal('hide');
+			if(shengYuMoney<0){
+				alert("余额不足，请先去充值，商品已加入您的订单，\n"+str);
+				  alert("即将跳转到账户信息");
+			        window.location.href='my-account.jsp';
+				return;
+			}
+			 PostbirdAlertBox.prompt({
+				    'title': '请输入密码',
+				    'okBtn': '提交',
+				    onConfirm:function (data) {
+			 			var data1={
+							id:id,
+							pwd:data,
+							money:shengYuMoney
+			 				}
+				    	$.post("YanZhen.do",data1,function (flag){
+				    		//console.log(flag);
+				    		if(flag=="true"){
+				    			alert("密码正确");
+				    			PostbirdAlertBox.alert({
+				    			    'title': '交易信息',
+				    			    'content': str,
+				    			    'okBtn': '好的',
+				    			    'contentColor': 'red',
+				    			    'onConfirm': function () {
+				    			        //console.log("回调触发后隐藏提示框");
+				    			        alert("即将跳转到账户信息");
+				    			        window.location.href='my-account.jsp';
+				    			    }
+				    			});
+				    		}else{
+				    			alert("密码错误，请重试");
+				    		}
+				    	});
+				    },
+				    onCancel: function (data) {
+				        alert("你取消了支付，我在订单中等你");
+				        window.location.href='my-account.jsp';
+				    },
+				});
+		 }
+		
+	</script>
 </body>
 
 </html>

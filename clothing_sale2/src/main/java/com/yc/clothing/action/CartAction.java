@@ -22,12 +22,15 @@ import com.yc.clothing.bean.User;
 import com.yc.clothing.biz.CartBiz;
 import com.yc.clothing.biz.GoodsBiz;
 import com.yc.clothing.biz.OrdersBiz;
+import com.yc.clothing.biz.UserBiz;
 import com.yc.clothing.util.sessionUtil;
 
 @Controller
 public class CartAction {
 	@Resource
 	CartBiz cbiz;
+	@Resource
+	UserBiz ubiz;
 	@Resource
 	GoodsBiz gbiz;
 	@Resource
@@ -140,7 +143,7 @@ public class CartAction {
 		goods=gbiz.selectGoodInfoById(goods);
 		model.addAttribute("goods", goods);
 		session.setAttribute("goods", goods);
-		out.print(goods.getDescribe()+"/"+goods.getName()+"/"+goods.getPrice()+"/"+goods.getRebate()+"/"+goods.getId());
+		out.print(goods.getGdescribe()+"/"+goods.getName()+"/"+goods.getPrice()+"/"+goods.getRebate()+"/"+goods.getId());
 	}
 	
 	//删除购物车
@@ -167,36 +170,23 @@ public class CartAction {
 	
 	//验证支付密码
 	@RequestMapping("YanZhen.do")
-	public  void YanZhen(PrintWriter out,String orderAddr, String pwd,HttpSession session){
+	public  void YanZhen(PrintWriter out, Integer id,String pwd,HttpSession session,Double money){
 		Orders orders=new Orders();
 		User user =(User) session.getAttribute("user");
 		user.setPwd(pwd);
-		orders.setUid(user.getUid());
-		orders.setOrderAddr(orderAddr);
-		Cart cart=new Cart();
-		cart.setUid(user.getUid());
+		user.setMoney(money);
+		orders.setId(id);
 		Date date=new Date(System.currentTimeMillis());
 		orders.setTime(date);
-		
 		if(cbiz.YanZhen(user)){
+			session.setAttribute("user", user);
 			//订单已成交
-			obiz.insertOrder1(orders);
+			obiz.updateOrder1(orders);
+			ubiz.updateMoney(user);
 			out.print(true);
 		}else{
-			//订单未成交
-			obiz.insertOrder(orders);
 			out.print(false);
 		}
-		int oid=orders.getId();
-		List<Map<String,Object>> list=cbiz.selectAll(cart);
-		for(int i=0;i<list.size();i++){
-			int count=(int) list.get(i).get("count");
-			int scid=(int) list.get(i).get("scid");
-			obiz.insertgsds(oid,scid,count);
-		}
-		//清空购物车
-		cbiz.delete(cart);
-		sutil.rsession(cart, session, cbiz);
 	}
 	
 }

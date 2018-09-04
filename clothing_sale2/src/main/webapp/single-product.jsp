@@ -156,8 +156,8 @@
 							<div class="sp-bottom-des">
 								<div class="single-product-option">
 									<div class="sort product-type">
-										<label>颜色: </label> <select id="input-sort-color"
-											onchange="ajax1()">
+										<label>颜色: </label> <select id="input-sort-color5"
+											onchange="ajax5()">
 											<c:forEach items="${lstColor }" var="lc">
 												<option id="selColor" value="#">${lc}</option>
 											</c:forEach>
@@ -165,8 +165,8 @@
 										</select>
 									</div>
 									<div class="sort product-type">
-										<label>尺寸: </label> <select id="input-sort-size"
-											onchange="ajax1()">
+										<label>尺寸: </label> <select id="input-sort-size5"
+											onchange="ajax5()">
 											<c:forEach items="${ lstSize}" var="ls">
 												<option value="#">${ls}</option>
 											</c:forEach>
@@ -174,7 +174,7 @@
 										</select>
 									</div>
 								</div>
-								<label>库存 :</label><label id="lab"> <c:choose>
+								<label>库存 :</label><label id="lab5"> <c:choose>
 										<c:when test="${empty count }">${goods.stock}</c:when>
 										<c:otherwise>${count}</c:otherwise>
 									</c:choose>
@@ -186,11 +186,11 @@
 											<div class="product-qty">
 												<div class="cart-quantity">
 													<div class="cart-plus-minus">
-														<div class="dec qtybutton" onclick="jiancount();">-</div>
-														<input id="iptCount" type="text" value="0"
+														<div class="dec qtybutton" onclick="jiancount5();">-</div>
+														<input id="iptCount5" type="text" value="0"
 															readonly="readonly" name="qtybutton"
 															class="cart-plus-minus-box">
-														<div class="inc qtybutton" onclick="addcount();">+</div>
+														<div class="inc qtybutton" onclick="addcount5();">+</div>
 													</div>
 												</div>
 											</div>
@@ -200,7 +200,7 @@
 								</div>
 								<div class="social-icon socile-icon-style-1">
 									<ul>
-										<li><a onclick="addCart();"data-tooltip="Add To Cart"
+										<li><a onclick="addCart5();"data-tooltip="Add To Cart"
 											class="add-cart add-cart-text" data-placement="left"
 											tabindex="0">添加到购物车<i class="fa fa-cart-plus"></i></a></li>
 										<li><a href="#" data-tooltip="Wishlist" class="w-list"
@@ -246,7 +246,7 @@
 									<div role="tabpanel" class="tab-pane fix fade in"
 										id="newarrival">
 										<div class="review-wraper">
-											<p id="pDescribe">${goods.describe}</p>
+											<p id="pDescribe">${goods.gdescribe}</p>
 										</div>
 									</div>
 									<div role="tabpanel" class="tab-pane fix fade in active"
@@ -334,224 +334,210 @@
 					<div class="clearfix"></div>
 					<div
 						class="total-new-arrival new-arrival-slider-active carsoule-btn">
-						<div class="col-md-3">
-							<!-- single product start-->
-							<div class="single-product">
-								<div class="product-img">
-									<div class="product-label">
-										<div class="new">New</div>
-									</div>
-									<div class="single-prodcut-img  product-overlay pos-rltv">
-										<a href="single-product.html"> <img alt=""
-											src="images/product/01.jpg" class="primary-image"> <img
-											alt="" src="images/product/02.jpg" class="secondary-image">
-										</a>
-									</div>
-									<div class="product-icon socile-icon-tooltip text-center">
-										<ul>
-											<li><a href="#" data-tooltip="Add To Cart"
-												class="add-cart" data-placement="left"><i
-													class="fa fa-cart-plus"></i></a></li>
-											<li><a href="#" data-tooltip="Wishlist" class="w-list"><i
-													class="fa fa-heart-o"></i></a></li>
-											<li><a href="#" data-tooltip="Compare" class="cpare"><i
-													class="fa fa-refresh"></i></a></li>
-											<li><a href="#" data-tooltip="Quick View" class="q-view"
-												data-toggle="modal" data-target=".modal"><i
-													class="fa fa-eye"></i></a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="product-text">
-									<div class="prodcut-name">
-										<a href="single-product.html">Quisque fringilla</a>
-									</div>
-									<div class="prodcut-ratting-price">
-										<div class="prodcut-price">
-											<div class="new-price">$220</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- single product end-->
-						</div>
-						<div class="col-md-3">
-							<!-- single product start-->
-							<div class="single-product">
-								<div class="product-img">
-									<div class="single-prodcut-img  product-overlay pos-rltv">
-										<a href="single-product.html"> <img alt=""
-											src="images/product/03.jpg" class="primary-image"> <img
-											alt="" src="images/product/04.jpg" class="secondary-image">
-										</a>
-									</div>
-									<div class="product-icon socile-icon-tooltip text-center">
-										<ul>
-											<li><a href="#" data-tooltip="Add To Cart"
-												class="add-cart" data-placement="left"><i
-													class="fa fa-cart-plus"></i></a></li>
-											<li><a href="#" data-tooltip="Wishlist" class="w-list"><i
-													class="fa fa-heart-o"></i></a></li>
-											<li><a href="#" data-tooltip="Compare" class="cpare"><i
-													class="fa fa-refresh"></i></a></li>
-											<li><a href="#" data-tooltip="Quick View" class="q-view"
-												data-toggle="modal" data-target=".modal"><i
-													class="fa fa-eye"></i></a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="product-text">
-									<div class="prodcut-name">
-										<a href="single-product.html">Quisque fringilla</a>
-									</div>
-									<div class="prodcut-ratting-price">
-										<div class="prodcut-price">
-											<div class="new-price">$220</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- single product end-->
-						</div>
-						<div class="col-md-3">
-							<!-- single product start-->
-							<div class="single-product">
-								<div class="product-img">
-									<div class="product-label">
-										<div class="new">Sale</div>
-									</div>
-									<div class="single-prodcut-img  product-overlay pos-rltv">
-										<a href="single-product.html"> <img alt=""
-											src="images/product/02.jpg" class="primary-image"> <img
-											alt="" src="images/product/03.jpg" class="secondary-image">
-										</a>
-									</div>
-									<div class="product-icon socile-icon-tooltip text-center">
-										<ul>
-											<li><a href="#" data-tooltip="Add To Cart"
-												class="add-cart" data-placement="left"><i
-													class="fa fa-cart-plus"></i></a></li>
-											<li><a href="#" data-tooltip="Wishlist" class="w-list"><i
-													class="fa fa-heart-o"></i></a></li>
-											<li><a href="#" data-tooltip="Compare" class="cpare"><i
-													class="fa fa-refresh"></i></a></li>
-											<li><a href="#" data-tooltip="Quick View" class="q-view"
-												data-toggle="modal" data-target=".modal"><i
-													class="fa fa-eye"></i></a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="product-text">
-									<div class="prodcut-name">
-										<a href="single-product.html">Quisque fringilla</a>
-									</div>
-									<div class="prodcut-ratting-price">
-										<div class="prodcut-ratting">
-											<a href="#"><i class="fa fa-star"></i></a> <a href="#"><i
-												class="fa fa-star"></i></a> <a href="#"><i
-												class="fa fa-star"></i></a> <a href="#"><i
-												class="fa fa-star"></i></a> <a href="#"><i
-												class="fa fa-star-o"></i></a>
-										</div>
-										<div class="prodcut-price">
-											<div class="new-price">$220</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- single product end-->
-						</div>
-						<div class="col-md-3">
-							<!-- single product start-->
-							<div class="single-product">
-								<div class="product-img">
-									<div class="single-prodcut-img  product-overlay pos-rltv">
-										<a href="single-product.html"> <img alt=""
-											src="images/product/04.jpg" class="primary-image"> <img
-											alt="" src="images/product/03.jpg" class="secondary-image">
-										</a>
-									</div>
-									<div class="product-icon socile-icon-tooltip text-center">
-										<ul>
-											<li><a href="#" data-tooltip="Add To Cart"
-												class="add-cart" data-placement="left"><i
-													class="fa fa-cart-plus"></i></a></li>
-											<li><a href="#" data-tooltip="Wishlist" class="w-list"><i
-													class="fa fa-heart-o"></i></a></li>
-											<li><a href="#" data-tooltip="Compare" class="cpare"><i
-													class="fa fa-refresh"></i></a></li>
-											<li><a href="#" data-tooltip="Quick View" class="q-view"
-												data-toggle="modal" data-target=".modal"><i
-													class="fa fa-eye"></i></a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="product-text">
-									<div class="prodcut-name">
-										<a href="single-product.html">Quisque fringilla</a>
-									</div>
-									<div class="prodcut-ratting-price">
-										<div class="prodcut-price">
-											<div class="new-price">$220</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- single product end-->
-						</div>
-						<div class="col-md-3">
-							<!-- single product start-->
-							<div class="single-product">
-								<div class="product-img">
-									<div class="single-prodcut-img  product-overlay pos-rltv">
-										<a href="single-product.html"> <img alt=""
-											src="images/product/05.jpg" class="primary-image"> <img
-											alt="" src="images/product/06.jpg" class="secondary-image">
-										</a>
-									</div>
-									<div class="product-icon socile-icon-tooltip text-center">
-										<ul>
-											<li><a href="#" data-tooltip="Add To Cart"
-												class="add-cart" data-placement="left"><i
-													class="fa fa-cart-plus"></i></a></li>
-											<li><a href="#" data-tooltip="Wishlist" class="w-list"><i
-													class="fa fa-heart-o"></i></a></li>
-											<li><a href="#" data-tooltip="Compare" class="cpare"><i
-													class="fa fa-refresh"></i></a></li>
-											<li><a href="#" data-tooltip="Quick View" class="q-view"
-												data-toggle="modal" data-target=".modal"><i
-													class="fa fa-eye"></i></a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="product-text">
-									<div class="prodcut-name">
-										<a href="single-product.html">Quisque fringilla</a>
-									</div>
-									<div class="prodcut-ratting-price">
-										<div class="prodcut-ratting">
-											<a href="#"><i class="fa fa-star"></i></a> <a href="#"><i
-												class="fa fa-star"></i></a> <a href="#"><i
-												class="fa fa-star"></i></a> <a href="#"><i
-												class="fa fa-star"></i></a> <a href="#"><i
-												class="fa fa-star-o"></i></a>
-										</div>
-										<div class="prodcut-price">
-											<div class="new-price">$220</div>
-											<div class="old-price">
-												<del>$250</del>
+						<c:forEach items="${lstGoods}" var="g">
+											<div class="col-md-3">
+												<div class="single-product">
+													<div class="product-img">
+														<div class="product-label">
+															<div class="new">Sale</div>
+														</div>
+														<div class="single-prodcut-img  product-overlay pos-rltv">
+															<a href="single-product.do?id=${g.id }&name=${g.name}">
+																<img alt=""
+																src="images/product/${g.image.split('、')[0]}"
+																class="primary-image"> <img alt=""
+																src="images/product/03.jpg" class="secondary-image">
+															</a>
+														</div>
+														<div class="product-icon socile-icon-tooltip text-center">
+															<ul>
+																<li><a href="#" data-tooltip="Wishlist"
+																	class="w-list"><i class="fa fa-heart-o"></i></a></li>
+																<li><a href="#" data-tooltip="Compare"
+																	class="cpare"><i class="fa fa-refresh"></i></a></li>
+																<li><a onclick="showInfo(${g.id})"
+																	data-tooltip="Quick View" class="q-view"
+																	data-toggle="modal" data-target=".modal"><i
+																		class="fa fa-eye"></i></a></li>
+															</ul>
+														</div>
+													</div>
+													<div class="product-text">
+														<div class="prodcut-name">
+															<a href="single-product.html">${g.name }</a>
+														</div>
+														<div class="prodcut-ratting-price">
+															<div class="prodcut-ratting">
+																<a href="#"><i class="fa fa-star"></i></a> <a href="#"><i
+																	class="fa fa-star"></i></a> <a href="#"><i
+																	class="fa fa-star"></i></a> <a href="#"><i
+																	class="fa fa-star"></i></a> <a href="#"><i
+																	class="fa fa-star-o"></i></a>
+															</div>
+															<div class="prodcut-price">
+																<div class="new-price">
+																	$
+																	<fmt:formatNumber type="number" value="${g.price*g.rebate}"
+																		pattern="#.00" maxFractionDigits="2" />
+																</div>
+																<div class="old-price">${g.price}</div>
+															</div>
+														</div>
+													</div>
+												</div>
 											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- single product end-->
-						</div>
+										</c:forEach>
+						
+						
 					</div>
 				</div>
 			</div>
 		</div>
 		<!--new arrival area end-->
+			<!-- QUICKVIEW PRODUCT -->
+		<div id="quickview-wrapper">
+			<!-- Modal -->
+			<div class="modal fade" id="productModal" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="modal-product">
+								<div class="product-images">
+									<!--modal tab start-->
+									<div class="portfolio-thumbnil-area-2">
+										<div class="tab-content active-portfolio-area-2">
+											<div role="tabpanel" class="tab-pane active" id="view1">
+												<div class="product-img">
+													<img alt="Single portfolio" class="img1" />
+												</div>
+											</div>
+											<div role="tabpanel" class="tab-pane" id="view2">
+												<div class="product-img">
+													<img alt="Single portfolio" class="img2" />
+												</div>
+											</div>
+											<div role="tabpanel" class="tab-pane" id="view3">
+												<div class="product-img">
+													<img alt="Single portfolio" class="img3" />
+												</div>
+											</div>
+											<div role="tabpanel" class="tab-pane" id="view4">
+												<div class="product-img">
+													<img alt="Single portfolio" class="img4" />
+												</div>
+											</div>
+										</div>
+										<div class="product-more-views-2">
+											<div class="thumbnail-carousel-modal-2" data-tabs="tabs">
+												<a href="#view1" aria-controls="view1" data-toggle="tab"><img
+													alt="" class="img1" /></a> <a href="#view2"
+													aria-controls="view2" data-toggle="tab"><img alt=""
+													class="img2" /></a> <a href="#view3" aria-controls="view3"
+													data-toggle="tab"><img alt="" class="img3" /></a> <a
+													href="#view4" aria-controls="view4" data-toggle="tab"><img
+													alt="" class="img4" /></a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--modal tab end-->
+								<!-- .product-images -->
+								<div class="product-info">
+									<h1 id="product_name"></h1>
+									<div class="price-box-3">
+										<div class="s-price-box">
+											<span class="new-price" id="new_price"></span> <span
+												class="old-price" id="old_price"></span>
+										</div>
+									</div>
+									<a href="shop.jsp" class="see-all">查看所有商品</a>
+									<div class="single-product-option">
+										<div class="sort product-type">
+											<label>颜色: </label> <select id="input-sort-color"
+												onchange="ajax1()">
+
+
+											</select>
+										</div>
+										<div class="sort product-type">
+											<label>尺寸: </label> <select id="input-sort-size"
+												onchange="ajax1()">
+
+
+											</select>
+										</div>
+									</div>
+									<label>库存 :</label><label id="lab"> <c:choose>
+											<c:when test="${empty count }">${goods.stock}</c:when>
+											<c:otherwise>${count}</c:otherwise>
+										</c:choose>
+									</label>
+									<div class="quantity-area">
+										<label>数量 :</label>
+										<div class="cart-quantity">
+											<form action="" method="POST" id="myform">
+												<div class="product-qty">
+													<div class="cart-quantity">
+														<div class="cart-plus-minus">
+															<div class="dec qtybutton" onclick="jiancount();">-</div>
+															<input id="iptCount" type="text" value="0"
+																readonly="readonly" name="qtybutton"
+																class="cart-plus-minus-box">
+															<div class="inc qtybutton" onclick="addcount();">+</div>
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+
+									</div>
+									<div class="quick-add-to-cart">
+										<button class="single_add_to_cart_button" onclick="addCart();">加入购物车</button>
+									</div>
+									<div class="quick-desc" id="feature">
+									</div>
+									<div class="social-sharing-modal">
+										<div class="widget widget_socialsharing_widget">
+											<h3 class="widget-title-modal">分享商品</h3>
+											<ul class="social-icons-modal">
+												<li><a target="_blank" title="Facebook" href="#"
+													class="facebook m-single-icon"><i
+														class="fa fa-facebook"></i></a></li>
+												<li><a target="_blank" title="Twitter" href="#"
+													class="twitter m-single-icon"><i class="fa fa-twitter"></i></a></li>
+												<li><a target="_blank" title="Pinterest" href="#"
+													class="pinterest m-single-icon"><i
+														class="fa fa-pinterest"></i></a></li>
+												<li><a target="_blank" title="Google +" href="#"
+													class="gplus m-single-icon"><i
+														class="fa fa-google-plus"></i></a></li>
+												<li><a target="_blank" title="LinkedIn" href="#"
+													class="linkedin m-single-icon"><i
+														class="fa fa-linkedin"></i></a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!-- .product-info -->
+							</div>
+							<!-- .modal-product -->
+						</div>
+						<!-- .modal-body -->
+					</div>
+					<!-- .modal-content -->
+				</div>
+				<!-- .modal-dialog -->
+			</div>
+			<!-- END Modal -->
+		</div>
+		<!-- END QUICKVIEW PRODUCT -->
+		</div>
 <!-- Modernizr JS -->
 <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 <script type="text/javascript">
@@ -561,13 +547,13 @@
 	var count = "${goods.stock}";
 	//》》》》修改后的商品id
 	var scid;
-	function ajax1() {
-		var obj1 = document.getElementById("input-sort-color");
+	function ajax5() {
+		var obj1 = document.getElementById("input-sort-color5");
 
 		var index1 = obj1.selectedIndex;
 
 		var color = obj1.options[index1].text;
-		var obj = document.getElementById("input-sort-size");
+		var obj = document.getElementById("input-sort-size5");
 
 		var index = obj.selectedIndex;
 
@@ -584,14 +570,14 @@
 			"dataType" : "json",
 			"success" : function(obj) {
 				if (obj != null) {
-					$("#iptCount").val(0);
+					$("#iptCount5").val(0);
 					scid = obj.id;
 					count = obj.stock;
-					$("#lab").html(obj.stock);
+					$("#lab5").html(obj.stock);
 				} else {
-					$("#iptCount").val(0);
+					$("#iptCount5").val(0);
 					count = 0;
-					$("#lab").html(0);
+					$("#lab5").html(0);
 				}
 
 			},
@@ -600,9 +586,9 @@
 		});
 	}
 
-	function addCart(){
+	function addCart5(){
 		
-		var inputcount=$("#iptCount").val();
+		var inputcount=$("#iptCount5").val();
 		if(inputcount==0){
 			alert("请选择商品数量！");
 			return;
@@ -622,32 +608,30 @@
 			});
 			
 		}
-		$("#iptCount").val(0);
+		$("#iptCount5").val(0);
 		count = 0;
-		$("#lab").html(0);
-		$("#input-sort-size").val(1);
-		$("#input-sort-color").val(1);
+		$("#lab5").html(0);
+		$("#input-sort-size5").val(1);
+		$("#input-sort-color5").val(1);
 	}
 	
 	
-	function addcount(){
-        var oldVal =parseInt($("#iptCount").val());
+	function addcount5(){
+        var oldVal =parseInt($("#iptCount5").val());
         if(count>oldVal){
         	var newVal=oldVal+1;
-	    	$("#iptCount").val(newVal);
-	    	$("#inputcount").val($(newVal));
+	    	$("#iptCount5").val(newVal);
 	     }else{
 	        	alert("库存不足");
 	    }
    } 
- 	function jiancount(){
-			var oldVal =parseInt($("#iptCount").val());
+ 	function jiancount5(){
+			var oldVal =parseInt($("#iptCount5").val());
 	        if(oldVal>1){
 	        	var newVal=oldVal-1;
-	         	$("#iptCount").val(newVal);
-	         	$("#inputcount").val(newVal)
+	         	$("#iptCount5").val(newVal);
 	        }else{
-	        	$("#iptCount").val(1);
+	        	$("#iptCount5").val(1);
 	        }
        
         } 
@@ -658,5 +642,148 @@
 				+ "&size=" + size;
 	}
 </script>
+<!-- 眼睛js -->
+<script type="text/javascript">
+		var count = "${goods.stock}";
+		//》》》》修改后的商品id
+		var scid;
+		var price1;
+		function showInfo(gid){
+				$.ajax({
+				"url" : "single-product1.do",
+				"type" : "post",
+				"data" : {
+					"id" : gid,
+				},
+				"dataType" : "json",
+				"success" : function(obj) {
+					if (obj != null) {
+						$("#iptCount").val(0);
+						count = 0;
+						$("#lab").html(0);
+						$("#input-sort-size").empty();
+						$("#input-sort-color").empty();
+						var images=obj[3];
+						var goods=obj[0];
+						var lstSize=obj[2];
+						var lstColor=obj[1];
+						console.log(images);
+						$(".img1").attr("src","images/product/"+images[0]);
+						$(".img2").attr("src","images/product/"+images[1]);
+						$(".img3").attr("src","images/product/"+images[2]);
+						$(".img4").attr("src","images/product/"+images[3]);
+						$("#product_name").text(goods.name);
+						price1=(goods.price*goods.rebate).toFixed(2);
+						$("#new_price").text("$"+(goods.price*goods.rebate).toFixed(2));
+						$("#old_price").text("$"+goods.price);
+						$("#feature").html(goods.feature);	
+						var sel1=$("#input-sort-size"); //根据id获取select的jquery对象
+						sel1.append("<option value='1' selected='selected'>请选择尺寸</option>");
+						for(var i=0;i<lstSize.length;i++){
+							sel1.append("<option >"+lstSize[i]+"</option>");//添加option
+						}
+						var sel2=$("#input-sort-color"); 
+						sel2.append("<option  value='1' selected='selected'>请选择颜色</option>");
+						for(var i=0;i<lstColor.length;i++){
+							sel2.append("<option >"+lstColor[i]+"</option>");//添加option
+						}
+					} else {
+					}
+				},
+				"error" : function() {
+				}
+			});
+		};
 
+		function ajax1() {
+			var obj1 = document.getElementById("input-sort-color");
+			var index1 = obj1.selectedIndex;
+			var color = obj1.options[index1].text;
+			var obj = document.getElementById("input-sort-size");
+			var index = obj.selectedIndex;
+			var size = obj.options[index].text;
+			var name=$("#product_name").html();
+				$.ajax({
+				"url" : "ajax1.do",
+				"type" : "post",
+				"data" : {
+					"color" : color,
+					"size" : size,
+					"name" : name
+				},
+				"dataType" : "json",
+				"success" : function(obj) {
+					if (obj != null) {
+						$("#iptCount").val(0);
+						scid = obj.id;
+						$("#inputscid").val(scid);
+						count = obj.stock;
+						$("#lab").html(obj.stock);
+					} else {
+						$("#iptCount").val(0);
+						count = 0;
+						$("#lab").html(0);
+					}
+
+				},
+				"error" : function() {
+				}
+			});
+		}
+
+		function addcount(){
+	        var oldVal =parseInt($("#iptCount").val());
+	        if(count>oldVal){
+	        	var newVal=oldVal+1;
+		    	$("#iptCount").val(newVal);
+		     }else{
+		        	alert("库存不足");
+		    }
+	   } 
+	 	function jiancount(){
+				var oldVal =parseInt($("#iptCount").val());
+		        if(oldVal>1){
+		        	var newVal=oldVal-1;
+		         	$("#iptCount").val(newVal);
+		         	$("#inputcount").val(newVal)
+		        }else{
+		        	$("#iptCount").val(1);
+		        }
+	       
+	        }
+	 	
+		function addCart(){
+			var inputcount=$("#iptCount").val();
+			if(inputcount==0||inputcount==null){
+				alert("请选择商品数量");
+				return;
+			}
+			var data={scid:scid,count:inputcount}
+			$.post("ajax_addCart.do",data,function(data){
+				var type=data.split("|~|");
+				if(type[1]=="id"){
+					console.log(type[0]);
+					console.log(inputcount);
+					var newcount=parseInt(inputcount)+parseInt($("#countId_"+type[0]).html());
+					var price=parseFloat($.trim($("#priceId_"+type[0]).html()));
+					$("#countId_"+type[0]).text(newcount);
+					console.log(price);
+					console.log(newcount);
+					$("#totalMoney").text(parseFloat($("#totalMoney").text())+inputcount*price1);
+				}else{
+					$("#cart").prepend(type[0]);
+					$("#total").text(parseInt($("#total").text())+1);
+					console.log(price1);
+					console.log(parseFloat($("#totalMoney").text()));
+					$("#totalMoney").text(parseFloat($("#totalMoney").text())+inputcount*price1);
+				}
+			});
+			alert("添加成功");
+			$("#iptCount").val(0);
+			count = 0;
+			$("#lab").html(0);
+			$("#input-sort-size").val(1);	
+			$("#input-sort-color").val(1);
+		}
+	</script>
 		<%@include file="footer.jsp"%>

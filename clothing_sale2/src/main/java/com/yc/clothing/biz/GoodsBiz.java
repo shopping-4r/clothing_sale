@@ -95,4 +95,11 @@ public class GoodsBiz {
 		long total=gdao.countAll();
 		return new Page<Map<String, Object>>(total,goods);
 	}
+	/**
+	 * 查询与该商品相关的商品
+	 * @return
+	 */
+	public List<Goods> selectLikeGoods(Goods goods){
+		return gdao.selectLikeGoods(goods);
+	}
 }

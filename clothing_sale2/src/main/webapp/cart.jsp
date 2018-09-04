@@ -27,10 +27,6 @@
     <link rel="stylesheet" href="css/responsive.css">
     <!-- User style -->
     <link rel="stylesheet" href="css/custom.css">  <link rel="stylesheet" href="css/color/skin-default.css">
-    <!-- 弹框css -->
-	<link rel="stylesheet" type="text/css" href="css/css/postbirdAlertBox.min.css">
-    <!-- 弹框js -->
-    <script type="text/javascript" src="js/js/postbirdAlertBox.min.js"></script>
     <!-- Modernizr JS -->
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
@@ -590,13 +586,15 @@
 	 function createOrder(){
 		 
 		 var addr=$("#addrSelect").val();
-		 $.post("insertOrder.do",null,function(data){
+		 var data={orderAddr:addr};
+		 $.post("insertOrder.do",data,function(data){
 			 //console.log(data);
 			 $("#total").text("0");
 			 $(".cart-single-wraper").remove();
 			 $("#totalMoney").text("0");
 			 $("#goodsOrder").prepend(data);
 			 $("#spanAddr").html(addr);
+			 alert("订单已生成");
 			 
 		 });
 	 }	
@@ -612,6 +610,7 @@
 	 
 	 //付款的方法
 	 function FuKuan(money){
+		var id=$("#oid").val();
 		var jianMoney= parseFloat($("#cartTotal").html());
 		var shengYuMoney=money-jianMoney;
 		//console.log(money);
@@ -628,13 +627,13 @@
 			    'title': '请输入密码',
 			    'okBtn': '提交',
 			    onConfirm:function (data) {
-					var addr=$("#addrSelect").val();
 		 			var data1={
-						orderAddr:addr,
-						pwd:data
+						id:id,
+						pwd:data,
+						money:shengYuMoney
 		 				}
 			    	$.post("YanZhen.do",data1,function (flag){
-			    		console.log(flag);
+			    		//console.log(flag);
 			    		if(flag=="true"){
 			    			alert("密码正确");
 			    			PostbirdAlertBox.alert({
@@ -657,7 +656,8 @@
 			    },
 			    onCancel: function (data) {
 			       
-			        alert("你取消了支付");
+			        alert("你取消了支付，我在订单中等你");
+			        window.location.href='my-account.jsp';
 			    },
 			});
 	 }

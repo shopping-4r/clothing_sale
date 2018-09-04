@@ -14,15 +14,21 @@ public class Goods {
 	private Double price;
 	private Date time;
 	private List<Board> boards;        //该商品所属的所有类型
-	private String describe;
+	private String gdescribe;
 	private Double rebate;
 	private String feature;
-	
-	public String getDescribe() {
-		return describe;
+	private Integer bid;
+	public Integer getBid() {
+		return bid;
 	}
-	public void setDescribe(String describe) {
-		this.describe = describe;
+	public void setBid(Integer bid) {
+		this.bid = bid;
+	}
+	public String getGdescribe() {
+		return gdescribe;
+	}
+	public void setGdescribe(String gdescribe) {
+		this.gdescribe = gdescribe;
 	}
 	public Double getRebate() {
 		return rebate;

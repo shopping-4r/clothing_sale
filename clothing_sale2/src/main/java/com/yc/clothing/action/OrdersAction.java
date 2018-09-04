@@ -52,15 +52,15 @@ public class OrdersAction {
 	}
 	//提交订单
 	@RequestMapping("/insertOrder.do")
-	public void insertOrder(PrintWriter out,HttpSession session ){
+	public void insertOrder(PrintWriter out,HttpSession session,Orders orders){
 		User user =(User) session.getAttribute("user");
-//		orders.setUid(user.getUid());
+		orders.setUid(user.getUid());
 		Cart cart=new Cart();
 		cart.setUid(user.getUid());
-//		Date date=new Date(System.currentTimeMillis());
-//		orders.setTime(date);
-		//obiz.insertOrder(orders);
-//		int oid=orders.getId();
+		Date date=new Date(System.currentTimeMillis());
+		orders.setTime(date);
+		obiz.insertOrder(orders);
+		int oid=orders.getId();
 		List<Map<String,Object>> list=cbiz.selectAll(cart);
 		String data=null;
 		Double totalMoney = 0d;
@@ -68,13 +68,13 @@ public class OrdersAction {
 		for(int i=0;i<list.size();i++){
 			String name=(String) list.get(i).get("name");
 			int count=(int) list.get(i).get("count");
-			//int scid=(int) list.get(i).get("scid");
+			int scid=(int) list.get(i).get("scid");
 			double price=(double) list.get(i).get("price");
 			double rebate=(double) list.get(i).get("rebate");
 			String color=(String) list.get(i).get("color");
 			String size=(String) list.get(i).get("size");
 			totalMoney+=price*rebate*count;
-			//obiz.insertgsds(oid,scid,count);
+			obiz.insertgsds(oid,scid,count);
 			 data=data+"<tr class='cart_item check-item prd-name'><<td class='ctg-type'>"+ name+" x<span id='count'>"+count+"</span><span>件</span>&nbsp;颜色："+color+"&nbsp;尺码："+size+"</td>"+
              "<td class='cgt-des'> <span>￥</span><span id='price_count'>"+df.format(count*price*rebate)+"</span></td> </tr>";
 		}
@@ -87,11 +87,12 @@ public class OrdersAction {
 				+ " <label for='pay-toggle2'>普通包邮</label>" + " </div>" + "</td>" + " </tr>" + " <tr class='cart_item'>"
 				+ "<td class='ctg-type crt-total' >总计</td>" + " <td class='cgt-des prc-total' id='cartTotal'> "
 				+ df.format(totalMoney) + "</td>" + " </tr>";
+		data=data+"<input id='oid' type='hidden' value='"+oid+"'/>";
 		//System.out.println("=================data=="+data);
 		//清空购物车
 		
-		//cbiz.delete(cart);
-		//sessionutil.rsession(cart, session, cbiz);
+		cbiz.delete(cart);
+		sessionutil.rsession(cart, session, cbiz);
 		out.print(data);
 	}
 	
@@ -133,7 +134,13 @@ public class OrdersAction {
 		session.setAttribute("orderData", data);
 		return "management/index";
 	}
-	
+	/**
+	 * 评价订单
+	 */
+	@RequestMapping("comment.do")
+	public void commentOrder(PrintWriter out,Orders orders){
+		obiz.updateOrders(orders);
+	}
 	
 	
 }

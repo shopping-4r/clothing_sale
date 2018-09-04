@@ -197,16 +197,7 @@ public class GoodsAction {
 			model.addAttribute("salesGoods", allSalesGoods);
 			model.addAttribute("commentGoods", allSalesGoods);
 		}
-		// 热评
-		/*List<Goods> allCommentGoods = gbiz.OrderByComment();
-		if (allCommentGoods.size() > 5) {
-			for (int i = 0; i < 5; i++) {
-				commentgoods.add(allCommentGoods.get(i));
-			}
-			model.addAttribute("commentGoods", commentgoods);
-		} else {
-			model.addAttribute("commentGoods", allCommentGoods);
-		}*/
+		
 		return "index";
 	}
 
@@ -226,7 +217,7 @@ public class GoodsAction {
 		Long total =obiz.countSumSize(goods.getId()).longValue();
 		 Page<Map<String, Object>> pages=new Page<Map<String, Object>>( total,rows);
 		model.addAttribute("page",pages);
-		 // 将图片路径按、分割
+		//查询商品详细信息
 		goods = gbiz.selectGoodInfoById(goods);
 		model.addAttribute("goods", goods);
 		List<Map<String,Object>> ColorAndSize = gbiz.selectGoodInfoByName(goods.getId());
@@ -245,7 +236,11 @@ public class GoodsAction {
 				lstSize.add(tempSize);
 			}
 		}
+		// 将图片路径按、分割
 		String[] images = goods.getImage().split("、");
+		//相关商品
+		List<Goods> lstGoods=gbiz.selectLikeGoods(goods);
+		model.addAttribute("lstGoods", lstGoods);
 		model.addAttribute("lstSize", lstSize);
 		model.addAttribute("lstColor", lstColor);
 		model.addAttribute("lstimages", images);
