@@ -13,4 +13,8 @@ public class translateAction {
 	public String translate2() {
 		return "regist";
 	} 
+	@RequestMapping("/translate3.do")
+	public String translate3() {
+		return "refindPwd";
+	} 
 }

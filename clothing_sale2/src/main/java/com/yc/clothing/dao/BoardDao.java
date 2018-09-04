@@ -9,6 +9,6 @@ public interface BoardDao {
 	Board findByName(String name);
 	//查询所有父类型
 	List<Board> selectAllParentBoard();
-	//根据父类型名字查询所有子类型
-	List<Board> selectBoardByParentName(String parentName);
+	//根据父类型id查询所有子类型
+	List<Board> selectBoardByParentName(Integer id);
 }

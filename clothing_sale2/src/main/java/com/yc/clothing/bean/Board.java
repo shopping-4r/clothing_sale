@@ -7,8 +7,14 @@ public class Board {
 	private Integer parentid;        //该类型的父类型
 	private String name;
 	private List<Goods> goods;      //该类型下的所有商品
+	private List<Board> childBoard;
 	
-	
+	public List<Board> getChildBoard() {
+		return childBoard;
+	}
+	public void setChildBoard(List<Board> childBoard) {
+		this.childBoard = childBoard;
+	}
 	public List<Goods> getGoods() {
 		return goods;
 	}

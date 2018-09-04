@@ -21,8 +21,4 @@ public class BoardBiz {
 	public List<Board> findAllParentBoard() {
 		return bdao.selectAllParentBoard();
 	}
-	//根据父类型名字查询所有子类型
-	public List<Board> findBoardByParentName(String parentName) {
-		return bdao.selectBoardByParentName(parentName);
-	}
 }

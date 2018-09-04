@@ -30,4 +30,6 @@ public interface UserDao {
 	//付款以后余额
 	@Update(value = { "update cs_user set money=#{money} where uid=#{uid}" })
 	public void updateMoney1(User user);
+	//找回密码
+	public void updatePwd(User user);
 }

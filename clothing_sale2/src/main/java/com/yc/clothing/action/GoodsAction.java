@@ -51,41 +51,23 @@ public class GoodsAction {
 		res.getWriter().print(Json);
 	}
 	/**
-	 * 查询该商铺所有的商品
-	 * @return
-	 */
-	@RequestMapping("showAllGoods.do")
-	public String findGoods(HttpSession session,Model model) {
-		User user=(User) session.getAttribute("user");
-		Saler saler=sbiz.findSaler(user.getUid());
-		Page<Map<String,Object>> goods=gbiz.findAllGoods();
-		List<Map<String,Object>> goods2=(List<Map<String, Object>>) goods.getRows().subList(0, 6);
-		List<Map<String,Object>> goods3=(List<Map<String, Object>>) goods.getRows().subList(0, 2);
-		model.addAttribute("total",goods.getTotal());
-		model.addAttribute("goods",goods2);
-		model.addAttribute("goods2",goods3);
-		return "shop";
-	}
-	/**
-	 * ajax查询该商铺所有的商品
+	 * ajax查询该商铺所有的商品     默认大小为6分页
 	 * @return
 	 * @throws IOException 
 	 */
 	@RequestMapping("showGoods.do")
-	public void ajaxFindGoods(HttpServletResponse res,HttpSession session,
-			Model model,Integer type,Integer page,Integer size) throws IOException {
-		User user=(User) session.getAttribute("user");
-		Saler saler=sbiz.findSaler(user.getUid());
+	public void ajaxFindGoods(HttpServletResponse res,String name,
+			Model model,String priceRange,Integer boardid,Integer type,Integer page,Integer size) throws IOException {
 		page=page==null?0:page;
 		size=size==null?6:size;
 		int min=(page-1)*size;
 		int max=min+size;
 		Page<Map<String,Object>> goods=null;
-		if(type==1) {
-			goods=gbiz.findAllGoods();
+		if(type==1 && boardid==-1) {
+			goods=gbiz.findAllGoods(priceRange,name);
 		}
 		else {
-			goods=gbiz.findByType(type);
+			goods=gbiz.findByType(type,boardid,priceRange,name);
 		}
 		if(max>goods.getTotal()) {
 			max=(int) goods.getTotal();
@@ -100,25 +82,23 @@ public class GoodsAction {
 		res.getWriter().println(json);
 	}
 	/**
-	 * ajax查询该商铺所有的商品
+	 * ajax查询该商铺所有的商品   默认按大小为2分页
 	 * @return
 	 * @throws IOException 
 	 */
 	@RequestMapping("showGoods2.do")
-	public void ajaxFindGoods2(HttpServletResponse res,HttpSession session,
-			Model model,Integer type,Integer page,Integer size) throws IOException {
-		User user=(User) session.getAttribute("user");
-		Saler saler=sbiz.findSaler(user.getUid());
+	public void ajaxFindGoods2(HttpServletResponse res,String name,
+			Model model,String priceRange,Integer boardid,Integer type,Integer page,Integer size) throws IOException {
 		page=page==null?0:page;
 		size=size==null?2:size;
 		int min=(page-1)*size;
 		int max=min+size;
 		Page<Map<String,Object>> goods=null;
-		if(type==1) {
-			goods=gbiz.findAllGoods();
+		if(type==1&& boardid==-1) {
+			goods=gbiz.findAllGoods(priceRange,name);
 		}
 		else {
-			goods=gbiz.findByType(type);
+			goods=gbiz.findByType(type,boardid,priceRange,name);
 		}
 		if(max>goods.getTotal()) {
 			max=(int) goods.getTotal();
@@ -131,32 +111,6 @@ public class GoodsAction {
 		data.put("page",page );
 		String json=gson.toJson(data);
 		res.getWriter().println(json);
-	}
-	/**
-	 * 查询该商铺所有的商品
-	 * @return
-	 */
-	@RequestMapping("showGoodsByType.do")
-	public String findGoodsByType(HttpSession session,Model model,Integer type,Integer page,Integer size) {
-		User user=(User) session.getAttribute("user");
-		Saler saler=sbiz.findSaler(user.getUid());
-		if(page==null){
-			page=1;
-		}
-		if(size==null){
-			size=6;
-		}
-		int min=(page-1)*size;
-		int max=min+size;
-		Page<Map<String,Object>> goods=null;
-			goods=gbiz.findAllGoods();
-		if(max>goods.getTotal()) {
-			max=(int) goods.getTotal();
-		}
-		List<Map<String,Object>> goods2=(List<Map<String, Object>>) goods.getRows().subList(min, max);
-		model.addAttribute("total",goods.getTotal());
-		model.addAttribute("goods",goods2);
-		return "shop";
 	}
 	/**
 	 * 分别 按照上架时间、销售量、评论数量查询商品的方法

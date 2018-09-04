@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
 	request.setAttribute("root", application.getContextPath());
@@ -20,7 +18,6 @@
 <script type="text/javascript" src="${root}/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript"
 	src="${root}/easyui/locale/easyui-lang-zh_CN.js"></script>
-
 <!-- Start of header area -->
 <header class="header-area header-wrapper">
 	<div class="header-top-bar black-bg clearfix">
@@ -79,9 +76,7 @@
 												<span id="total">${sessionScope.total }</span>
 											</div>
 											<div class="cart-content-wraper" id="cart">
-
 												<c:forEach items="${sessionScope.cart }" var="c">
-
 													<div class="cart-single-wraper" id="headerId_${c.id }">
 														<div class="cart-img">
 															<a href="#"><img
@@ -92,12 +87,9 @@
 																<a href="#">${c.name }</a>
 															</div>
 															<div class="cart-price" id="priceId_${c.id }">
-
-
 																<fmt:formatNumber type="number"
 																	value="${c.price*c.rebate }" pattern="0.00"
 																	maxFractionDigits="2" />
-
 															</div>
 															<div class="cart-qty">
 																颜色: <span id="countId_${c.id }">${c.color }</span>
@@ -116,7 +108,6 @@
 														</div>
 													</div>
 												</c:forEach>
-
 												<div class="cart-subtotal">
 													总计: <span id="totalMoney">${sessionScope.totalMoney }</span>
 												</div>
@@ -124,9 +115,7 @@
 													<div class="view-cart">
 														<a class="btn-def" href="cart.jsp">结账</a>
 													</div>
-
 												</div>
-
 											</div>
 										</c:when>
 										<c:otherwise>
@@ -142,14 +131,10 @@
 													<div style="height: 50px; width: 100px; text-align: center">
 														<a href="login.jsp" class="btn-def btn2">点击登录</a>
 													</div>
-
 												</div>
-
 											</div>
 										</c:otherwise>
 									</c:choose>
-
-
 								</div>
 							</li>
 						</ul>
@@ -162,7 +147,6 @@
 		<div class="container">
 			<div class="full-width-mega-dropdown">
 				<div class="row">
-
 					<div class="col-md-7 col-sm-10 hidden-xs">
 						<nav id="primary-menu">
 							<ul class="main-menu">
@@ -182,7 +166,6 @@
 											<li><a href="shop.html">Shirt 03</a></li>
 											<li><a href="shop.html">Shirt 04</a></li>
 										</ul>
-
 										<div class="mega-banner-img">
 											<a href="single-product.html"><img
 												src="images/banner/banner-fashion-02.jpg" alt=""></a>
@@ -198,7 +181,6 @@
 											<li><a href="shop.html">Sharee 04</a></li>
 											<li><a href="shop.html">Sharee 05</a></li>
 										</ul>
-
 										<div class="mega-banner-img">
 											<a href="single-product.html"><img
 												src="images/banner/banner-fashion.jpg" alt=""></a>
@@ -211,7 +193,6 @@
 										<li><a href="cart.jsp" target="_blank">我的购物车</a></li>
 										<li><a href="my-account.jsp" target="_blank">我的订单</a></li>
 									</ul></li>
-
 								<li class="mega-parent"><a href="shop.jsp">总览</a></li>
 								<li><a href="about-us.jsp">关于我们</a></li>
 							</ul>
@@ -238,7 +219,6 @@
 						</div>
 					</div>
 				</div>
-
 				<!-- mobile-menu-area start -->
 				<div class="mobile-menu-area">
 					<div class="container">
@@ -298,14 +278,12 @@
 													target="_blank">Brand Product</a></li>
 												<li><a href="shortcode-brand-slider.html"
 													target="_blank">Brand Slider</a></li>
-
 												<li><a href="shortcode-breadcrumb.html" target="_blank">Breadcrumb</a></li>
 												<li><a href="shortcode-related-product.html"
 													target="_blank">Related Product</a></li>
 												<li><a href="shortcode-service.html" target="_blank">Service</a></li>
 												<li><a href="shortcode-skill.html" target="_blank">Skill</a></li>
 												<li><a href="shortcode-slider.html" target="_blank">Slider</a></li>
-
 												<li><a href="shortcode-team.html" target="_blank">Team</a></li>
 												<li><a href="shortcode-testimonial.html"
 													target="_blank">Testimonial</a></li>
